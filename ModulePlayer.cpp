@@ -164,7 +164,7 @@ update_status ModulePlayer::Update()
 		bombPosition.x = position.x;
 		bombPosition.y = position.y+16;
 		bombAnimation = &bomb;
-		App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
+		//App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
 		bombOn = true;
 	}
 
