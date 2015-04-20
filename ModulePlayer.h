@@ -28,7 +28,6 @@ public:
 
 public:
 
-	bool hasCollided;
 	Looking direction;
 	SDL_Texture* graphics;
 	SDL_Texture* bombs;
