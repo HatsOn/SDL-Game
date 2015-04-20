@@ -149,6 +149,10 @@ bool ModuleTileMap::Start()
 	tile22.w = 16;
 
 	return 1;
+
+	App->player->Enable();
+
+
 }
 
 bool ModuleTileMap::Init()

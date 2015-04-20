@@ -9,9 +9,9 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, false);
 	scene_space = new ModuleSceneSpace(this, false);
-	tileMap = new ModuleTileMap(this, true);
-	player = new ModulePlayer(this, true);
-	scene_intro = new ModuleSceneIntro(this, false);
+	tileMap = new ModuleTileMap(this, false);
+	player = new ModulePlayer(this, false);
+	scene_intro = new ModuleSceneIntro(this, true);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
 	collision = new ModuleCollision(this, false);
