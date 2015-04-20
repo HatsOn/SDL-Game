@@ -154,7 +154,7 @@ bool ModuleTileMap::Start()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	LoadMap("..\\firstLevel.txt");
+	LoadMap("firstLevel.txt");
 	PrintMap();
 	return true;
 }
