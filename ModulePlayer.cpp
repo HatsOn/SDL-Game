@@ -60,7 +60,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	bomb.loop = true;
 	bomb.speed = 0.1f;
 
-
+	hasCollided = false;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -76,7 +76,7 @@ bool ModulePlayer::Start()
 	bombs = App->tileMap->tilesReference;
 	position.x = 75;
 	position.y = 50;
-	collider = App->collision->AddCollider({ position.x, position.y+16, 16, 16 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x, position.y+12, 16, 16 }, COLLIDER_PLAYER, this);
 	// TODO 2: Afegir collider al jugador
 
 	return true;
@@ -117,8 +117,12 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		speed = 1;
-		position.x -= speed;
-		collider->SetPos(position.x, position.y+16);
+
+		if (!hasCollided)
+		{
+			position.x -= speed;
+		}
+		collider->SetPos(position.x, position.y+12);//Make collider follow player's position
 		direction = Directionleft;
 
 		if (current_animation != &left)
@@ -133,7 +137,12 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		speed = 1;
-		position.x += speed;
+
+		if (!hasCollided)
+		{
+			LOG("COLLISION!");
+			position.x += speed;
+		}
 		collider->SetPos(position.x, position.y + 16);
 		direction = Directionright;
 		if (current_animation != &right)
@@ -146,7 +155,10 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		speed = 1;
-		position.y += speed;
+		if (!hasCollided)
+		{
+			position.y += speed;
+		}
 		collider->SetPos(position.x, position.y + 16);
 		direction = Directiondown;
 
@@ -160,7 +172,11 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		speed = 1;
-		position.y -= speed;
+		if (!hasCollided)
+		{
+			position.y -= speed;
+		}
+		
 		collider->SetPos(position.x, position.y + 16);
 		direction = Directionup;
 
@@ -213,35 +229,86 @@ update_status ModulePlayer::Update()
 
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
+	hasCollided = false;
 	return UPDATE_CONTINUE;
 }
 
 // TODO 4: Detectar colisio del jugador y retornar a la pantalla de inici
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	
+	hasCollided = true;
 	if (c2->type == COLLIDER_WALL && direction == Directionright)
 	{
-		position.x -= speed;
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			
+			//position.x -= 1;
+			position.y -= speed*2;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			//position.x -= 1;
+			position.y += speed*2;
+		}
+
+		else{ position.x -= 0; }
 		
+
 	}
 
 	if (c2->type == COLLIDER_WALL && direction == Directionleft )
 	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+
+			//position.x += 1;
+			position.y -= speed;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			//position.x += 1;
+			position.y += speed;
+		}
+
+		else{ position.x -= 0; }
 		
-		position.x += speed;
 	}
 
 	if (c2->type == COLLIDER_WALL && direction == Directionup)
 	{
 		
-		position.y += speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+
+			//position.y += 1;
+			position.x += speed;
+
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			//position.y += 1;
+			position.x -= speed;
+		}
+
+		else{ position.x += 0; }
 	}
 
 	if (c2->type == COLLIDER_WALL && direction == Directiondown)
 	{
 		
-		position.y -= speed;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+
+			position.y += speed;
+			//position.x -= speed;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			position.y -= speed;
+			//position.x += speed;
+		}
+
+		else{ position.x -= 0; }
 	}
 	
 }
