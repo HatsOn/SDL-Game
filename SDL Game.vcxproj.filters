@@ -16,18 +16,6 @@
     <Filter Include="Header Files\Containers">
       <UniqueIdentifier>{97c4111e-b102-4ba8-9053-6f07ccbbe3d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Regular Modules">
-      <UniqueIdentifier>{8f63201a-e02b-4059-bd11-8a796e2a273f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Custom">
-      <UniqueIdentifier>{25e26a74-8481-44a3-9086-d376fa0e9b1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Custom">
-      <UniqueIdentifier>{0d09b0b7-2796-401b-8d86-a3605f1243c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Regular Modules">
-      <UniqueIdentifier>{9490d3fe-3a31-456f-8ddb-3a1555678263}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -45,50 +33,50 @@
     <ClInclude Include="p2List.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleAudio.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCollision.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleFadeToBlack.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleInput.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleParticles.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleRender.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneIntro.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneSpace.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleWindow.h">
-      <Filter>Header Files\Regular Modules</Filter>
-    </ClInclude>
     <ClInclude Include="bomb.h">
-      <Filter>Header Files\Custom</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Globals.h">
-      <Filter>Header Files\Custom</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModulePlayer.h">
-      <Filter>Header Files\Custom</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTileMap.h">
-      <Filter>Header Files\Custom</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
-      <Filter>Header Files\Regular Modules</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFadeToBlack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneIntro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneSpace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -98,44 +86,44 @@
     <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleAudio.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCollision.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleFadeToBlack.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleInput.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleParticles.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleRender.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneSpace.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Source Files\Regular Modules</Filter>
+    <ClCompile Include="log.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Source Files\Custom</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTileMap.cpp">
-      <Filter>Source Files\Custom</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="log.cpp">
-      <Filter>Source Files\Custom</Filter>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFadeToBlack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneIntro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneSpace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindow.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
