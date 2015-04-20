@@ -161,6 +161,7 @@ bool ModuleTileMap::Init()
 	LoadMap("firstLevel.txt");
 	PrintMap();
 	return true;
+	
 }
 
 void ModuleTileMap::LoadMap(char* name)
@@ -342,6 +343,7 @@ void ModuleTileMap::BuildMap()
 
 		}
 	}
+	App->player->Enable();
 }
 
 
