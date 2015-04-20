@@ -55,6 +55,7 @@ public:
 
 
 	void BuildMap();
+	void CollisionMap();
 	// Called before quitting
 	bool Init();
 

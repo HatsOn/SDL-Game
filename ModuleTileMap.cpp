@@ -158,8 +158,9 @@ bool ModuleTileMap::Start()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	LoadMap("firstLevel.txt");
+	LoadMap("DebugLevel.txt");
 	PrintMap();
+	CollisionMap();
 	return true;
 	
 }
@@ -223,8 +224,6 @@ void ModuleTileMap::BuildMap()
 	int x, y;
 
 	/* Draw the background */
-
-
 
 	/* Draw the map */
 
@@ -346,7 +345,127 @@ void ModuleTileMap::BuildMap()
 	App->player->Enable();
 }
 
+void ModuleTileMap::CollisionMap()
+{
+	int x, y;
 
+	/* Draw the background */
+
+	/* Draw the map */
+
+	for (y = 0; y<MAX_MAP_Y; y++)
+	{
+		for (x = 0; x<MAX_MAP_X; x++)
+		{
+			if (map.tile[x][y] == 0)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 1)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 2)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 3)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 4)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 5)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 6)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 7)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 8)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 9)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+			if (map.tile[x][y] == 10)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 11)
+			{
+				//App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 12)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 13)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 14)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 15)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 16)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 17)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 18)
+			{
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+			}
+
+			if (map.tile[x][y] == 19)
+			{
+			}
+
+			if (map.tile[x][y] == 20)
+			{
+			}
+
+			if (map.tile[x][y] == 21)
+			{
+			}
+
+		}
+	}
+}
 
 update_status ModuleTileMap::Update()
 {

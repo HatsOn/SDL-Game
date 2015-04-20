@@ -14,6 +14,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void isWalkable();
+	void OnCollision(Collider*, Collider*);
 
 public:
 
@@ -29,6 +30,7 @@ public:
 	Animation right;
 	Animation down;
 	Animation bomb;
+	int speed;
 	p2Point<int> position;
 	p2Point<int> bombPosition;
 	bool bombOn;

@@ -14,7 +14,7 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this, true);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
-	collision = new ModuleCollision(this, false);
+	collision = new ModuleCollision(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

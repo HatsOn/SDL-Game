@@ -12,7 +12,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	current_animation = NULL;
 	bombAnimation = NULL;
 	bombOn = false;
-
+	speed = 1;
 	// idle animation (just the ship)
 	idle.frames.PushBack({73, 46, 14, 24});
 
@@ -44,6 +44,15 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	left.loop = true;
 	left.speed = 0.1f;
 
+
+	//Dying
+	/*die.frames.PushBack({ 343, 38, 16, 24 }); 
+	die.frames.PushBack({ 361, 38, 16, 24 });
+	die.frames.PushBack({ 379, 38, 16, 24 });
+	die.frames.PushBack({ 397, 38, 16, 24 });
+	die.speed = 0.1f;
+	die.loop = false;*/
+
 	// Set Bombs
 	bomb.frames.PushBack({ 356, 151 ,16,16});
 	bomb.frames.PushBack({ 373, 151, 16,16});
@@ -63,10 +72,11 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("bombermanPC.png");
+	
 	bombs = App->tileMap->tilesReference;
 	position.x = 75;
 	position.y = 50;
-
+	collider = App->collision->AddCollider({ position.x, position.y+16, 16, 16 }, COLLIDER_PLAYER, this);
 	// TODO 2: Afegir collider al jugador
 
 	return true;
@@ -102,11 +112,12 @@ void ModulePlayer::isWalkable()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	int speed = 1;
+	
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
+		collider->SetPos(position.x, position.y+16);
 		if (current_animation != &left)
 		{
 			left.Reset();
@@ -119,6 +130,7 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
+		collider->SetPos(position.x, position.y + 16);
 		if (current_animation != &right)
 		{
 			right.Reset();
@@ -129,6 +141,7 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += speed;
+		collider->SetPos(position.x, position.y + 16);
 		if(current_animation != &down)
 		{
 			down.Reset();
@@ -139,6 +152,7 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= speed;
+		collider->SetPos(position.x, position.y + 16);
 		if(current_animation != &up)
 		{
 			up.Reset();
@@ -180,3 +194,11 @@ update_status ModulePlayer::Update()
 }
 
 // TODO 4: Detectar colisio del jugador y retornar a la pantalla de inici
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c2->type == COLLIDER_WALL)
+	{
+		speed = 0;
+		LOG("collision!");
+	}
+}
