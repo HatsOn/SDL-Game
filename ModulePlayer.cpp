@@ -171,10 +171,19 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		int delay = 100;
+		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT, 30);
+		LOG("bomba");
+	}
+
+
+	/*if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		App->particles->AddParticle(App->particles->laser, position.x + 28, position.y, COLLIDER_PLAYER_SHOT);
-	}
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 	{
@@ -186,7 +195,7 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 	{
 
 		bombPosition.x = position.x;
@@ -194,7 +203,7 @@ update_status ModulePlayer::Update()
 		bombAnimation = &bomb;
 		//App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
 		bombOn = true;
-	}
+	}*/
 
 	if (bombOn)
 	{

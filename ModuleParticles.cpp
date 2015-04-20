@@ -20,6 +20,8 @@ bool ModuleParticles::Start()
 	bomb.anim.frames.PushBack({ 509, 185, 16, 16});
 	bomb.anim.frames.PushBack({ 526, 185, 16, 16 });
 	bomb.anim.frames.PushBack({ 543, 185, 16, 16 });
+	bomb.life = 3000;
+	bomb.anim.speed = 0.05f;
 
 	// Explosion particle
 	
@@ -106,9 +108,13 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
+			if (p->collider->type == COLLIDER_PLAYER_SHOT)
+			{
+				App->particles->AddParticle(App->particles->explosion, p->position.x - 16, p->position.y - 16, COLLIDER_PLAYER_EXPLOSION);
+			}
 			delete p;
 			active.del(tmp);
-		}
+		}		
 		else if(SDL_GetTicks() >= p->born)
 		{
 			App->renderer->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
