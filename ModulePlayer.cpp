@@ -116,8 +116,11 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
+		speed = 1;
 		position.x -= speed;
 		collider->SetPos(position.x, position.y+16);
+		direction = Directionleft;
+
 		if (current_animation != &left)
 		{
 			left.Reset();
@@ -129,8 +132,10 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
+		speed = 1;
 		position.x += speed;
 		collider->SetPos(position.x, position.y + 16);
+		direction = Directionright;
 		if (current_animation != &right)
 		{
 			right.Reset();
@@ -140,8 +145,11 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
+		speed = 1;
 		position.y += speed;
 		collider->SetPos(position.x, position.y + 16);
+		direction = Directiondown;
+
 		if(current_animation != &down)
 		{
 			down.Reset();
@@ -151,8 +159,11 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
+		speed = 1;
 		position.y -= speed;
 		collider->SetPos(position.x, position.y + 16);
+		direction = Directionup;
+
 		if(current_animation != &up)
 		{
 			up.Reset();
@@ -166,8 +177,11 @@ update_status ModulePlayer::Update()
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+	{
+		speed = 0;
 		current_animation = &idle;
-
+		
+	}
 	// TODO 3: Actualitzar la posicio del collider del jugador perque el segueixi
 
 	// Draw everything --------------------------------------
@@ -196,9 +210,29 @@ update_status ModulePlayer::Update()
 // TODO 4: Detectar colisio del jugador y retornar a la pantalla de inici
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c2->type == COLLIDER_WALL)
+	
+	if (c2->type == COLLIDER_WALL && direction == Directionright)
 	{
-		speed = 0;
-		LOG("collision!");
+		position.x -= speed;
+		
 	}
+
+	if (c2->type == COLLIDER_WALL && direction == Directionleft )
+	{
+		
+		position.x += speed;
+	}
+
+	if (c2->type == COLLIDER_WALL && direction == Directionup)
+	{
+		
+		position.y += speed;
+	}
+
+	if (c2->type == COLLIDER_WALL && direction == Directiondown)
+	{
+		
+		position.y -= speed;
+	}
+	
 }

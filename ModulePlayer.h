@@ -4,6 +4,16 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "bomb.h"
+
+
+enum Looking {					
+	Directiondown = 0,
+	Directionright = 1,
+	Directionleft = 2,
+	Directionup = 3
+};
+
+
 class ModulePlayer : public Module
 {
 public:
@@ -18,6 +28,7 @@ public:
 
 public:
 
+	Looking direction;
 	SDL_Texture* graphics;
 	SDL_Texture* bombs;
 	p2DynArray<bomb>* bomblist;
