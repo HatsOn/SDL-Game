@@ -21,7 +21,8 @@ bool ModuleParticles::Start()
 	bomb.anim.frames.PushBack({ 526, 185, 16, 16 });
 	bomb.anim.frames.PushBack({ 543, 185, 16, 16 });
 	bomb.life = 3000;
-	bomb.anim.speed = 0.05f;
+	bomb.anim.speed = 10.05f;
+	bomb.anim.loop = true;
 
 	// Explosion particle
 	
@@ -72,18 +73,18 @@ bool ModuleParticles::Start()
 	explosionRight.anim.loop = false;
 	
 
-
+	
 
 
 
 	// Laser particle
-	
+	/*
 	laser.anim.frames.PushBack({200, 120, 32, 12});
 	laser.anim.frames.PushBack({230, 120, 32, 12});
 	laser.speed.x = 7;
 	laser.life = 1000;
 	laser.anim.speed = 0.05f;
-
+	*/
 	return true;
 }
 
@@ -108,10 +109,10 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
-			if (p->collider->type == COLLIDER_PLAYER_SHOT)
+			/*if (p->collider->type == COLLIDER_PLAYER_SHOT)
 			{
 				App->particles->AddParticle(App->particles->explosion, p->position.x - 16, p->position.y - 16, COLLIDER_PLAYER_EXPLOSION);
-			}
+			}*/
 			delete p;
 			active.del(tmp);
 		}		
@@ -200,8 +201,8 @@ bool Particle::Update()
 		if(anim.Finished())
 			ret = false;
 
-	//position.x += speed.x;
-	//position.y += speed.y;
+	position.x += speed.x;
+	position.y += speed.y;
 
 	if(collider != NULL)
 	{

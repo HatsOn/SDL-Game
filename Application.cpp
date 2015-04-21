@@ -96,7 +96,7 @@ update_status Application::Update()
 			ret = item->data->PreUpdate();
 		item = item->next;
 	}
-
+	     
 	item = list_modules.getFirst();
 
 	while(item != NULL && ret == UPDATE_CONTINUE)
