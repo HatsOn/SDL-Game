@@ -108,6 +108,10 @@
     <ClCompile Include="ModuleTileMap.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="DebugLevel.txt" />
+    <Text Include="firstLevel.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

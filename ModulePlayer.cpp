@@ -77,7 +77,9 @@ bool ModulePlayer::Start()
 	bombs = App->tileMap->tilesReference;
 	position.x = 75;
 	position.y = 50;
-	//collider = App->collision->AddCollider({ position.x, position.y+12, 16, 16 }, COLLIDER_PLAYER, this);
+	speed.x = 1;
+	speed.y = 1;
+	collider = App->collision->AddCollider({ position.x, position.y+12, 16, 16 }, COLLIDER_PLAYER, this);
 	// TODO 2: Afegir collider al jugador
 
 	return true;
@@ -108,11 +110,8 @@ update_status ModulePlayer::Update()
 		//speed.x = 1;
 		//speed.y = 1;
 
-		if (!hasCollided)
-		{
 			position.x -= speed.x;
-		}
-		//collider->SetPos(position.x, position.y+12);//Make collider follow player's position
+		collider->SetPos(position.x, position.y+12);//Make collider follow player's position
 		direction = Directionleft;
 
 		if (current_animation != &left)
@@ -129,12 +128,8 @@ update_status ModulePlayer::Update()
 		//speed.x = 1;
 		//speed.y = 1;
 
-		if (!hasCollided)
-		{
-			LOG("COLLISION!");
 			position.x += speed.x;
-		}
-		//collider->SetPos(position.x, position.y + 16);
+		collider->SetPos(position.x, position.y + 16);
 		direction = Directionright;
 		if (current_animation != &right)
 		{
@@ -147,11 +142,8 @@ update_status ModulePlayer::Update()
 	{
 		//speed.x = 1;
 		//speed.y = 1;
-		if (!hasCollided)
-		{
 			position.y += speed.y;
-		}
-		//collider->SetPos(position.x, position.y + 16);
+		collider->SetPos(position.x, position.y + 16);
 		direction = Directiondown;
 
 		if(current_animation != &down)
@@ -163,14 +155,13 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-	//	speed.x = 1;
+		//speed.x = 1;
 		//speed.y = 1;
-		if (!hasCollided)
-		{
-			position.y -= speed.y;
-		}
 		
-		//collider->SetPos(position.x, position.y + 16);
+			position.y -= speed.y;
+		
+		
+		collider->SetPos(position.x, position.y + 16);
 		direction = Directionup;
 
 		if(current_animation != &up)
@@ -186,7 +177,8 @@ update_status ModulePlayer::Update()
 		int delay = 100;
 		bombPosition.x = position.x;
 		bombPosition.y = position.y;
-		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_ENEMY);
+
 		LOG("bomba");
 	}
 	 
@@ -198,8 +190,8 @@ update_status ModulePlayer::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 	{
-		speed.x = 0;
-		speed.y = 0;
+		//speed.x = 0;
+		//speed.y = 0;
 		current_animation = &idle;
 		
 	}
@@ -226,10 +218,10 @@ update_status ModulePlayer::Update()
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
 	
-	speed.x = 1;
-	speed.y = 1;
+	//speed.x = 1;
+	//speed.y = 1;
 	hasCollided = false;
-	isWalkable();
+	//isWalkable();
 	return UPDATE_CONTINUE;
 }
 
@@ -237,11 +229,11 @@ update_status ModulePlayer::Update()
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 
-	if (c2->type == COLLIDER_WALL || c2->type == COLLIDER_PLAYER_SHOT)
+	if (c2->type == COLLIDER_WALL || c2->type == COLLIDER_PLAYER_SHOT || c2->type == COLLIDER_ENEMY)
 	{
 		speed.x = 0;
 		speed.y = 0;
-		a = 0;
+		LOG("hola");
 	}
 
 
@@ -322,7 +314,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			//position.x += speed;
 		}
 
-		else{ position.x -= 0; }
+		else{ position.x -= 0; }dd
 	}
 	*/
 }

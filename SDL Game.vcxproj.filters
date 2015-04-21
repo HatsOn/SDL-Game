@@ -126,4 +126,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="firstLevel.txt" />
+    <Text Include="DebugLevel.txt" />
+  </ItemGroup>
 </Project>
