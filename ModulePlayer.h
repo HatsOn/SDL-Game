@@ -29,6 +29,8 @@ public:
 public:
 
 	bool hasCollided;
+
+
 	Looking direction;
 	SDL_Texture* graphics;
 	SDL_Texture* bombs;
@@ -43,6 +45,8 @@ public:
 	Animation down;
 	Animation bomb;
 	int speed;
+	p2Point<int> lastPosition;
+	p2Point<int> positionTileMap;
 	p2Point<int> position;
 	p2Point<int> bombPosition;
 	bool bombOn;
