@@ -184,12 +184,12 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		int delay = 100;
-		bombPosition.x = 10;
-		bombPosition.y = 10;
+		bombPosition.x = position.x;
+		bombPosition.y = position.y;
 		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
 		LOG("bomba");
 	}
-
+	 
 
 	/*if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{

@@ -21,8 +21,8 @@ bool ModuleParticles::Start()
 	bomb.anim.frames.PushBack({ 526, 185, 16, 16 });
 	bomb.anim.frames.PushBack({ 543, 185, 16, 16 });
 	bomb.life = 3000;
-	bomb.anim.speed = 10.05f;
-	bomb.anim.loop = true;
+	bomb.anim.speed = 0.05f;
+	//bomb.anim.loop = true;
 
 	// Explosion particle
 	
@@ -109,10 +109,10 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
-			/*if (p->collider->type == COLLIDER_PLAYER_SHOT)
+			if (p->collider->type == COLLIDER_PLAYER_SHOT)
 			{
-				App->particles->AddParticle(App->particles->explosion, p->position.x - 16, p->position.y - 16, COLLIDER_PLAYER_EXPLOSION);
-			}*/
+				App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+			}
 			delete p;
 			active.del(tmp);
 		}		
