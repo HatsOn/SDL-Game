@@ -236,6 +236,19 @@ update_status ModulePlayer::Update()
 // TODO 4: Detectar colisio del jugador y retornar a la pantalla de inici
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
+
+	if (c2->type == COLLIDER_WALL || c2->type == COLLIDER_PLAYER_SHOT)
+	{
+		speed.x = 0;
+		speed.y = 0;
+		a = 0;
+	}
+
+
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
+	{
+		//TODO: perdre
+	}
 	/*
 	hasCollided = true;
 	if (c2->type == COLLIDER_WALL && direction == Directionright)

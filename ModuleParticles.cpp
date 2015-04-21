@@ -52,6 +52,7 @@ bool ModuleParticles::Start()
 	explosionDown.anim.frames.PushBack({ 356, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
 	explosionDown.life = 1000;
 	explosionDown.anim.loop = false;
 	
