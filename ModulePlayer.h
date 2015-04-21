@@ -44,7 +44,12 @@ public:
 	Animation right;
 	Animation down;
 	Animation bomb;
-	int speed;
+	p2Point<int> positionTileMapUpperLeftCorner;
+	p2Point<int> positionTileMapUpperRightCorner;
+	p2Point<int> positionTileMapLowerLeftCorner;
+	p2Point<int> positionTileMapLowerRightCorner;
+	p2Point<int> positionTileMapMid;
+	p2Point<int> speed;
 	p2Point<int> lastPosition;
 	p2Point<int> positionTileMap;
 	p2Point<int> position;

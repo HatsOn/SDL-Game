@@ -12,27 +12,28 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	current_animation = NULL;
 	bombAnimation = NULL;
 	bombOn = false;
-	speed = 1;
-	// idle animation (just the ship)
-	idle.frames.PushBack({73, 46, 14, 24});
+	speed.x = 1;
+	speed.y = 1;
+	// idle animation (just the bomberman
+	idle.frames.PushBack({72, 46, 15, 23});
 
 	// move upwards
-	up.frames.PushBack({73, 22, 15, 23});
-	up.frames.PushBack({90, 21, 15, 23});
+	up.frames.PushBack({89, 21, 15, 23});
+	up.frames.PushBack({57, 21, 15, 23});
 	up.loop = true;
 	up.speed = 0.1f;
 	
 	// Move down
-	down.frames.PushBack({56, 48, 14, 24});
-	down.frames.PushBack({88, 48, 14, 24});
+	down.frames.PushBack({56, 46, 15, 24});
+	down.frames.PushBack({88, 46, 15, 24});
 	
 	down.loop = true;
 	down.speed = 0.1f;
 
 
 	// move right
-	right.frames.PushBack({ 106, 47, 14, 24 });
-	right.frames.PushBack({ 123, 48, 14, 23 });
+	right.frames.PushBack({ 106, 47, 16, 24 });
+	right.frames.PushBack({ 122, 48, 16, 23 });
 	right.frames.PushBack({ 139, 49, 16, 22 });
 	right.loop = true;
 	right.speed = 0.1f;
@@ -40,7 +41,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	// Move left
 	left.frames.PushBack({ 36, 47, 16, 22 });
 	left.frames.PushBack({ 19, 45, 15, 23 });
-	left.frames.PushBack({ 4, 44, 16, 24 });
+	left.frames.PushBack({ 3, 44, 16, 24 });
 	left.loop = true;
 	left.speed = 0.1f;
 
@@ -100,13 +101,16 @@ update_status ModulePlayer::Update()
 {
 	lastPosition = position;
 
+
+
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		speed = 1;
+		//speed.x = 1;
+		//speed.y = 1;
 
 		if (!hasCollided)
 		{
-			position.x -= speed;
+			position.x -= speed.x;
 		}
 		//collider->SetPos(position.x, position.y+12);//Make collider follow player's position
 		direction = Directionleft;
@@ -122,12 +126,13 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		speed = 1;
+		//speed.x = 1;
+		//speed.y = 1;
 
 		if (!hasCollided)
 		{
 			LOG("COLLISION!");
-			position.x += speed;
+			position.x += speed.x;
 		}
 		//collider->SetPos(position.x, position.y + 16);
 		direction = Directionright;
@@ -140,10 +145,11 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		speed = 1;
+		//speed.x = 1;
+		//speed.y = 1;
 		if (!hasCollided)
 		{
-			position.y += speed;
+			position.y += speed.y;
 		}
 		//collider->SetPos(position.x, position.y + 16);
 		direction = Directiondown;
@@ -157,10 +163,11 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		speed = 1;
+	//	speed.x = 1;
+		//speed.y = 1;
 		if (!hasCollided)
 		{
-			position.y -= speed;
+			position.y -= speed.y;
 		}
 		
 		//collider->SetPos(position.x, position.y + 16);
@@ -189,7 +196,8 @@ update_status ModulePlayer::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 	{
-		speed = 0;
+		speed.x = 0;
+		speed.y = 0;
 		current_animation = &idle;
 		
 	}
@@ -215,6 +223,9 @@ update_status ModulePlayer::Update()
 
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
+	
+	speed.x = 1;
+	speed.y = 1;
 	hasCollided = false;
 	isWalkable();
 	return UPDATE_CONTINUE;
@@ -304,25 +315,41 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 void ModulePlayer:: isWalkable()
 {
-	positionTileMap.x = position.x / TILE_SIZE;
-	positionTileMap.y = position.y / TILE_SIZE;
+	positionTileMapUpperLeftCorner.x = (position.x) / TILE_SIZE;
+	positionTileMapUpperLeftCorner.y = (position.y) / TILE_SIZE;
 
-	if (App->tileMap->map.tile[positionTileMap.x + 1][positionTileMap.y] == 10)
+	positionTileMapUpperRightCorner.x = (position.x + 15) / TILE_SIZE;
+	positionTileMapUpperRightCorner.y = (position.y) / TILE_SIZE;
+
+	positionTileMapLowerLeftCorner.x = (position.x) / TILE_SIZE;
+	positionTileMapLowerLeftCorner.y = (position.y + 23) / TILE_SIZE;
+
+	positionTileMapLowerRightCorner.x = (position.x + 15) / TILE_SIZE;
+	positionTileMapLowerRightCorner.y = (position.y + 23) / TILE_SIZE;
+
+	positionTileMapMid.x = (position.x + 8) / TILE_SIZE;
+	positionTileMapMid.y = (position.y + 16) / TILE_SIZE;
+
+	if (App->tileMap->map.tile[positionTileMapUpperLeftCorner.x][positionTileMapUpperLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapUpperRightCorner.x][positionTileMapUpperRightCorner.y] == 10)
 	{
-		position = lastPosition;
+		speed.x = 1;
+		speed.y = 0;
 	}
-	if (App->tileMap->map.tile[positionTileMap.x][positionTileMap.y+1] == 10)
+	if (App->tileMap->map.tile[positionTileMapLowerLeftCorner.x][positionTileMapLowerLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapUpperLeftCorner.x][positionTileMapUpperLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapMid.x][positionTileMapMid.y] == 10)
 	{
-		position = lastPosition;
+		speed.x = 0;
+		speed.y = 1;
 	}
-	if (App->tileMap->map.tile[positionTileMap.x - 1][positionTileMap.y] == 10)
+	if (App->tileMap->map.tile[positionTileMapLowerLeftCorner.x][positionTileMapLowerLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapLowerRightCorner.x][positionTileMapLowerRightCorner.y] == 10) // From top to down
 	{
-		position = lastPosition;
+		speed.x = 1;
+		speed.y = 0;
 	}
-	if (App->tileMap->map.tile[positionTileMap.x][positionTileMap.y - 1] == 10)
+	if (App->tileMap->map.tile[positionTileMapUpperRightCorner.x][positionTileMapUpperRightCorner.y] == 10 || App->tileMap->map.tile[positionTileMapLowerLeftCorner.x][positionTileMapLowerLeftCorner.y] == 10) // From down to top
 	{
-		position = lastPosition;
+		speed.x = 1;
+		speed.y = 0;
 	}
 
-
+	
 }
