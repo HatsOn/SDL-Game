@@ -30,6 +30,7 @@ bool ModuleParticles::Start()
 	explosion.anim.frames.PushBack({ 339, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 356, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 373, 100, 16, 16 });
+	explosion.anim.frames.PushBack({ 322, 117, 16, 16 });
 	explosion.life = 1000;
 	explosion.anim.loop = false;
 	
@@ -37,10 +38,11 @@ bool ModuleParticles::Start()
 
 
 
-	explosionUp.anim.frames.PushBack({ 475, 134, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 492, 134, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 509, 134, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 527, 134, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 372, 66, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 492, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 509, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 527, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 527, 82, 16, 16 });
 	explosionUp.life = 1000;
 	explosionUp.anim.loop = false;
 	
@@ -52,24 +54,26 @@ bool ModuleParticles::Start()
 	explosionDown.anim.frames.PushBack({ 356, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
-	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 305, 83, 16, 16 });
 	explosionDown.life = 1000;
 	explosionDown.anim.loop = false;
 	
 
-	explosionLeft.anim.frames.PushBack({ 475, 134, 16, 16 });
-	explosionLeft.anim.frames.PushBack({ 492, 134, 16, 16 });
-	explosionLeft.anim.frames.PushBack({ 509, 134, 16, 16 });
-	explosionLeft.anim.frames.PushBack({ 527, 134, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 322, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 305, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 288, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 271, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 254, 66, 16, 16 });
 	explosionLeft.life = 1000;
 	explosionLeft.anim.loop = false;
 	
 
 
-	explosionRight.anim.frames.PushBack({ 475, 134, 16, 16 });
-	explosionRight.anim.frames.PushBack({ 492, 134, 16, 16 });
-	explosionRight.anim.frames.PushBack({ 509, 134, 16, 16 });
-	explosionRight.anim.frames.PushBack({ 527, 134, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 271, 100, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 271, 117, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 271, 134, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 305, 100, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 305, 117, 16, 16 });
 	explosionRight.life = 1000;
 	explosionRight.anim.loop = false;
 	
