@@ -26,11 +26,11 @@ bool ModuleParticles::Start()
 
 	// Explosion particle
 	
-	explosion.anim.frames.PushBack({475, 134, 16, 16});
-	explosion.anim.frames.PushBack({492, 134, 16, 16});
-	explosion.anim.frames.PushBack({509, 134, 16, 16});
-	explosion.anim.frames.PushBack({527, 134, 16, 16});
-	
+	explosion.anim.frames.PushBack({322, 100, 16, 16});
+	explosion.anim.frames.PushBack({ 339, 100, 16, 16 });
+	explosion.anim.frames.PushBack({ 356, 100, 16, 16 });
+	explosion.anim.frames.PushBack({ 373, 100, 16, 16 });
+	explosion.life = 1000;
 	explosion.anim.loop = false;
 	
 
@@ -41,18 +41,18 @@ bool ModuleParticles::Start()
 	explosionUp.anim.frames.PushBack({ 492, 134, 16, 16 });
 	explosionUp.anim.frames.PushBack({ 509, 134, 16, 16 });
 	explosionUp.anim.frames.PushBack({ 527, 134, 16, 16 });
-
+	explosionUp.life = 1000;
 	explosionUp.anim.loop = false;
 	
 
 
 
 
-	explosionDown.anim.frames.PushBack({ 475, 134, 16, 16 });
-	explosionDown.anim.frames.PushBack({ 492, 134, 16, 16 });
-	explosionDown.anim.frames.PushBack({ 509, 134, 16, 16 });
-	explosionDown.anim.frames.PushBack({ 527, 134, 16, 16 });
-
+	explosionDown.anim.frames.PushBack({ 339, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 356, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
+	explosionDown.life = 1000;
 	explosionDown.anim.loop = false;
 	
 
@@ -60,7 +60,7 @@ bool ModuleParticles::Start()
 	explosionLeft.anim.frames.PushBack({ 492, 134, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 509, 134, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 527, 134, 16, 16 });
-
+	explosionLeft.life = 1000;
 	explosionLeft.anim.loop = false;
 	
 
@@ -69,7 +69,7 @@ bool ModuleParticles::Start()
 	explosionRight.anim.frames.PushBack({ 492, 134, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 509, 134, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 527, 134, 16, 16 });
-
+	explosionRight.life = 1000;
 	explosionRight.anim.loop = false;
 	
 
@@ -112,6 +112,10 @@ update_status ModuleParticles::Update()
 			if (p->collider->type == COLLIDER_PLAYER_SHOT)
 			{
 				App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y-16, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y+16, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionLeft, p->position.x-16, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionRight, p->position.x+16, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 			}
 			delete p;
 			active.del(tmp);
