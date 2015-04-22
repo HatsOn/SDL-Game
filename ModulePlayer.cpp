@@ -299,7 +299,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_FINISH)
 	{
 		LOG("PORTAL ACTIVADO");
-		App->player->Disable();
+		//App->player->Disable();
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro);
 		
 	}
