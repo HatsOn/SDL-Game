@@ -12,6 +12,7 @@ public:
 	Map map;
 	SDL_Texture* tilesReference;
 	SDL_Texture* bomblvl1;
+	SDL_Texture* portalImg;
 
 
 	SDL_Rect tile1;
@@ -37,6 +38,8 @@ public:
 	SDL_Rect tile21;
 	SDL_Rect tile22;
 
+	SDL_Rect portal;
+	
 public:
 
 	ModuleTileMap(Application* app, bool start_enabled);

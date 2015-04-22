@@ -10,7 +10,13 @@ enum Looking {
 	Directiondown = 0,
 	Directionright = 1,
 	Directionleft = 2,
-	Directionup = 3
+	Directionup = 3,
+	DirectionupLeft = 4,
+	DirectionupRight = 5,
+	DirectiondownLeft = 6,
+	DirectiondownRight = 7,
+	NoDirection = 8
+
 };
 
 

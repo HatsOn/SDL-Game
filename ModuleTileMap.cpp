@@ -15,6 +15,15 @@ bool ModuleTileMap::Start()
 {
 
 	tilesReference = App->textures->Load("BombermanTiles.png");
+	portalImg = App->textures->Load("portal.png");
+
+	portal.x = ;
+	portal.y = ;
+	portal.h = ;
+	portal.w = ;
+
+
+
 
 	tile1.x = 255;
 	tile1.y = 15;
@@ -158,7 +167,8 @@ bool ModuleTileMap::Start()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	LoadMap("DebugLevel.txt");
+	//LoadMap("DebugLevel.txt");
+	LoadMap("Firstlevel.txt");
 	PrintMap();
 	CollisionMap();
 	return true;

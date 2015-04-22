@@ -31,7 +31,8 @@ bool ModuleParticles::Start()
 	explosion.anim.frames.PushBack({ 356, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 373, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 322, 117, 16, 16 });
-	explosion.life = 1000;
+	explosion.anim.speed = 0.05f;
+	explosion.life = 3000;
 	explosion.anim.loop = false;
 	
 
@@ -39,11 +40,12 @@ bool ModuleParticles::Start()
 
 
 	explosionUp.anim.frames.PushBack({ 372, 66, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 492, 82, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 509, 82, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 527, 82, 16, 16 });
-	explosionUp.anim.frames.PushBack({ 527, 82, 16, 16 });
-	explosionUp.life = 1000;
+	explosionUp.anim.frames.PushBack({ 372, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 356, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 339, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 322, 82, 16, 16 });
+	explosionUp.life = 3000;
+	explosionUp.anim.speed = 0.05f;
 	explosionUp.anim.loop = false;
 	
 
@@ -55,7 +57,8 @@ bool ModuleParticles::Start()
 	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 305, 83, 16, 16 });
-	explosionDown.life = 1000;
+	explosionDown.life = 3000;
+	explosionDown.anim.speed = 0.05f;
 	explosionDown.anim.loop = false;
 	
 
@@ -64,7 +67,8 @@ bool ModuleParticles::Start()
 	explosionLeft.anim.frames.PushBack({ 288, 66, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 271, 66, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 254, 66, 16, 16 });
-	explosionLeft.life = 1000;
+	explosionLeft.life = 3000;
+	explosionLeft.anim.speed = 0.05f;
 	explosionLeft.anim.loop = false;
 	
 
@@ -74,7 +78,8 @@ bool ModuleParticles::Start()
 	explosionRight.anim.frames.PushBack({ 271, 134, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 305, 100, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 305, 117, 16, 16 });
-	explosionRight.life = 1000;
+	explosionRight.life = 3000;
+	explosionRight.anim.speed = 0.05f;
 	explosionRight.anim.loop = false;
 	
 
