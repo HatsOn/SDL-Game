@@ -17,12 +17,12 @@ bool ModuleTileMap::Start()
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
 
-	portal.x = ;
-	portal.y = ;
-	portal.h = ;
-	portal.w = ;
+	portal.x = 268;
+	portal.y = 64;
+	portal.h = 16;
+	portal.w = 16;
 
-
+	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
 
 
 	tile1.x = 255;
@@ -352,6 +352,8 @@ void ModuleTileMap::BuildMap()
 
 		}
 	}
+
+	App->renderer->Blit(portalImg, 3*TILE_SIZE, 3*TILE_SIZE, &portal, 0.75f);
 	App->player->Enable();
 }
 

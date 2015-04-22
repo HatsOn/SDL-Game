@@ -92,8 +92,8 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 
-	App->textures->Unload(graphics);
-	App->textures->Unload(bombs);
+	/*App->textures->Unload(graphics);
+	App->textures->Unload(bombs);*/
 
 	return true;
 }
@@ -216,33 +216,21 @@ update_status ModulePlayer::Update()
 		current_animation = &idle;
 		
 	}
-	// TODO 3: Actualitzar la posicio del collider del jugador perque el segueixi
 
-	// Draw everything --------------------------------------
 
-	/*if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-	{
-
-		bombPosition.x = position.x;
-		bombPosition.y = position.y+16;
-		bombAnimation = &bomb;
-		//App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
-		bombOn = true;
-	}*/
+	
 
 	if (bombOn)
 	{
 		App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
-		//App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT, 30);
+
 	}
 
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
 	
-	//speed.x = 1;
-	//speed.y = 1;
+
 	hasCollided = false;
-	//isWalkable();
 	return UPDATE_CONTINUE;
 }
 
@@ -300,13 +288,20 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		/*speed.x = 0;
 		speed.y = 0;*/
-		LOG("hola");
+	
 	}
 
 
-	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY || c2->type == COLLIDER_FINISH)
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
-		//TODO: perdre
+		
+	}
+	if (c2->type == COLLIDER_FINISH)
+	{
+		LOG("PORTAL ACTIVADO");
+		App->player->Disable();
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro);
+		
 	}
 
 }
