@@ -82,7 +82,7 @@ bool ModulePlayer::Start()
 	speed.x = 1;
 	speed.y = 1;
 	collider = App->collision->AddCollider({ position.x, position.y+12, 16, 16 }, COLLIDER_PLAYER, this);
-	// TODO 2: Afegir collider al jugador
+	
 
 	return true;
 }
@@ -109,17 +109,17 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		/*speed.x = 1;
-		speed.y = 1;*/
+		if ((position.x+speed.x))
+		{
+		
+		
+		}
+		
+		
+
+
 		position.x -= speed.x;
 		collider->SetPos(position.x, position.y);//Make collider follow player's position
-		if (direction == Directionup)
-			direction = DirectionupLeft;
-		else if (direction == Directiondown)
-			direction = DirectiondownLeft;
-		else			
-			direction = Directionleft;
-		
 
 		if (current_animation != &left)
 		{
@@ -132,67 +132,52 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		//speed.x = 1;
-		//speed.y = 1;
-		position.x += speed.x;
-		collider->SetPos(position.x, position.y);
+		
+		
 
-		if (direction == Directionup)
-			direction = DirectionupRight;
-		else if (direction == Directiondown)
-			direction = DirectiondownRight;
-		else
-			direction = Directionright;
+	
 
 		if (current_animation != &right)
 		{
 			right.Reset();
 			current_animation = &right;
 		}
+		position.x += speed.x;
+		collider->SetPos(position.x, position.y);
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		//speed.x = 1;
-		//speed.y = 1;
-		position.y += speed.y;
-		collider->SetPos(position.x, position.y);
+	
+		
 
-		if (direction == Directionleft)
-			direction = DirectiondownLeft;
-		else if (direction == Directionright)
-			direction = DirectiondownRight;
-		else
-			direction = Directiondown;
+	
 
 		if(current_animation != &down)
 		{
 			down.Reset();
 			current_animation = &down;
 		}
+		position.y += speed.y;
+		collider->SetPos(position.x, position.y);
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		//speed.x = 1;
-		//speed.y = 1;
-		position.y -= speed.y;		
-		collider->SetPos(position.x, position.y);
-		if (direction == Directionleft)
-			direction = DirectionupLeft;
-		else if (direction == Directionright)
-			direction = DirectionupRight;
-		else
-			direction = Directionup;
+	
+
 
 		if(current_animation != &up)
 		{
 			up.Reset();
 			current_animation = &up;
 		}
+
+		position.y -= speed.y;
+		collider->SetPos(position.x, position.y);
 	}
 
-	LOG("%d\n", direction);
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
@@ -203,12 +188,7 @@ update_status ModulePlayer::Update()
 
 		LOG("bomba");
 	}
-	 
-
-	/*if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		App->particles->AddParticle(App->particles->laser, position.x + 28, position.y, COLLIDER_PLAYER_SHOT);
-	}*/
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 	{
@@ -234,7 +214,7 @@ update_status ModulePlayer::Update()
 	return UPDATE_CONTINUE;
 }
 
-// TODO 4: Detectar colisio del jugador y retornar a la pantalla de inici
+
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
@@ -243,41 +223,41 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		switch (direction)
 		{
 			case Directionright:
-				position.x--;
+				position.x -= speed.x;
 				collider->SetPos(position.x, position.y);
 				break;
 			case Directionleft:
-				position.x++;
+				position.x+= speed.x;
 				collider->SetPos(position.x, position.y);
 				break;
 			case Directiondown:
-				position.y--;
+				position.y-= speed.y;
 				collider->SetPos(position.x, position.y);
 				break;
 			case Directionup:
-				position.y++;
+				position.y+= speed.y;
 				collider->SetPos(position.x, position.y);
 
 				break;
 			case DirectiondownLeft:
-				position.x++;
-				position.y--;
+				position.x+=speed.x;
+				position.y-=speed.y;
 				collider->SetPos(position.x, position.y);
 				
 				break;
 			case DirectiondownRight:
-				position.x--;
-				position.y--;
+				position.x-= speed.x;
+				position.y-= speed.y;
 				collider->SetPos(position.x, position.y);
 				break;
 			case DirectionupLeft:
-				position.x++;
-				position.y++;
+				position.x+= speed.x;
+				position.y+= speed.y;
 				collider->SetPos(position.x, position.y);
 				break;
 			case DirectionupRight:
-				position.x--;
-				position.y++;
+				position.x-= speed.x;
+				position.y+= speed.y;
 				collider->SetPos(position.x, position.y);
 				break;
 			case NoDirection:

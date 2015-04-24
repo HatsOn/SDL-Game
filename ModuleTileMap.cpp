@@ -168,7 +168,7 @@ bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
 	//LoadMap("DebugLevel.txt");
-	LoadMap("Firstlevel.txt");
+	LoadMap("DebugLevel.txt");
 	PrintMap();
 	CollisionMap();
 	return true;
