@@ -81,7 +81,7 @@ bool ModulePlayer::Start()
 	position.y = 16;
 	speed.x = 1;
 	speed.y = 1;
-	collider = App->collision->AddCollider({ position.x, position.y+12, 16, 16 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_PLAYER, this);
 	
 
 	return true;
@@ -109,13 +109,20 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if ((position.x+speed.x))
-		{
-		
-		
+		if  (position.x - speed.x/TILE_SIZE != position.x / TILE_SIZE )
+		{	
+			if (App->tileMap->map.tile[(position.x / TILE_SIZE)][position.y / TILE_SIZE] == 10 || App->tileMap->map.tile[position.x / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10)
+			{
+
+				speed.x = 0;
+			}
+			else
+			{
+
+				speed.x = 1;
+			}
+
 		}
-		
-		
 
 
 		position.x -= speed.x;
@@ -133,25 +140,55 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		
-		
+		if (position.x + 16 + speed.x / TILE_SIZE != position.x / TILE_SIZE)
+		{ 
+			if(App->tileMap->map.tile[((position.x+16) / TILE_SIZE)][position.y / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y+16) / TILE_SIZE] == 10)
+			{
 
-	
+				speed.x = 0;
+			
+			}
+			else
+			{
+
+				speed.x = 1;
+			}
+
+
+	}
+		position.x += speed.x;
+		collider->SetPos(position.x, position.y);
 
 		if (current_animation != &right)
 		{
 			right.Reset();
 			current_animation = &right;
 		}
-		position.x += speed.x;
-		collider->SetPos(position.x, position.y);
+	
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 	
-		
+		if (position.y + 16 + speed.y / TILE_SIZE != position.y / TILE_SIZE && App->tileMap->map.tile[(position.x + 8) / TILE_SIZE][(position.y + 16) == 10])
+		{
+			if (App->tileMap->map.tile[position.x / TILE_SIZE][(position.y+16) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10 )
+			{
 
-	
+				speed.y = 0;
+
+			}
+			else
+			{
+
+				speed.y = 1;
+			}
+
+		}
+		else
+		{
+			speed.y = 1;
+		}
 
 		if(current_animation != &down)
 		{
@@ -165,7 +202,17 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 	
+		if (position.y - speed.y / TILE_SIZE != position.y / TILE_SIZE && App->tileMap->map.tile[position.x / TILE_SIZE][(position.y / TILE_SIZE)-1] == 10)
+		{
 
+			speed.y = 0;
+
+		}
+		else
+		{
+
+			speed.y = 1;
+		}
 
 		if(current_animation != &up)
 		{
@@ -218,59 +265,7 @@ update_status ModulePlayer::Update()
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
-	if (c2->type == COLLIDER_WALL || c2->type == COLLIDER_PLAYER_SHOT || c2->type == COLLIDER_ENEMY)
-	{
-		switch (direction)
-		{
-			case Directionright:
-				position.x -= speed.x;
-				collider->SetPos(position.x, position.y);
-				break;
-			case Directionleft:
-				position.x+= speed.x;
-				collider->SetPos(position.x, position.y);
-				break;
-			case Directiondown:
-				position.y-= speed.y;
-				collider->SetPos(position.x, position.y);
-				break;
-			case Directionup:
-				position.y+= speed.y;
-				collider->SetPos(position.x, position.y);
-
-				break;
-			case DirectiondownLeft:
-				position.x+=speed.x;
-				position.y-=speed.y;
-				collider->SetPos(position.x, position.y);
-				
-				break;
-			case DirectiondownRight:
-				position.x-= speed.x;
-				position.y-= speed.y;
-				collider->SetPos(position.x, position.y);
-				break;
-			case DirectionupLeft:
-				position.x+= speed.x;
-				position.y+= speed.y;
-				collider->SetPos(position.x, position.y);
-				break;
-			case DirectionupRight:
-				position.x-= speed.x;
-				position.y+= speed.y;
-				collider->SetPos(position.x, position.y);
-				break;
-			case NoDirection:
-				
-				break;
-		}
-
-
-		/*speed.x = 0;
-		speed.y = 0;*/
 	
-	}
-
 
 	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
