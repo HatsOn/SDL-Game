@@ -91,9 +91,8 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
-	/*App->textures->Unload(graphics);
-	App->textures->Unload(bombs);*/
+	App->textures->Unload(graphics);
+	App->textures->Unload(bombs);
 
 	return true;
 }
