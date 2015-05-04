@@ -6,16 +6,17 @@
 #include "bomb.h"
 
 
-enum Looking {					
-	Directiondown = 0,
-	Directionright = 1,
-	Directionleft = 2,
-	Directionup = 3,
-	DirectionupLeft = 4,
-	DirectionupRight = 5,
-	DirectiondownLeft = 6,
-	DirectiondownRight = 7,
-	NoDirection = 8
+enum LookingLeftRight {					
+	DIRECTIONLEFT = 0,
+	DIRECTIONRIGHT = 1,
+	NODIRECTIONSIDE = 2
+
+};
+
+enum LookingUpDown {
+	DIRECTIONUP = 0,
+	DIRECTIONDOWN= 1,
+	NODIRECTIONVERTICAL = 2
 
 };
 
@@ -31,13 +32,17 @@ public:
 	bool CleanUp();
 	void isWalkable();
 	void OnCollision(Collider*, Collider*);
+	void leftRightCollision(LookingLeftRight direction);
+	void upDownCollision(LookingUpDown direction);
+	void UpdatePosition();
 
 public:
 
 	bool hasCollided;
 
 
-	Looking direction;
+	LookingLeftRight directionSide;
+	LookingUpDown directionVertical;
 	SDL_Texture* graphics;
 	SDL_Texture* bombs;
 	p2DynArray<bomb>* bomblist;
