@@ -168,9 +168,9 @@ bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
 	//LoadMap("DebugLevel.txt");
-	LoadMap("DebugLevel.txt");
+	LoadMap("FirstLevel.txt");
 	PrintMap();
-	CollisionMap();
+	//CollisionMap();
 	return true;
 	
 }
@@ -361,9 +361,7 @@ void ModuleTileMap::CollisionMap()
 {
 	int x, y;
 
-	/* Draw the background */
 
-	/* Draw the map */
 
 	for (y = 0; y<MAX_MAP_Y; y++)
 	{
@@ -371,7 +369,7 @@ void ModuleTileMap::CollisionMap()
 		{
 			if (map.tile[x][y] == 0)
 			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
+				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 14, 14 }, COLLIDER_WALL, this);
 			}
 
 			if (map.tile[x][y] == 1)

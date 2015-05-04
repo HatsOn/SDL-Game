@@ -79,9 +79,9 @@ bool ModulePlayer::Start()
 	bombs = App->tileMap->tilesReference;
 	position.x = 48;
 	position.y = 16;
-	speed.x = 1;
-	speed.y = 1;
-	collider = App->collision->AddCollider({ position.x, position.y, 16, 16 }, COLLIDER_PLAYER, this);
+	speed.x = 0;
+	speed.y = 0;
+	collider = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
 	
 
 	return true;
@@ -262,7 +262,8 @@ update_status ModulePlayer::Update()
 	
 	UpdatePosition();
 
-	hasCollided = false;
+	directionSide = NODIRECTIONSIDE;
+	directionVertical = NODIRECTIONVERTICAL;
 	return UPDATE_CONTINUE;
 }
 void ModulePlayer::UpdatePosition()
@@ -279,11 +280,16 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 { 
 	
 	
-	if (directionSide == 0)
+	if (directionSide == 0)//Left
 	{
-		if (App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10)
 		{
-			speed.x = 0;
+			
+			if (App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y+8) / TILE_SIZE] != 10)
+			{
+				speed.x = -1;
+			}
+			else{ speed.x = 0; }
 		}
 		else
 		{
@@ -291,26 +297,43 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 		}
 	}
 
-	if (directionSide == 1)
+	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10)
 		{
-			speed.x = 0;
+			
+			if (App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y + 8) / TILE_SIZE] != 10)
+			{
+				speed.x = 1;
+			}
+			else{ speed.x = 0; }
+
 		}
 		else
 		{
 			speed.x = 1;
 		}
 	}
+
+	if (directionSide == 2)//Idle
+	{
+	
+		speed.x = 0;
+	}
+
 }
 
 void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 { 
-	if (directionVertical == 0)
+	if (directionVertical == 0)//Up
 	{
-		if (App->tileMap->map.tile[(position.x) / TILE_SIZE][(position.y - 1) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y - 1) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(position.x) / TILE_SIZE][(position.y - 1) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y - 1) / TILE_SIZE] == 10)
 		{
-			speed.y = 0;
+			if (App->tileMap->map.tile[(position.x + 8) / TILE_SIZE][(position.y -1) / TILE_SIZE] != 10)
+			{
+				speed.y = -1;
+			}
+			else{ speed.y = 0; }
 		}
 		else
 		{
@@ -318,17 +341,27 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 		}
 	}
 
-	if (directionVertical == 1)
+	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->map.tile[(position.x) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(position.x) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10)
 		{
-			speed.y = 0;
+			if (App->tileMap->map.tile[(position.x + 8) / TILE_SIZE][(position.y + 17) / TILE_SIZE] != 10)
+			{
+				speed.y = 1;
+			}
+			else{ speed.y = 0; }	
 		}
 		else
 		{
 			speed.y = 1;
 		}
 	}
+
+	if (directionVertical == 2)//Idle
+	{
+		speed.y = 0;
+	}
+
 }
 
 
