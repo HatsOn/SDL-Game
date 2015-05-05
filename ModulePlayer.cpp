@@ -79,9 +79,11 @@ bool ModulePlayer::Start()
 	bombs = App->tileMap->tilesReference;
 	position.x = 48;
 	position.y = 16;
+	playerCollider.x = 48;
+	playerCollider.y = 32;
 	speed.x = 0;
 	speed.y = 0;
-	collider = App->collision->AddCollider({ position.x, position.y, 15, 15 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ (playerCollider.x+1), (playerCollider.y+1), 14, 14 }, COLLIDER_PLAYER, this);
 	
 
 	return true;
@@ -109,22 +111,7 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		directionSide = DIRECTIONLEFT;
-		/*if  (position.x - speed.x/TILE_SIZE != position.x / TILE_SIZE )
-		{	
-			if (App->tileMap->map.tile[(position.x / TILE_SIZE)][position.y / TILE_SIZE] == 10 || App->tileMap->map.tile[position.x / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10)
-			{
 
-				speed.x = 0;
-			}
-			else
-			{
-
-				speed.x = 1;
-			}
-			
-		}
-
-		*/
 	//Make collider follow player's position
 
 		if (current_animation != &left)
@@ -140,24 +127,7 @@ update_status ModulePlayer::Update()
 	{
 
 		directionSide = DIRECTIONRIGHT;
-		/*
-		if (position.x + 16 + speed.x / TILE_SIZE != position.x / TILE_SIZE)
-		{ 
-			if(App->tileMap->map.tile[((position.x+16) / TILE_SIZE)][position.y / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y+16) / TILE_SIZE] == 10)
-			{
-
-				speed.x = 0;
-			
-			}
-			else
-			{
-
-				speed.x = 1;
-			}
-			
-
-		}
-		*/
+	
 	
 
 		if (current_animation != &right)
@@ -172,23 +142,7 @@ update_status ModulePlayer::Update()
 	{
 
 		directionVertical = DIRECTIONDOWN;
-		/*
-		if (position.y + 16 + speed.y / TILE_SIZE != position.y / TILE_SIZE && App->tileMap->map.tile[(position.x + 8) / TILE_SIZE][(position.y + 16) == 10])
-		{
-			if (App->tileMap->map.tile[position.x / TILE_SIZE][(position.y+16) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10 )
-			{
-
-				speed.y = 0;
-
-			}
-			else
-			{
-
-				speed.y = 1;
-			}
-
-		}
-		*/
+		
 		
 
 		if(current_animation != &down)
@@ -270,10 +224,12 @@ void ModulePlayer::UpdatePosition()
 {
 	position.y += speed.y;
 	position.x += speed.x;
-	collider->SetPos(position.x, position.y);
+	playerCollider.x += speed.x;
+	playerCollider.y += speed.y;
+
+	collider->SetPos(playerCollider.x, playerCollider.y);
 
 }
-
 
 
 void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
@@ -282,14 +238,11 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 	
 	if (directionSide == 0)//Left
 	{
-		if (App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][(playerCollider.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][(playerCollider.y + 14) / TILE_SIZE] == 10)
 		{
-			
-			if (App->tileMap->map.tile[(position.x - 1) / TILE_SIZE][(position.y+8) / TILE_SIZE] != 10)
-			{
-				speed.x = -1;
-			}
-			else{ speed.x = 0; }
+
+			speed.x = 0;
+
 		}
 		else
 		{
@@ -299,15 +252,11 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y + 16) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][(playerCollider.y) / TILE_SIZE] == 10 || App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][(playerCollider.y + 14) / TILE_SIZE] == 10)
 		{
-			
-			if (App->tileMap->map.tile[(position.x + 17) / TILE_SIZE][(position.y + 8) / TILE_SIZE] != 10)
-			{
-				speed.x = 1;
-			}
-			else{ speed.x = 0; }
 
+			speed.x = 0;
+		
 		}
 		else
 		{
@@ -327,13 +276,10 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 { 
 	if (directionVertical == 0)//Up
 	{
-		if (App->tileMap->map.tile[(position.x) / TILE_SIZE][(position.y - 1) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y - 1) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][(playerCollider.y - 1) / TILE_SIZE] == 10 || App->tileMap->map.tile[(playerCollider.x + 14) / TILE_SIZE][(playerCollider.y - 1) / TILE_SIZE] == 10)
 		{
-			if (App->tileMap->map.tile[(position.x + 8) / TILE_SIZE][(position.y -1) / TILE_SIZE] != 10)
-			{
-				speed.y = -1;
-			}
-			else{ speed.y = 0; }
+			speed.y = 0;
+			
 		}
 		else
 		{
@@ -343,13 +289,10 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 
 	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->map.tile[(position.x) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10 || App->tileMap->map.tile[(position.x + 16) / TILE_SIZE][(position.y + 17) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][(playerCollider.y + 15) / TILE_SIZE] == 10 || App->tileMap->map.tile[(playerCollider.x + 14) / TILE_SIZE][(playerCollider.y + 15) / TILE_SIZE] == 10)
 		{
-			if (App->tileMap->map.tile[(position.x + 8) / TILE_SIZE][(position.y + 17) / TILE_SIZE] != 10)
-			{
-				speed.y = 1;
-			}
-			else{ speed.y = 0; }	
+			speed.y = 0;
+			
 		}
 		else
 		{

@@ -36,11 +36,12 @@ public:
 	void upDownCollision(LookingUpDown direction);
 	void UpdatePosition();
 
+
 public:
 
 	bool hasCollided;
 
-
+	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;
 	LookingUpDown directionVertical;
 	SDL_Texture* graphics;
