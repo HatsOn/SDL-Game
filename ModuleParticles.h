@@ -42,8 +42,12 @@ private:
 	p2List<Particle*> active;
 
 public:
-
+	Particle bomb;
 	Particle explosion;
+	Particle explosionUp;
+	Particle explosionDown;
+	Particle explosionLeft;
+	Particle explosionRight;
 	Particle laser;
 
 };

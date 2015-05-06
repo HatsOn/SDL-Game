@@ -16,7 +16,7 @@ enum update_status
 };
 
 // Configuration -----------
-#define SCREEN_WIDTH 384
+#define SCREEN_WIDTH 272
 #define SCREEN_HEIGHT 256
 #define SCREEN_SIZE 3
 #define WIN_FULLSCREEN false
@@ -25,3 +25,17 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "Super Awesome Game"
+
+#define MAX_MAP_X 17
+#define MAX_MAP_Y 17
+#define TILE_SIZE 16
+
+
+
+
+
+
+typedef struct Map
+{
+	int tile[MAX_MAP_Y][MAX_MAP_X];
+} Map;

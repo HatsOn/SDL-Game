@@ -13,27 +13,88 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("rtype/particles.png");
+	graphics = App->textures->Load("BombermanTiles.png");
+
+	// Bomb particle
+
+	bomb.anim.frames.PushBack({ 509, 185, 16, 16});
+	bomb.anim.frames.PushBack({ 526, 185, 16, 16 });
+	bomb.anim.frames.PushBack({ 543, 185, 16, 16 });
+	bomb.life = 3000;
+	bomb.anim.speed = 0.05f;
+	//bomb.anim.loop = true;
 
 	// Explosion particle
-	explosion.fx = App->audio->LoadFx("rtype/explosion.wav");
-	explosion.anim.frames.PushBack({274, 296, 33, 30});
-	explosion.anim.frames.PushBack({313, 296, 33, 30});
-	explosion.anim.frames.PushBack({346, 296, 33, 30});
-	explosion.anim.frames.PushBack({382, 296, 33, 30});
-	explosion.anim.frames.PushBack({419, 296, 33, 30});
-	explosion.anim.frames.PushBack({457, 296, 33, 30});
+	
+	explosion.anim.frames.PushBack({322, 100, 16, 16});
+	explosion.anim.frames.PushBack({ 339, 100, 16, 16 });
+	explosion.anim.frames.PushBack({ 356, 100, 16, 16 });
+	explosion.anim.frames.PushBack({ 373, 100, 16, 16 });
+	explosion.anim.frames.PushBack({ 322, 117, 16, 16 });
+	explosion.anim.speed = 0.05f;
+	explosion.life = 3000;
 	explosion.anim.loop = false;
-	explosion.anim.speed = 0.3f;
+	
+
+
+
+
+	explosionUp.anim.frames.PushBack({ 372, 66, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 372, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 356, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 339, 82, 16, 16 });
+	explosionUp.anim.frames.PushBack({ 322, 82, 16, 16 });
+	explosionUp.life = 3000;
+	explosionUp.anim.speed = 0.05f;
+	explosionUp.anim.loop = false;
+	
+
+
+
+
+	explosionDown.anim.frames.PushBack({ 339, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 356, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
+	explosionDown.anim.frames.PushBack({ 305, 83, 16, 16 });
+	explosionDown.life = 3000;
+	explosionDown.anim.speed = 0.05f;
+	explosionDown.anim.loop = false;
+	
+
+	explosionLeft.anim.frames.PushBack({ 322, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 305, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 288, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 271, 66, 16, 16 });
+	explosionLeft.anim.frames.PushBack({ 254, 66, 16, 16 });
+	explosionLeft.life = 3000;
+	explosionLeft.anim.speed = 0.05f;
+	explosionLeft.anim.loop = false;
+	
+
+
+	explosionRight.anim.frames.PushBack({ 271, 100, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 271, 117, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 271, 134, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 305, 100, 16, 16 });
+	explosionRight.anim.frames.PushBack({ 305, 117, 16, 16 });
+	explosionRight.life = 3000;
+	explosionRight.anim.speed = 0.05f;
+	explosionRight.anim.loop = false;
+	
+
+	
+
+
 
 	// Laser particle
-	laser.fx = App->audio->LoadFx("rtype/slimeball.wav");
+	/*
 	laser.anim.frames.PushBack({200, 120, 32, 12});
 	laser.anim.frames.PushBack({230, 120, 32, 12});
 	laser.speed.x = 7;
 	laser.life = 1000;
 	laser.anim.speed = 0.05f;
-
+	*/
 	return true;
 }
 
@@ -58,9 +119,17 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
+			if (p->collider->type == COLLIDER_PLAYER_SHOT)
+			{
+				App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y-16, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y+16, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionLeft, p->position.x-16, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+				App->particles->AddParticle(App->particles->explosionRight, p->position.x+16, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+			}
 			delete p;
 			active.del(tmp);
-		}
+		}		
 		else if(SDL_GetTicks() >= p->born)
 		{
 			App->renderer->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
@@ -80,6 +149,7 @@ update_status ModuleParticles::Update()
 // Always destroy particles that collide
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 {
+	// TODO 5: Fer que cada vegada que un laser collisini sorti una explosio
   	p2List_item<Particle*>* tmp = active.getFirst();
 
 	while(tmp != NULL)

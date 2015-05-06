@@ -19,8 +19,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	graphics = App->textures->Load("rtype/intro.png");
-	App->audio->PlayMusic("rtype/intro.ogg", 0.0f);
+	graphics = App->textures->Load("BombermanIntro.png");
+	App->audio->PlayMusic("SBTitleScreen.midi", 0.0f);
 	fx = App->audio->LoadFx("rtype/starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -46,7 +46,7 @@ update_status ModuleSceneIntro::Update()
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		App->audio->PlayFx(fx);
-		App->fade->FadeToBlack(this, App->scene_space, 3.0f);
+		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
 	}
 
 	return UPDATE_CONTINUE;

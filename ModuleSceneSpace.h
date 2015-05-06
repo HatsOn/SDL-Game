@@ -15,8 +15,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
-	
 	SDL_Texture* background;
 	SDL_Texture* stars;
 };

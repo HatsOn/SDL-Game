@@ -15,6 +15,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
+#include "ModuleTileMap.h"
 
 class Application
 {
@@ -30,6 +31,7 @@ public:
 	ModuleSceneIntro* scene_intro;
 	ModuleParticles* particles;
 	ModuleCollision* collision;
+	ModuleTileMap* tileMap;
 
 private:
 
