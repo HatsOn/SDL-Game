@@ -20,8 +20,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	graphics = App->textures->Load("BombermanIntro.png");
-	App->audio->PlayMusic("SBTitleScreen.midi", 0.0f);
-	fx = App->audio->LoadFx("rtype/starting.wav");
+	App->audio->PlayMusic("bombermanIntro.wav", 1.0f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	return ret;
@@ -45,7 +44,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		App->audio->PlayFx(fx);
+		
 		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
 	}
 

@@ -7,7 +7,7 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, false);
+	audio = new ModuleAudio(this, true);
 	scene_space = new ModuleSceneSpace(this, false);
 	tileMap = new ModuleTileMap(this, false);
 	player = new ModulePlayer(this, false);

@@ -286,7 +286,7 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 
 	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][(playerCollider.y + 15) / TILE_SIZE] == 10 || App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][(playerCollider.y + 15) / TILE_SIZE] == 10)
+		if (App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][(playerCollider.y + 16) / TILE_SIZE] == 10 || App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][(playerCollider.y + 16) / TILE_SIZE] == 10)
 		{
 			speed.y = 0;
 			
