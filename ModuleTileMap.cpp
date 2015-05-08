@@ -159,8 +159,9 @@ bool ModuleTileMap::Start()
 
 	return 1;
 
-	App->player->Enable();
 
+	App->bombs->Enable();
+	App->player->Enable();
 
 }
 
@@ -224,7 +225,8 @@ void ModuleTileMap::PrintMap()const
 
 bool ModuleTileMap::CleanUp()
 {
-
+	App->bombs->Disable();
+	App->player->Disable();
 	return 0;
 }
 

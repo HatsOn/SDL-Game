@@ -14,6 +14,11 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	bombOn = false;
 	speed.x = 1;
 	speed.y = 1;
+
+	// 
+	bombPower = 1;
+
+
 	// idle animation (just the bomberman
 	idle.frames.PushBack({72, 46, 15, 23});
 

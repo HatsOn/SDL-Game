@@ -67,4 +67,5 @@ public:
 	p2Point<int> position;
 	p2Point<int> bombPosition;
 	bool bombOn;
+	int bombPower;
 };
