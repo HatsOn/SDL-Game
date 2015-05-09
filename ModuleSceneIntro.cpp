@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	graphics = App->textures->Load("BombermanIntro.png");
-	App->audio->PlayMusic("bombermanIntro.wav", 1.0f);
+	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	return ret;

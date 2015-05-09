@@ -13,7 +13,7 @@ ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app,
 
 bool ModuleTileMap::Start()
 {
-
+	App->audio->PlayMusic();
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
 
