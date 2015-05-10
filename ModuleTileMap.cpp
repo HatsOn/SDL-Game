@@ -13,7 +13,7 @@ ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app,
 
 bool ModuleTileMap::Start()
 {
-	App->audio->PlayMusic();
+	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
 
@@ -24,6 +24,25 @@ bool ModuleTileMap::Start()
 
 	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
 
+
+	prepareTiles();
+
+
+
+	return 1;
+
+
+
+	
+
+	App->bombs->Enable();
+	App->player->Enable();
+
+}
+
+
+void ModuleTileMap::prepareTiles()
+{
 
 	tile1.x = 255;
 	tile1.y = 15;
@@ -157,13 +176,36 @@ bool ModuleTileMap::Start()
 	tile22.h = 16;
 	tile22.w = 16;
 
-	return 1;
-
-
-	App->bombs->Enable();
-	App->player->Enable();
+	nonWalkableTiles.PushBack(0);
+	nonWalkableTiles.PushBack(1);
+	nonWalkableTiles.PushBack(2);
+	nonWalkableTiles.PushBack(3);
+	nonWalkableTiles.PushBack(4);
+	nonWalkableTiles.PushBack(5);
+	nonWalkableTiles.PushBack(6);
+	nonWalkableTiles.PushBack(7);
+	nonWalkableTiles.PushBack(8);
+	nonWalkableTiles.PushBack(9);
+	nonWalkableTiles.PushBack(10);
+	
+	nonWalkableTiles.PushBack(12);
+	nonWalkableTiles.PushBack(13);
+	nonWalkableTiles.PushBack(14);
+	nonWalkableTiles.PushBack(15);
+	nonWalkableTiles.PushBack(16);
+	nonWalkableTiles.PushBack(17);
+	nonWalkableTiles.PushBack(18);
+	
+	nonWalkableTiles.PushBack(21);
 
 }
+
+
+
+
+
+
+
 
 bool ModuleTileMap::Init()
 {

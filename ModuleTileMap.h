@@ -14,6 +14,7 @@ public:
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;
 
+	p2DynArray<int> nonWalkableTiles;
 
 	SDL_Rect tile1;
 	SDL_Rect tile2;
@@ -54,7 +55,7 @@ public:
 
 	update_status Update();
 
-
+	void prepareTiles();
 
 
 	void BuildMap();
