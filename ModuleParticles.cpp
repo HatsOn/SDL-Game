@@ -121,11 +121,8 @@ update_status ModuleParticles::Update()
 		{
 			if (p->collider->type == COLLIDER_PLAYER_SHOT)
 			{
-				App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-				App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y-16, COLLIDER_PLAYER_EXPLOSION);
-				App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y+16, COLLIDER_PLAYER_EXPLOSION);
-				App->particles->AddParticle(App->particles->explosionLeft, p->position.x-16, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-				App->particles->AddParticle(App->particles->explosionRight, p->position.x+16, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+				///////////////
+				generateBomb(App->player->bombPower, p);
 			}
 			delete p;
 			active.del(tmp);
@@ -225,4 +222,28 @@ bool Particle::Update()
 	}
 
 	return ret;
+}
+
+
+void ModuleParticles::generateBomb(int power, Particle* p)
+{
+	int size = 16;
+	int i = 0;
+	//Center
+	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+
+	//Arms
+	for (i = 1; i < power; i++)
+	{
+		App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
+		App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
+		App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+		App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	}
+	
+	//Hands
+	App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
+	App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
+	App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 }
