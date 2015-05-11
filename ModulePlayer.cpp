@@ -83,9 +83,9 @@ bool ModulePlayer::Start()
 	
 	bombs = App->tileMap->tilesReference;
 	position.x = 48;
-	position.y = 16;
+	position.y = GUIOffset + 16;
 	playerCollider.x = 48;
-	playerCollider.y = 26;
+	playerCollider.y = GUIOffset + 26;
 	speed.x = 0;
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);

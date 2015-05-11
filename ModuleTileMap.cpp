@@ -22,9 +22,9 @@ bool ModuleTileMap::Start()
 	portal.h = 16;
 	portal.w = 16;
 
-	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
+	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
 
-
+	
 	prepareTiles();
 
 
@@ -287,117 +287,117 @@ void ModuleTileMap::BuildMap()
 		{
 			if (map.tile[x][y] == 0)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile1, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile1, 0.75f);
 			}
 
 			if (map.tile[x][y] == 1)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile2, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile2, 0.75f);
 			}
 
 			if (map.tile[x][y] == 2)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile3, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile3, 0.75f);
 			}
 
 			if (map.tile[x][y] == 3)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile4, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile4, 0.75f);
 			}
 
 			if (map.tile[x][y] == 4)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile5, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile5, 0.75f);
 			}
 
 			if (map.tile[x][y] == 5)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile6, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile6, 0.75f);
 			}
 
 			if (map.tile[x][y] == 6)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile7, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile7, 0.75f);
 			}
 
 			if (map.tile[x][y] == 7)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile8, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile8, 0.75f);
 			}
 
 			if (map.tile[x][y] == 8)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile9, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile9, 0.75f);
 			}
 
 			if (map.tile[x][y] == 9)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile10, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile10, 0.75f);
 			}
 			if (map.tile[x][y] == 10)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile11, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile11, 0.75f);
 			}
 
 			if (map.tile[x][y] == 11)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile12, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile12, 0.75f);
 			}
 
 			if (map.tile[x][y] == 12)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile13, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile13, 0.75f);
 			}
 
 			if (map.tile[x][y] == 13)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile14, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile14, 0.75f);
 			}
 
 			if (map.tile[x][y] == 14)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile15, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile15, 0.75f);
 			}
 
 			if (map.tile[x][y] == 15)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile16, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile16, 0.75f);
 			}
 
 			if (map.tile[x][y] == 16)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile17, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile17, 0.75f);
 			}
 
 			if (map.tile[x][y] == 17)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile18, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile18, 0.75f);
 			}
 
 			if (map.tile[x][y] == 18)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile19, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile19, 0.75f);
 			}
 
 			if (map.tile[x][y] == 19)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile20, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile20, 0.75f);
 			}
 
 			if (map.tile[x][y] == 20)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile21, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile21, 0.75f);
 			}
 
 			if (map.tile[x][y] == 21)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, y*TILE_SIZE, &tile22, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile22, 0.75f);
 			}
 
 		}
 	}
 
-	App->renderer->Blit(portalImg, 3*TILE_SIZE, 3*TILE_SIZE, &portal, 0.75f);
+	App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
 	App->player->Enable();
 }
 
@@ -528,3 +528,4 @@ update_status ModuleTileMap::Update()
 	LOG("TileMap being drawn");
 	return UPDATE_CONTINUE;
 }
+
