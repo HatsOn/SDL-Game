@@ -249,7 +249,7 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16) / TILE_SIZE][(playerCollider.y) / TILE_SIZE]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16) / TILE_SIZE][(playerCollider.y + 15) / TILE_SIZE]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][(playerCollider.y) / TILE_SIZE]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][(playerCollider.y + 15) / TILE_SIZE]))
 		{
 
 			speed.x = 0;

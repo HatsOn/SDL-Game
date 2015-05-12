@@ -92,10 +92,12 @@ public:
 		{
 			if (n == data[i])
 			{
+				
 				return true;
 			}
 		
 		}
+		LOG("%d", n);
 		return false;
 	
 	

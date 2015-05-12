@@ -525,7 +525,7 @@ update_status ModuleTileMap::Update()
 {
 
 	BuildMap();
-	LOG("TileMap being drawn");
+	
 	return UPDATE_CONTINUE;
 }
 
