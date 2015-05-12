@@ -26,6 +26,7 @@ enum update_status
 #define VSYNC true
 #define TITLE "Super Awesome Game"
 #define GUIOffset 64
+#define SCOREOFFSET 4
 #define MAX_MAP_X 17
 #define MAX_MAP_Y 17
 #define TILE_SIZE 16

@@ -187,7 +187,7 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(8);
 	nonWalkableTiles.PushBack(9);
 	nonWalkableTiles.PushBack(10);
-	
+	nonWalkableTiles.PushBack(33);
 	nonWalkableTiles.PushBack(12);
 	nonWalkableTiles.PushBack(13);
 	nonWalkableTiles.PushBack(14);
@@ -195,7 +195,8 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(16);
 	nonWalkableTiles.PushBack(17);
 	nonWalkableTiles.PushBack(18);
-	
+	nonWalkableTiles.PushBack(44);
+	nonWalkableTiles.PushBack(55);
 	nonWalkableTiles.PushBack(21);
 
 }
