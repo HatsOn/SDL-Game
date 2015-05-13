@@ -231,11 +231,12 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	int i = 0;
 	//Center
 	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	power = 2;
+	power = 4;
 	//Arms
 	for (i = 1; i < power; i++)
 	{
-		App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
+		if (canExplode(p->position, 'n'))
+			App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
 		App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
 		App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 		App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
@@ -246,4 +247,27 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
 	App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 	App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+}
+
+bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
+{
+	switch (orientation)
+	{
+	case 'n':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y - 1) / TILE_SIZE) - SCOREOFFSET])
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 15) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		{
+			return false;
+		}
+		break;
+	case 's':
+		break;
+	case 'e':
+		break;
+	case 'o':
+		break;
+	default:
+		break;
+	}
+	return true;
 }

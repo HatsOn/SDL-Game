@@ -178,10 +178,11 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		int delay = 100;
-		bombPosition.x = position.x;
-		bombPosition.y = position.y;
-		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+		bombPosition = bombPos(position);
+		 
 
+		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+		//TODO: bomba centrada en una posició
 		LOG("bomba");
 	}
 	
@@ -362,7 +363,19 @@ void ModulePlayer:: isWalkable()
 	{
 		speed.x = 1;
 		speed.y = 0;
-	}
+	}	
+}
 
-	
+p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
+{
+	int tileX = p.x / TILE_SIZE;
+	int tileY = p.y / TILE_SIZE - SCOREOFFSET;
+
+	p2Point<int> res;
+
+	res.x = tileX * 16;
+	res.y = (tileY + SCOREOFFSET + 1) * 16;
+
+
+	return res;
 }
