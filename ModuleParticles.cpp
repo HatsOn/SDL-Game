@@ -231,7 +231,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	int i = 0;
 	//Center
 	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-
+	power = 2;
 	//Arms
 	for (i = 1; i < power; i++)
 	{
