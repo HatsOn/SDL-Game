@@ -86,16 +86,19 @@ public:
 
 	bool isThere(const int n)
 	{
+		int i = 0;
 		bool isFound = false;
 
-		for (int i = 0; i < num_elements; i++)
+		for (; i < num_elements; i++)
 		{
 			if (n == data[i])
 			{
+				LOG("%d", n);
 				return true;
 			}
 		
 		}
+		
 		return false;
 	
 	
