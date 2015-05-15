@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "p2List.h"
+#include "SDL\include\SDL.h"
 
 enum COLLIDER_TYPE
 {

@@ -84,6 +84,31 @@ public:
 		num_elements = 0;
 	}
 
+	bool isThere(const int n)
+	{
+		int i = 0;
+		bool isFound = false;
+
+		for (; i < num_elements; i++)
+		{
+			if (n == data[i])
+			{
+				LOG("%d", n);
+				return true;
+			}
+		
+		}
+		
+		return false;
+	
+	
+	}
+
+
+
+
+
+
 	bool Insert(const VALUE& element, unsigned int position)
 	{
 		if(position > num_elements)

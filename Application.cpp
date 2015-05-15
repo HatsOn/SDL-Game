@@ -7,7 +7,7 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, false);
+	audio = new ModuleAudio(this, true);
 	scene_space = new ModuleSceneSpace(this, false);
 	tileMap = new ModuleTileMap(this, false);
 	player = new ModulePlayer(this, false);
@@ -15,6 +15,7 @@ Application::Application()
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
 	collision = new ModuleCollision(this, true);
+	bombs = new bomb(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

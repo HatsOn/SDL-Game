@@ -1,12 +1,15 @@
+#pragma once
+
+
 #include "Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
 #include "Module.h"
-#include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
-#include "p2List.h"
+#include "p2DynArray.h"
 #include "ModuleCollision.h"
+#include "ModuleParticles.h"
 
 class bomb : public Module
 {

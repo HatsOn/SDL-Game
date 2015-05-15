@@ -138,8 +138,11 @@ void ModuleCollision::DrawDebug(Collider* col)
 		App->renderer->DrawQuad(col->rect, 255, 0, 0, alpha);
 		break;
 		case COLLIDER_PLAYER_SHOT:
-		App->renderer->DrawQuad(col->rect, 255, 255, 0, alpha);
+		App->renderer->DrawQuad(col->rect, 255, 0, 0, alpha);
 		break;
+		case COLLIDER_PLAYER_EXPLOSION:
+			App->renderer->DrawQuad(col->rect, 255, 30, 150, alpha);
+			break;
 		case COLLIDER_ENEMY_SHOT:
 		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
 		break;

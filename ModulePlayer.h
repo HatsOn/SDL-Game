@@ -35,7 +35,7 @@ public:
 	void leftRightCollision(LookingLeftRight direction);
 	void upDownCollision(LookingUpDown direction);
 	void UpdatePosition();
-
+	p2Point<int> bombPos(p2Point<int> p);
 
 public:
 
@@ -67,4 +67,5 @@ public:
 	p2Point<int> position;
 	p2Point<int> bombPosition;
 	bool bombOn;
+	int bombPower;
 };

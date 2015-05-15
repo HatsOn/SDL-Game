@@ -1,4 +1,7 @@
 #pragma once
+#pragma warning
+
+#include "Globals.h"
 
 class Application;
 struct Collider;
