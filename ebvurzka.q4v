@@ -409,7 +409,7 @@ void ModuleTileMap::CollisionMap()
 {
 	int x, y;
 
-	
+	App->collision->AddCollider({ 2 * TILE_SIZE, 1 * TILE_SIZE + GUIOffset, 16, 16 }, COLLIDER_SPEEDPOWERUP, this);
 	
 }
 
@@ -417,7 +417,7 @@ update_status ModuleTileMap::Update()
 {
 
 	BuildMap();
-	
+	CollisionMap();
 	return UPDATE_CONTINUE;
 }
 

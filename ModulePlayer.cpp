@@ -89,7 +89,11 @@ bool ModulePlayer::Start()
 	speed.x = 0;
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
-	
+	App->collision->AddCollider({ 2 * TILE_SIZE, 1 * TILE_SIZE + GUIOffset, 16, 16 }, COLLIDER_SPEEDPOWERUP, this);
+	speedValue = 1;
+
+	hasCollided = false;
+
 
 	return true;
 }
@@ -211,10 +215,16 @@ update_status ModulePlayer::Update()
 
 	
 	
+	
 	UpdatePosition();
+
+
+
 
 	directionSide = NODIRECTIONSIDE;
 	directionVertical = NODIRECTIONVERTICAL;
+	hasCollided = false;
+
 	return UPDATE_CONTINUE;
 }
 void ModulePlayer::UpdatePosition()
@@ -224,6 +234,11 @@ void ModulePlayer::UpdatePosition()
 	playerCollider.x += speed.x;
 	playerCollider.y += speed.y;
 
+	if (hasCollided)
+	{
+		position.x -= speedValue - 1;
+	}
+	hasCollided = false;
 	collider->SetPos(playerCollider.x, playerCollider.y);
 
 }
@@ -235,29 +250,30 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 	
 	if (directionSide == 0)//Left
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - speedValue) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - speedValue) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			hasCollided = true;
 
 			speed.x = 0;
 
 		}
 		else
 		{
-			speed.x = -1;
+			speed.x = -speedValue;
 		}
 	}
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16 + speedValue) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16 + speedValue) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
-
+			
 			speed.x = 0;
 		
 		}
 		else
 		{
-			speed.x = 1;
+			speed.x = speedValue;
 		}
 	}
 
@@ -273,27 +289,29 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 { 
 	if (directionVertical == 0)//Up
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - speedValue) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - speedValue) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
-			speed.y = -1;
+			speed.y = -speedValue;
 		}
 	}
 
 	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 15 + speedValue) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 15 + speedValue) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
-			speed.y = 1;
+			speed.y = speedValue;
 		}
 	}
 
@@ -309,7 +327,11 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
-	
+	if (c2->type == COLLIDER_SPEEDPOWERUP)
+	{
+		speedValue = 2;
+	}
+
 
 	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
@@ -323,46 +345,4 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		
 	}
 
-}
-
-
-void ModulePlayer:: isWalkable()
-{
-	positionTileMapUpperLeftCorner.x = (position.x) / TILE_SIZE;
-	positionTileMapUpperLeftCorner.y = (position.y) / TILE_SIZE;
-
-	positionTileMapUpperRightCorner.x = (position.x + 15) / TILE_SIZE;
-	positionTileMapUpperRightCorner.y = (position.y) / TILE_SIZE;
-
-	positionTileMapLowerLeftCorner.x = (position.x) / TILE_SIZE;
-	positionTileMapLowerLeftCorner.y = (position.y + 23) / TILE_SIZE;
-
-	positionTileMapLowerRightCorner.x = (position.x + 15) / TILE_SIZE;
-	positionTileMapLowerRightCorner.y = (position.y + 23) / TILE_SIZE;
-
-	positionTileMapMid.x = (position.x + 8) / TILE_SIZE;
-	positionTileMapMid.y = (position.y + 16) / TILE_SIZE;
-
-	if (App->tileMap->map.tile[positionTileMapUpperLeftCorner.x][positionTileMapUpperLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapUpperRightCorner.x][positionTileMapUpperRightCorner.y] == 10)
-	{
-		speed.x = 1;
-		speed.y = 0;
-	}
-	if (App->tileMap->map.tile[positionTileMapLowerLeftCorner.x][positionTileMapLowerLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapUpperLeftCorner.x][positionTileMapUpperLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapMid.x][positionTileMapMid.y] == 10)
-	{
-		speed.x = 0;
-		speed.y = 1;
-	}
-	if (App->tileMap->map.tile[positionTileMapLowerLeftCorner.x][positionTileMapLowerLeftCorner.y] == 10 || App->tileMap->map.tile[positionTileMapLowerRightCorner.x][positionTileMapLowerRightCorner.y] == 10) // From top to down
-	{
-		speed.x = 1;
-		speed.y = 0;
-	}
-	if (App->tileMap->map.tile[positionTileMapUpperRightCorner.x][positionTileMapUpperRightCorner.y] == 10 || App->tileMap->map.tile[positionTileMapLowerLeftCorner.x][positionTileMapLowerLeftCorner.y] == 10) // From down to top
-	{
-		speed.x = 1;
-		speed.y = 0;
-	}
-
-	
 }
