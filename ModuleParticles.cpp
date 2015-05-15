@@ -229,17 +229,38 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 {
 	int size = 16;
 	int i = 0;
+	// En principi aixo ho he posat per a tenir sempre la posicio de la particula actual
+	p2Point<int> particlePosition = p->position;  
+	
+	
 	//Center
 	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 	power = 4;
 	//Arms
 	for (i = 1; i < power; i++)
 	{
-		if (canExplode(p->position, 'n'))
-			App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
-		App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
-		App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-		App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+		// aixi era avans, ara li sumo sixe*i per anar de particula en particula
+		// if (canExplode(p->position, 'n')) 
+		if (canExplode(particlePosition, 'n')) 
+		{
+			App->particles->AddParticle(App->particles->explosionUp, 
+										particlePosition.x, 
+										particlePosition.y - size*i, 
+										COLLIDER_PLAYER_EXPLOSION);
+			particlePosition.y -= 16;
+		}
+		if (canExplode(p->position, 's')) 
+		{
+			App->particles->AddParticle(App->particles->explosionDown, 
+										p->position.x, 
+										p->position.y + size*i, 
+										COLLIDER_PLAYER_EXPLOSION);
+			particlePosition.y += 16;
+		}
+		if (canExplode(p->position, 'o')) 
+			App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+		if (canExplode(p->position, 'e')) 
+			App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 	}
 	
 	//Hands
