@@ -180,7 +180,7 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		int delay = 100;
-		bombPosition = bombPos(position);
+		bombPosition = bombPos(playerCollider);
 		 
 
 		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
@@ -378,15 +378,15 @@ p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 	//Despues
 	// Li sumo 8 per a trobar el punt mitg del personatge, no se si funciona, 
 	// s'ha de comprobar al debug level
-	int tileX = p.x+8 / TILE_SIZE;
-	int tileY = p.y+8 / TILE_SIZE - SCOREOFFSET;
+ 	int tileX = (p.x+8) / TILE_SIZE;
+	int tileY = (p.y+8) / TILE_SIZE - SCOREOFFSET;
 	//Despues	
 	
 	
 	p2Point<int> res;
 
 	res.x = tileX * 16;
-	res.y = (tileY + SCOREOFFSET + 1) * 16;
+	res.y = (tileY + SCOREOFFSET) * 16;
 
 
 	return res;
