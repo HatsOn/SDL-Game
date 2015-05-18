@@ -16,16 +16,15 @@ enum update_status
 };
 
 // Configuration -----------
-#define SCREEN_WIDTH 272
+#define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 272
-#define SCREEN_HEIGHT 256
 #define SCREEN_SIZE 3
 #define WIN_FULLSCREEN false
 #define WIN_RESIZABLE false
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "Super Awesome Game"
+#define TITLE "Super Bomberman"
 #define GUIOffset 64
 #define SCOREOFFSET 4
 #define MAX_MAP_X 16

@@ -209,11 +209,9 @@ bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
 	//LoadMap("DebugLevel.txt");
-<<<<<<< HEAD
 	LoadMap("FirstLevel.txt");
-=======
-	LoadMap("firstLevel.txt");
->>>>>>> origin/InProgress
+	//LoadMap("firstLevel.txt");
+
 	PrintMap();
 	//CollisionMap();
 	return true;
