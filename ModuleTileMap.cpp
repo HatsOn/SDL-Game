@@ -17,6 +17,7 @@ bool ModuleTileMap::Start()
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
 
+	App->renderer->camera.x = App->renderer->camera.y = 0;
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = 0;
 
