@@ -27,14 +27,8 @@ bool ModuleTileMap::Start()
 	
 	prepareTiles();
 
-
-
 	return 1;
-
-
-
 	
-
 	App->bombs->Enable();
 	App->player->Enable();
 
@@ -211,8 +205,8 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	LoadMap("DebugLevel.txt");
-	//LoadMap("FirstLevel.txt");
+	//LoadMap("DebugLevel.txt");
+	LoadMap("FirstLevel.txt");
 	PrintMap();
 	//CollisionMap();
 	return true;
