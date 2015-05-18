@@ -182,7 +182,7 @@ update_status ModulePlayer::Update()
 		 
 
 		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
-		//TODO: bomba centrada en una posició
+		//TODO: bomba centrada en una posiciï¿½
 		LOG("bomba");
 	}
 	
@@ -368,9 +368,19 @@ void ModulePlayer:: isWalkable()
 
 p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 {
-	int tileX = p.x / TILE_SIZE;
-	int tileY = p.y / TILE_SIZE - SCOREOFFSET;
-
+	//Antes
+	//int tileX = p.x+8 / TILE_SIZE;
+	//int tileY = p.y+8 / TILE_SIZE - SCOREOFFSET;
+	//Antes
+	
+	//Despues
+	// Li sumo 8 per a trobar el punt mitg del personatge, no se si funciona, 
+	// s'ha de comprobar al debug level
+	int tileX = p.x+8 / TILE_SIZE;
+	int tileY = p.y+8 / TILE_SIZE - SCOREOFFSET;
+	//Despues	
+	
+	
 	p2Point<int> res;
 
 	res.x = tileX * 16;

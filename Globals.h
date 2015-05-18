@@ -18,6 +18,7 @@ enum update_status
 // Configuration -----------
 #define SCREEN_WIDTH 272
 #define SCREEN_HEIGHT 272
+#define SCREEN_HEIGHT 256
 #define SCREEN_SIZE 3
 #define WIN_FULLSCREEN false
 #define WIN_RESIZABLE false
@@ -25,9 +26,9 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "Super Awesome Game"
-#define GUIOffset 48
-#define SCOREOFFSET 3
-#define MAX_MAP_X 17
+#define GUIOffset 64
+#define SCOREOFFSET 4
+#define MAX_MAP_X 16
 #define MAX_MAP_Y 17
 #define TILE_SIZE 16
 
