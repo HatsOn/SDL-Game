@@ -13,6 +13,7 @@ public:
 	SDL_Texture* tilesReference;
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;
+	SDL_Texture* enemyImg;
 	
 	p2DynArray<int> nonWalkableTiles;
 
@@ -40,6 +41,7 @@ public:
 	SDL_Rect tile22;
 
 	SDL_Rect portal;
+	SDL_Rect enemy1;
 	
 public:
 

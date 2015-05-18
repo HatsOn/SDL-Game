@@ -52,12 +52,14 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 
 	//Dying
-	/*die.frames.PushBack({ 343, 38, 16, 24 }); 
-	die.frames.PushBack({ 361, 38, 16, 24 });
-	die.frames.PushBack({ 379, 38, 16, 24 });
-	die.frames.PushBack({ 397, 38, 16, 24 });
-	die.speed = 0.1f;
-	die.loop = false;*/
+	dying.frames.PushBack({ 30, 75, 15, 25 });
+	dying.frames.PushBack({ 48, 75, 15, 25 });
+	dying.frames.PushBack({ 65, 75, 15, 25 });
+	dying.frames.PushBack({ 82, 75, 15, 25 });
+	dying.frames.PushBack({ 99, 75, 15, 25 });
+	dying.frames.PushBack({ 117, 75, 15, 25 });
+	dying.speed = 0.1f;
+	dying.loop = false;
 
 	// Set Bombs
 	bomb.frames.PushBack({ 356, 151 ,16,16});

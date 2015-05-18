@@ -56,6 +56,7 @@ public:
 	Animation right;
 	Animation down;
 	Animation bomb;
+	Animation dying;
 	p2Point<int> positionTileMapUpperLeftCorner;
 	p2Point<int> positionTileMapUpperRightCorner;
 	p2Point<int> positionTileMapLowerLeftCorner;

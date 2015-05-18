@@ -27,7 +27,15 @@ bool ModuleTileMap::Start()
 
 	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
 
-	
+	enemyImg = App->textures->Load("portal.png");
+
+	enemy1.x = 3;
+	enemy1.y = 2;
+	enemy1.h = 24;
+	enemy1.w = 16;
+
+	Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 24 }, COLLIDER_ENEMY);
+
 	prepareTiles();
 
 	return 1;
@@ -208,8 +216,8 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	//LoadMap("DebugLevel.txt");
-	LoadMap("FirstLevel.txt");
+	LoadMap("DebugLevel.txt");
+	//LoadMap("FirstLevel.txt");
 	//LoadMap("firstLevel.txt");
 
 	PrintMap();
@@ -398,6 +406,7 @@ void ModuleTileMap::BuildMap()
 	}
 
 	App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
+	App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
 	App->player->Enable();
 }
 
