@@ -105,7 +105,7 @@ bool ModuleParticles::Start()
 
 
 	// Laser particle
-	/**/
+	/*
 	laser.anim.frames.PushBack({200, 120, 32, 12});
 	laser.anim.frames.PushBack({230, 120, 32, 12});
 	laser.speed.x = 7;
@@ -244,6 +244,11 @@ bool Particle::Update()
 
 void ModuleParticles::generateBomb(int power, Particle* p)
 {
+	bool upHand = false;
+	bool downHand = false;
+	bool leftHand = false;
+	bool rightHand = false;
+
 	int size = 16;
 	int i = 0;
 	// En principi aixo ho he posat per a tenir sempre la posicio de la particula actual
@@ -252,7 +257,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	
 	//Center
 	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	power = 4;
+	power = 2;
 	//Arms
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -267,15 +272,22 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y -= 16;
 		}
-		else if (canDestroy(particlePosition, 'n')) // Si es destruible
+		else 
 		{
-			App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
-			App->particles->AddParticle(App->particles->bomb,
+			
+			
+			if (canDestroy(particlePosition, 'n')) // Si es destruible
+			{
+				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
+				App->particles->AddParticle(App->particles->bomb,
 										p->position.x,
 										p->position.y - size*i,
 										COLLIDER_PLAYER_EXPLOSION);
-		}
+			}
 
+			upHand = true;
+
+		}
 	}
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -288,6 +300,14 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y += 16;
 		}
+		else
+		{
+		
+			downHand = true;
+
+		}
+	
+
 	}
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -300,6 +320,12 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										p->position.y,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x -= 16;
+		}
+		else
+		{
+
+			leftHand = true;
+
 		}
 	}
 	particlePosition = p->position;
@@ -314,14 +340,24 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x += 16;
 		}
+		else
+		{
+
+			rightHand = true;
+
+		}
 	}
 	
 	
 	//Hands
-	App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
-	App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
-	App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	if (!upHand)
+		App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
+	if (!downHand)
+		App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
+	if (!leftHand)
+		App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	if (!rightHand)
+		App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 }
 
 bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
