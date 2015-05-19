@@ -14,13 +14,13 @@ bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
 	graphics = App->textures->Load("BombermanTiles.png");
-
+	int life = 2000;
 	// Bomb particle
 
 	bomb.anim.frames.PushBack({ 509, 185, 16, 16});
 	bomb.anim.frames.PushBack({ 526, 185, 16, 16 });
 	bomb.anim.frames.PushBack({ 543, 185, 16, 16 });
-	bomb.life = 3000;
+	bomb.life = life;
 	bomb.anim.speed = 0.05f;
 	//bomb.anim.loop = true;
 
@@ -32,7 +32,7 @@ bool ModuleParticles::Start()
 	explosion.anim.frames.PushBack({ 373, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 322, 117, 16, 16 });
 	explosion.anim.speed = 0.05f;
-	explosion.life = 3000;
+	explosion.life = life;
 	explosion.anim.loop = false;
 	
 
@@ -44,7 +44,7 @@ bool ModuleParticles::Start()
 	explosionUp.anim.frames.PushBack({ 356, 82, 16, 16 });
 	explosionUp.anim.frames.PushBack({ 339, 82, 16, 16 });
 	explosionUp.anim.frames.PushBack({ 322, 82, 16, 16 });
-	explosionUp.life = 3000;
+	explosionUp.life = life;
 	explosionUp.anim.speed = 0.05f;
 	explosionUp.anim.loop = false;
 	
@@ -57,7 +57,7 @@ bool ModuleParticles::Start()
 	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 305, 83, 16, 16 });
-	explosionDown.life = 3000;
+	explosionDown.life = life;
 	explosionDown.anim.speed = 0.05f;
 	explosionDown.anim.loop = false;
 	
@@ -67,7 +67,7 @@ bool ModuleParticles::Start()
 	explosionLeft.anim.frames.PushBack({ 288, 66, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 271, 66, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 254, 66, 16, 16 });
-	explosionLeft.life = 3000;
+	explosionLeft.life = life;
 	explosionLeft.anim.speed = 0.05f;
 	explosionLeft.anim.loop = false;
 	
@@ -78,12 +78,29 @@ bool ModuleParticles::Start()
 	explosionRight.anim.frames.PushBack({ 271, 134, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 305, 100, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 305, 117, 16, 16 });
-	explosionRight.life = 3000;
+	explosionRight.life = life;
 	explosionRight.anim.speed = 0.05f;
 	explosionRight.anim.loop = false;
 	
 
-	
+	horizontal.anim.frames.PushBack({ 254, 100, 16, 16 });
+	horizontal.anim.frames.PushBack({ 254, 117, 16, 16 });
+	horizontal.anim.frames.PushBack({ 254, 134, 16, 16 });
+	horizontal.anim.frames.PushBack({ 288, 100, 16, 16 });
+	horizontal.anim.frames.PushBack({ 288, 117, 16, 16 });
+	horizontal.life = life;
+	horizontal.anim.speed = 0.05f;
+	horizontal.anim.loop = false;
+
+
+	vertical.anim.frames.PushBack({ 339, 117, 16, 16 });
+	vertical.anim.frames.PushBack({ 356, 117, 16, 16 });
+	vertical.anim.frames.PushBack({ 373, 117, 16, 16 });
+	vertical.anim.frames.PushBack({ 288, 134, 16, 16 });
+	vertical.anim.frames.PushBack({ 305, 134, 16, 16 });
+	vertical.life = life;
+	vertical.anim.speed = 0.05f;
+	vertical.anim.loop = false;
 
 
 
@@ -237,43 +254,57 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 	power = 4;
 	//Arms
+	particlePosition = p->position;
 	for (i = 1; i < power; i++)
 	{
 		// aixi era avans, ara li sumo sixe*i per anar de particula en particula
 		// if (canExplode(p->position, 'n')) 
 		if (canExplode(particlePosition, 'n'))
 		{
-			App->particles->AddParticle(App->particles->explosionUp, 
-										particlePosition.x, 
-										particlePosition.y - size*i, 
+			App->particles->AddParticle(App->particles->vertical,
+										particlePosition.x,
+										particlePosition.y - size*i,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y -= 16;
 		}
-		if (canExplode(p->position, 's')) 
+	}
+	particlePosition = p->position;
+	for (i = 1; i < power; i++)
+	{
+		if (canExplode(particlePosition, 's'))
 		{
-			App->particles->AddParticle(App->particles->explosionDown, 
-										p->position.x, 
-										p->position.y + size*i, 
+			App->particles->AddParticle(App->particles->vertical,
+										p->position.x,
+										p->position.y + size*i,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y += 16;
 		}
-		if (canExplode(p->position, 'o'))
+	}
+	for (i = 1; i < power; i++)
+	{
+		particlePosition = p->position;
+		if (canExplode(particlePosition, 'o'))
 		{
-			App->particles->AddParticle(App->particles->explosionLeft,
+			App->particles->AddParticle(App->particles->horizontal,
 										p->position.x - size*i,
 										p->position.y,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x -= 16;
 		}
-		if (canExplode(p->position, 'e'))
+	}
+	for (i = 1; i < power; i++)
+	{
+		particlePosition = p->position;
+		if (canExplode(particlePosition, 'e'))
 		{
-			App->particles->AddParticle(App->particles->explosionRight,
+			App->particles->AddParticle(App->particles->horizontal,
 										p->position.x + size*i,
 										p->position.y,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x += 16;
 		}
 	}
+	
 	
 	//Hands
 	App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
@@ -288,32 +319,32 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 	{
 	case 'n':
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y - 1) / TILE_SIZE) - SCOREOFFSET])
-			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y -1) / TILE_SIZE) - SCOREOFFSET]))
 		{
 			return false;
 		}
 		break;
-	case 's':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y - 16) / TILE_SIZE) - SCOREOFFSET])
-			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+	/*case 's':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y + 16+1) / TILE_SIZE) - SCOREOFFSET])
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16 + 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
 			return false;
 		}
 		break;
 	case 'o':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y) / TILE_SIZE) - SCOREOFFSET])
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 1) / TILE_SIZE][((p.y) / TILE_SIZE) - SCOREOFFSET])
 			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 1) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 		{
 			return false;
 		}
 		break;
 	case 'e':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y) / TILE_SIZE) - SCOREOFFSET])
-			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 17) / TILE_SIZE][((p.y) / TILE_SIZE) - SCOREOFFSET])
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 17) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 		{
 			return false;
 		}
-		break;
+		break;*/
 	default:
 		break;
 	}
