@@ -8,8 +8,9 @@
 class ModuleEnemy : public Module
 {
 	
-
-
+	bool Start();
+	bool CleanUp();
+	void OnCollision(Collider*, Collider*);
 
 
 
@@ -17,7 +18,7 @@ class ModuleEnemy : public Module
 
 public: 
 	//Properties
-	
+	p2List<Enemy> enemyList;
 	
 
 

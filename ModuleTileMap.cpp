@@ -43,6 +43,10 @@ bool ModuleTileMap::Start()
 	App->bombs->Enable();
 	App->player->Enable();
 
+
+
+
+
 }
 
 

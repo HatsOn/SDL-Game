@@ -198,7 +198,6 @@ update_status ModulePlayer::Update()
 		directionVertical = NODIRECTIONVERTICAL;
 		directionSide = NODIRECTIONSIDE;
 		current_animation = &idle;
-		
 	}
 
 
