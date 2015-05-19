@@ -85,13 +85,17 @@ bool ModulePlayer::Start()
 	
 	bombs = App->tileMap->tilesReference;
 	position.x = 48;
-	position.y = GUIOffset + 16;
+	position.y = GUIOffset + 8;
 	playerCollider.x = 48;
-	playerCollider.y = GUIOffset + 26;
+	playerCollider.y = GUIOffset+16;
 	speed.x = 0;
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
+
 	
+
+	hasCollided = false;
+
 
 	return true;
 }
@@ -214,10 +218,16 @@ update_status ModulePlayer::Update()
 
 	
 	
+	
 	UpdatePosition();
+
+
+
 
 	directionSide = NODIRECTIONSIDE;
 	directionVertical = NODIRECTIONVERTICAL;
+	hasCollided = false;
+
 	return UPDATE_CONTINUE;
 }
 void ModulePlayer::UpdatePosition()
@@ -227,6 +237,8 @@ void ModulePlayer::UpdatePosition()
 	playerCollider.x += speed.x;
 	playerCollider.y += speed.y;
 
+
+	hasCollided = false;
 	collider->SetPos(playerCollider.x, playerCollider.y);
 
 }
@@ -240,6 +252,7 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 	{
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			hasCollided = true;
 
 			speed.x = 0;
 
@@ -247,21 +260,25 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 		else
 		{
 			speed.x = -1;
+		
 		}
+	
 	}
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
-
+			
 			speed.x = 0;
 		
 		}
 		else
 		{
 			speed.x = 1;
+
 		}
+		
 	}
 
 	if (directionSide == 2)//Idle
@@ -278,26 +295,32 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 	{
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
 			speed.y = -1;
+
 		}
+	
 	}
 
 	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
 			speed.y = 1;
+
 		}
+	
 	}
 
 	if (directionVertical == 2)//Idle
@@ -312,7 +335,11 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
-	
+	if (c2->type == COLLIDER_SPEEDPOWERUP)
+	{
+		
+	}
+
 
 	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
@@ -327,6 +354,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 
 }
+
 
 
 void ModulePlayer:: isWalkable()
@@ -391,3 +419,4 @@ p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 
 	return res;
 }
+

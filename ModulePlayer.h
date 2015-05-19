@@ -41,6 +41,11 @@ public:
 
 	bool hasCollided;
 
+
+
+
+
+
 	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;
 	LookingUpDown directionVertical;
@@ -69,4 +74,11 @@ public:
 	p2Point<int> bombPosition;
 	bool bombOn;
 	int bombPower;
+
+
+
+
+
+
+
 };

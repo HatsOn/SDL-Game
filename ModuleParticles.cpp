@@ -241,7 +241,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	{
 		// aixi era avans, ara li sumo sixe*i per anar de particula en particula
 		// if (canExplode(p->position, 'n')) 
-		if (canExplode(particlePosition, 'n')) 
+		if (canExplode(particlePosition, 'n'))
 		{
 			App->particles->AddParticle(App->particles->explosionUp, 
 										particlePosition.x, 
@@ -257,10 +257,22 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y += 16;
 		}
-		if (canExplode(p->position, 'o')) 
-			App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-		if (canExplode(p->position, 'e')) 
-			App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+		if (canExplode(p->position, 'o'))
+		{
+			App->particles->AddParticle(App->particles->explosionLeft,
+										p->position.x - size*i,
+										p->position.y,
+										COLLIDER_PLAYER_EXPLOSION);
+			particlePosition.x -= 16;
+		}
+		if (canExplode(p->position, 'e'))
+		{
+			App->particles->AddParticle(App->particles->explosionRight,
+										p->position.x + size*i,
+										p->position.y,
+										COLLIDER_PLAYER_EXPLOSION);
+			particlePosition.x += 16;
+		}
 	}
 	
 	//Hands
@@ -276,16 +288,31 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 	{
 	case 'n':
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y - 1) / TILE_SIZE) - SCOREOFFSET])
-			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 15) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 		{
 			return false;
 		}
 		break;
 	case 's':
-		break;
-	case 'e':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y - 16) / TILE_SIZE) - SCOREOFFSET])
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		{
+			return false;
+		}
 		break;
 	case 'o':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y) / TILE_SIZE) - SCOREOFFSET])
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 1) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		{
+			return false;
+		}
+		break;
+	case 'e':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y) / TILE_SIZE) - SCOREOFFSET])
+			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		{
+			return false;
+		}
 		break;
 	default:
 		break;
