@@ -43,6 +43,10 @@ bool ModuleTileMap::Start()
 	App->bombs->Enable();
 	App->player->Enable();
 
+
+
+
+
 }
 
 
@@ -254,7 +258,7 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	LoadMap("firstLevel.txt");
+	LoadMap("DebugLevel.txt");
 	//LoadMap("FirstLevel.txt");
 	//LoadMap("firstLevel.txt");
 
