@@ -105,7 +105,7 @@ bool ModuleParticles::Start()
 
 
 	// Laser particle
-	/**/
+	/*
 	laser.anim.frames.PushBack({200, 120, 32, 12});
 	laser.anim.frames.PushBack({230, 120, 32, 12});
 	laser.speed.x = 7;
@@ -252,7 +252,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	
 	//Center
 	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	power = 4;
+	power = 2;
 	//Arms
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -269,7 +269,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		}
 		else if (canDestroy(particlePosition, 'n')) // Si es destruible
 		{
-			App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
 			App->particles->AddParticle(App->particles->bomb,
 										p->position.x,
 										p->position.y - size*i,
@@ -288,6 +288,14 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y += 16;
 		}
+		else if (canDestroy(particlePosition, 's')) // Si es destruible
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y +16+ 8) / TILE_SIZE - SCOREOFFSET] = 19;
+			App->particles->AddParticle(App->particles->bomb,
+										p->position.x,
+										p->position.y + size*i,
+										COLLIDER_PLAYER_EXPLOSION);
+		}
 	}
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -301,6 +309,14 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x -= 16;
 		}
+		else if (canDestroy(particlePosition, 'o')) // Si es destruible
+		{
+			App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y  + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+			App->particles->AddParticle(App->particles->bomb,
+										p->position.x - size*i,
+										p->position.y ,
+										COLLIDER_PLAYER_EXPLOSION);
+		}
 	}
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -313,6 +329,14 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 										p->position.y,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x += 16;
+		}
+		else if (canDestroy(particlePosition, 'e')) // Si es destruible
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8 +16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+			App->particles->AddParticle(App->particles->bomb,
+										p->position.x + size*i,
+										p->position.y,
+										COLLIDER_PLAYER_EXPLOSION);
 		}
 	}
 	
@@ -364,9 +388,7 @@ bool ModuleParticles::canDestroy(p2Point<int> p, char orientation)
 	switch (orientation)
 	{
 	case 'n':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET]))
-		
-		
+				
 		if (App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] == 12 
 			|| App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] == 4)
 		{
@@ -374,20 +396,23 @@ bool ModuleParticles::canDestroy(p2Point<int> p, char orientation)
 		}
 		break;
 	case 's':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 8 + 16) / TILE_SIZE - SCOREOFFSET]))
-
+		
+		if (App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] == 12
+			|| App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y +16+ 8) / TILE_SIZE - SCOREOFFSET] == 4)
 		{
 			return true;
 		}
 		break;
 	case 'o':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET]))
+		if (App->tileMap->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET] == 12
+			|| App->tileMap->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET] == 4)
 		{
 			return true;
 		}
 		break;
 	case 'e':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16 + 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET]))
+		if (App->tileMap->map.tile[(p.x + 16 + 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET] == 12
+			|| App->tileMap->map.tile[(p.x + 16 + 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET] == 4)
 		{
 			return true;
 		}
