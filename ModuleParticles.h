@@ -37,6 +37,7 @@ public:
 	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Uint32 delay = 0);
 	void generateBomb(int power, Particle* p);
 	bool ModuleParticles::canExplode(p2Point<int> p, char orientation);
+	bool ModuleParticles::canDestroy(p2Point<int> p, char orientation);
 
 private:
 

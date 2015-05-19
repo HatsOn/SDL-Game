@@ -105,7 +105,7 @@ bool ModuleParticles::Start()
 
 
 	// Laser particle
-	/*
+	/**/
 	laser.anim.frames.PushBack({200, 120, 32, 12});
 	laser.anim.frames.PushBack({230, 120, 32, 12});
 	laser.speed.x = 7;
@@ -262,11 +262,20 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		if (canExplode(particlePosition, 'n'))
 		{
 			App->particles->AddParticle(App->particles->vertical,
-										particlePosition.x,
-										particlePosition.y - size*i,
+										p->position.x,
+										p->position.y - size*i,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y -= 16;
 		}
+		else if (canDestroy(particlePosition, 'n')) // Si es destruible
+		{
+			App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
+			App->particles->AddParticle(App->particles->bomb,
+										p->position.x,
+										p->position.y - size*i,
+										COLLIDER_PLAYER_EXPLOSION);
+		}
+
 	}
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
@@ -274,8 +283,8 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		if (canExplode(particlePosition, 's'))
 		{
 			App->particles->AddParticle(App->particles->vertical,
-										particlePosition.x,
-										particlePosition.y + size*i,
+										p->position.x,
+										p->position.y + size*i,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y += 16;
 		}
@@ -287,8 +296,8 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		if (canExplode(particlePosition, 'o'))
 		{
 			App->particles->AddParticle(App->particles->horizontal,
-										particlePosition.x - size*i,
-										particlePosition.y,
+										p->position.x - size*i,
+										p->position.y,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x -= 16;
 		}
@@ -300,8 +309,8 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		if (canExplode(particlePosition, 'e'))
 		{
 			App->particles->AddParticle(App->particles->horizontal,
-										particlePosition.x + size*i,
-										particlePosition.y,
+										p->position.x + size*i,
+										p->position.y,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x += 16;
 		}
@@ -327,6 +336,7 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 		break;
 	case 's':
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 8 + 16) / TILE_SIZE - SCOREOFFSET]))
+
 		{
 			return false;
 		}
@@ -347,4 +357,43 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 		break;
 	}
 	return true;
+}
+
+bool ModuleParticles::canDestroy(p2Point<int> p, char orientation)
+{
+	switch (orientation)
+	{
+	case 'n':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET]))
+		
+		
+		if (App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] == 12 
+			|| App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET] == 4)
+		{
+			return true;
+		}
+		break;
+	case 's':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 8 + 16) / TILE_SIZE - SCOREOFFSET]))
+
+		{
+			return true;
+		}
+		break;
+	case 'o':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET]))
+		{
+			return true;
+		}
+		break;
+	case 'e':
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16 + 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET]))
+		{
+			return true;
+		}
+		break;
+	default:
+		break;
+	}
+	return false;
 }

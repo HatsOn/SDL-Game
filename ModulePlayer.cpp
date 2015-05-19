@@ -81,6 +81,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
+	//Cada vegada mes rapid fins que es tot blanc durant l'ultim segon 
+
+
 	graphics = App->textures->Load("bombermanPC.png");
 	
 	bombs = App->tileMap->tilesReference;
@@ -117,88 +121,92 @@ update_status ModulePlayer::Update()
 {
 	lastPosition = position;
 
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		directionSide = DIRECTIONLEFT;
-
-	//Make collider follow player's position
-
-		if (current_animation != &left)
-		{
-			left.Reset();
-			current_animation = &left;
-		}
-	}
-
-
-
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (dead == false)
 	{
 
-		directionSide = DIRECTIONRIGHT;
-	
-	
-
-		if (current_animation != &right)
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			right.Reset();
-			current_animation = &right;
-		}
-	
-	}
+			directionSide = DIRECTIONLEFT;
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
+			//Make collider follow player's position
 
-		directionVertical = DIRECTIONDOWN;
-		
-		
-
-		if(current_animation != &down)
-		{
-			down.Reset();
-			current_animation = &down;
-		}
-	
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-
-		directionVertical = DIRECTIONUP;
-
-		
-		if(current_animation != &up)
-		{
-			up.Reset();
-			current_animation = &up;
+			if (current_animation != &left)
+			{
+				left.Reset();
+				current_animation = &left;
+			}
 		}
 
-		
-	}
 
-	
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		int delay = 100;
-		bombPosition = bombPos(playerCollider);
-		 
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
 
-		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
-		//TODO: bomba centrada en una posici�
-		LOG("bomba");
-	}
-	
+			directionSide = DIRECTIONRIGHT;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-	{
-		directionVertical = NODIRECTIONVERTICAL;
-		directionSide = NODIRECTIONSIDE;
-		current_animation = &idle;
-	}
+
+
+			if (current_animation != &right)
+			{
+				right.Reset();
+				current_animation = &right;
+			}
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+
+			directionVertical = DIRECTIONDOWN;
+
+
+
+			if (current_animation != &down)
+			{
+				down.Reset();
+				current_animation = &down;
+			}
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+
+			directionVertical = DIRECTIONUP;
+
+
+			if (current_animation != &up)
+			{
+				up.Reset();
+				current_animation = &up;
+			}
+
+
+		}
+
+
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			int delay = 100;
+			bombPosition = bombPos(playerCollider);
+
+
+			/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+			//TODO: bomba centrada en una posici�
+			LOG("bomba");
+		}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+		{
+			directionVertical = NODIRECTIONVERTICAL;
+			directionSide = NODIRECTIONSIDE;
+			current_animation = &idle;
+
+		}
+
+	}//Condició per si esta mort
 
 
 	
@@ -342,7 +350,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
-		
+		dead = true;
+
 	}
 	if (c2->type == COLLIDER_FINISH)
 	{
