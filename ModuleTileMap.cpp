@@ -47,7 +47,7 @@ bool ModuleTileMap::Start()
 void ModuleTileMap::prepareTiles()
 {
 
-	tile1.x = 255;
+	tile1.x = 254;
 	tile1.y = 15;
 	tile1.h = 16;
 	tile1.w = 16;
@@ -179,6 +179,36 @@ void ModuleTileMap::prepareTiles()
 	tile22.h = 16;
 	tile22.w = 16;
 
+	tile23.x = 216;
+	tile23.y = 15;
+	tile23.h = 16;
+	tile23.w = 16;
+
+	tile24.x = 234;
+	tile24.y = 15;
+	tile24.h = 16;
+	tile24.w = 16;
+
+	tile25.x = 216;
+	tile25.y = 32;
+	tile25.h = 16;
+	tile25.w = 16;
+
+	tile26.x = 234;
+	tile26.y = 32;
+	tile26.h = 16;
+	tile26.w = 16;
+
+	tile27.x = 216;
+	tile27.y = 49;
+	tile27.h = 16;
+	tile27.w = 16;
+
+	tile28.x = 234;
+	tile22.y = 49;
+	tile28.h = 16;
+	tile28.w = 16;
+
 	nonWalkableTiles.PushBack(0);
 	nonWalkableTiles.PushBack(1);
 	nonWalkableTiles.PushBack(2);
@@ -201,6 +231,14 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(44);
 	nonWalkableTiles.PushBack(55);
 	nonWalkableTiles.PushBack(21);
+	nonWalkableTiles.PushBack(22);
+	nonWalkableTiles.PushBack(23);
+	nonWalkableTiles.PushBack(24);
+	nonWalkableTiles.PushBack(25);
+	nonWalkableTiles.PushBack(26);
+	nonWalkableTiles.PushBack(27);
+	nonWalkableTiles.PushBack(28);
+
 
 }
 
@@ -397,6 +435,36 @@ void ModuleTileMap::BuildMap()
 			{
 				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile22, 0.75f);
 			}
+
+			if (map.tile[x][y] == 22)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile23, 0.75f);
+			}
+
+			if (map.tile[x][y] == 23)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile24, 0.75f);
+			}
+
+			if (map.tile[x][y] == 24)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile25, 0.75f);
+			}
+
+			if (map.tile[x][y] == 25)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile26, 0.75f);
+			}
+
+			if (map.tile[x][y] == 26)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile27, 0.75f);
+			}
+			if (map.tile[x][y] == 27)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile28, 0.75f);
+			}
+
 
 		}
 	}

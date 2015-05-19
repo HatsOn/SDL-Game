@@ -76,7 +76,6 @@ public:
 
 
 
-	int speedValue;
 
 
 
