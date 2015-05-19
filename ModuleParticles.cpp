@@ -262,8 +262,8 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		if (canExplode(particlePosition, 'n'))
 		{
 			App->particles->AddParticle(App->particles->vertical,
-										particlePosition.x,
-										particlePosition.y - size*i,
+										p->position.x,
+										p->position.y - size*i,
 										COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y -= 16;
 		}
@@ -324,7 +324,7 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 			return false;
 		}
 		break;
-	/*case 's':
+	case 's':
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x) / TILE_SIZE][((p.y + 16+1) / TILE_SIZE) - SCOREOFFSET])
 			|| App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16) / TILE_SIZE][((p.y + 16 + 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
@@ -344,7 +344,7 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 		{
 			return false;
 		}
-		break;*/
+		break;
 	default:
 		break;
 	}
