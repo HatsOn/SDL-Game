@@ -17,7 +17,7 @@ bool ModuleTileMap::Start()
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
-	//scoreImg = App->textures->Load("Marcador.png")
+	scoreImg = App->textures->Load("Marcador.png");
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = 0;
@@ -36,7 +36,12 @@ bool ModuleTileMap::Start()
 	enemy1.h = 24;
 	enemy1.w = 16;
 
-	Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 24 }, COLLIDER_ENEMY);
+	Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 16 }, COLLIDER_ENEMY);
+
+	score.x = 0;
+	score.y = 0;
+	score.h = 64;
+	score.w = 256;
 
 	prepareTiles();
 
@@ -483,6 +488,7 @@ void ModuleTileMap::BuildMap()
 
 	App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
 	App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
+	App->renderer->Blit(scoreImg, 0 * TILE_SIZE, 0 * TILE_SIZE, &score, 0.75f);
 	App->player->Enable();
 }
 
