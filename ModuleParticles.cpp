@@ -204,7 +204,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			break;
 		}
 		*/
-		if (c1->type == COLLIDER_PLAYER)
+		if (c2->type == COLLIDER_PLAYER)
 		{
 			delete tmp->data;
 			active.del(tmp);

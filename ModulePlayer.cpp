@@ -344,9 +344,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	
 	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
-		
+		App->particles->speedpowerUp.life = 0;
 		speedValue++;
-
 	}
 
 
