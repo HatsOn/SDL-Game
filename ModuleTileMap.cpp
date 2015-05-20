@@ -17,6 +17,7 @@ bool ModuleTileMap::Start()
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
+	//scoreImg = App->textures->Load("Marcador.png")
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = 0;
@@ -524,12 +525,6 @@ update_status ModuleTileMap::Update()
 
 	BuildMap();
 	
-	if (isSpeedPowerUp)
-	{
-	
-		App->renderer->Blit(enemyImg, enemy1.x, enemy1.y, &enemy1);
-
-	}
 
 
 	return UPDATE_CONTINUE;
