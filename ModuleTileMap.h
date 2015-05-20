@@ -54,7 +54,7 @@ public:
 	SDL_Rect enemy1;
 
 	bool isSpeedPowerUp;
-
+	
 	
 public:
 

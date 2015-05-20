@@ -525,12 +525,6 @@ update_status ModuleTileMap::Update()
 
 	BuildMap();
 	
-	if (isSpeedPowerUp)
-	{
-	
-		App->renderer->Blit(enemyImg, enemy1.x, enemy1.y, &enemy1);
-
-	}
 
 
 	return UPDATE_CONTINUE;

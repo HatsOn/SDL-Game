@@ -28,6 +28,11 @@ bool ModuleParticles::Start()
 	bomb.anim.speed = 0.05f;
 	//bomb.anim.loop = true;
 
+	
+
+
+
+
 	// Explosion particle
 	
 	explosion.anim.frames.PushBack({322, 100, 16, 16});
@@ -107,8 +112,11 @@ bool ModuleParticles::Start()
 	vertical.anim.loop = false;
 
 
-
-
+	speedpowerUp.anim.frames.PushBack({ 233, 98, 16, 16 });
+	speedpowerUp.anim.frames.PushBack({ 233, 114, 16, 16 });
+	speedpowerUp.life = 10000;
+	speedpowerUp.anim.speed = 0.05f;
+	speedpowerUp.anim.loop = false;
 
 	return true;
 }
@@ -389,11 +397,15 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
-				if ((rand()% 100 + 1) <= 25)
+				//(rand()% 100 + 1) <= 25
+				if (true)
 				{
 					
-					App->tileMap->isSpeedPowerUp = true;
-				
+					speedPowerUpLocation.x = (particlePosition.x + 16);
+
+					speedPowerUpLocation.y = (particlePosition.y - 8);
+
+					App->particles->AddParticle(App->particles->speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
 				}
 
 				App->particles->AddParticle(App->particles->bomb,
