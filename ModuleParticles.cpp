@@ -239,7 +239,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	//Arms
 	for (i = 1; i < power; i++)
 	{
-		// aixi era avans, ara li sumo sixe*i per anar de particula en particula
+		// aixi era avans, ara li sumo size*i per anar de particula en particula
 		// if (canExplode(p->position, 'n')) 
 		if (canExplode(particlePosition, 'n')) 
 		{
