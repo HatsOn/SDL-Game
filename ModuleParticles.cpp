@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleParticles.h"
+#include <time.h>
 
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {}
@@ -12,6 +13,9 @@ ModuleParticles::~ModuleParticles()
 // Load assets
 bool ModuleParticles::Start()
 {
+
+	srand(time(NULL));
+
 	LOG("Loading particles");
 	graphics = App->textures->Load("BombermanTiles.png");
 	int life = 2000;
@@ -104,14 +108,8 @@ bool ModuleParticles::Start()
 
 
 
-	// Laser particle
-	/*
-	laser.anim.frames.PushBack({200, 120, 32, 12});
-	laser.anim.frames.PushBack({230, 120, 32, 12});
-	laser.speed.x = 7;
-	laser.life = 1000;
-	laser.anim.speed = 0.05f;
-	*/
+
+
 	return true;
 }
 
@@ -390,6 +388,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'e')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+
 				App->particles->AddParticle(App->particles->bomb,
 					p->position.x + size*i,
 					p->position.y,
