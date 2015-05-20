@@ -73,8 +73,10 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="bomb.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ModuleCollision.h" />
+    <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleTileMap.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
@@ -94,10 +96,12 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="bomb.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCollision.cpp" />
+    <ClCompile Include="ModuleEnemy.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModuleSceneSpace.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />

@@ -10,9 +10,13 @@ private:
 
 public:
 	Map map;
+	p2Point<int> speedPowerUpLocation;
+	p2Point<int> sizeExplosionPowerUPLocation;
 	SDL_Texture* tilesReference;
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;
+	SDL_Texture* enemyImg;
+	SDL_Texture* scoreImg;
 	
 	p2DynArray<int> nonWalkableTiles;
 
@@ -39,7 +43,20 @@ public:
 	SDL_Rect tile21;
 	SDL_Rect tile22;
 
+	SDL_Rect tile23;
+	SDL_Rect tile24;
+	SDL_Rect tile25;
+	SDL_Rect tile26;
+	SDL_Rect tile27;
+	SDL_Rect tile28;
+
+
 	SDL_Rect portal;
+	SDL_Rect enemy1;
+	SDL_Rect score;
+
+	bool isSpeedPowerUp;
+	
 	
 public:
 

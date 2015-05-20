@@ -41,6 +41,11 @@ public:
 
 	bool hasCollided;
 
+
+
+
+
+
 	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;
 	LookingUpDown directionVertical;
@@ -56,16 +61,30 @@ public:
 	Animation right;
 	Animation down;
 	Animation bomb;
+	Animation dying;
 	p2Point<int> positionTileMapUpperLeftCorner;
 	p2Point<int> positionTileMapUpperRightCorner;
 	p2Point<int> positionTileMapLowerLeftCorner;
 	p2Point<int> positionTileMapLowerRightCorner;
 	p2Point<int> positionTileMapMid;
-	p2Point<int> speed;
+	
 	p2Point<int> lastPosition;
 	p2Point<int> positionTileMap;
 	p2Point<int> position;
 	p2Point<int> bombPosition;
 	bool bombOn;
 	int bombPower;
+
+	
+	p2Point<int> speed;
+	int speedValue;
+
+	bool dead;
+
+
+
+
+
+
+
 };
