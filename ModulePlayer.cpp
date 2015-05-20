@@ -11,11 +11,11 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	collider = NULL;
 	current_animation = NULL;
 	bombAnimation = NULL;
-	bombOn = false;
+	bombOn = true;
 	speed.x = 1;
 	speed.y = 1;
 
-	// 
+	
 	bombPower = 1;
 
 
@@ -58,7 +58,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	dying.frames.PushBack({ 82, 75, 15, 25 });
 	dying.frames.PushBack({ 99, 75, 15, 25 });
 	dying.frames.PushBack({ 117, 75, 15, 25 });
-	dying.speed = 0.1f;
+	dying.speed = 0.05f;
 	dying.loop = false;
 
 	// Set Bombs
@@ -70,6 +70,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	hasCollided = false;
 
+	current_animation = &idle;
 	
 }
 
@@ -79,19 +80,28 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	dead = false;
 	LOG("Loading player");
+
+	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
+	//Cada vegada mes rapid fins que es tot blanc durant l'ultim segon 
+
 
 	graphics = App->textures->Load("bombermanPC.png");
 	
 	bombs = App->tileMap->tilesReference;
 	position.x = 48;
-	position.y = GUIOffset + 16;
+	position.y = GUIOffset + 8;
 	playerCollider.x = 48;
-	playerCollider.y = GUIOffset + 26;
+	playerCollider.y = GUIOffset+16;
 	speed.x = 0;
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
-	
+	dead = false;
+	speedValue = 2;
+
+	hasCollided = false;
+
 
 	return true;
 }
@@ -100,6 +110,7 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	//delete collider;
 	App->textures->Unload(graphics);
 	App->textures->Unload(bombs);
 
@@ -113,111 +124,117 @@ update_status ModulePlayer::Update()
 {
 	lastPosition = position;
 
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		directionSide = DIRECTIONLEFT;
-
-	//Make collider follow player's position
-
-		if (current_animation != &left)
-		{
-			left.Reset();
-			current_animation = &left;
-		}
-	}
-
-
-
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (dead == false)
 	{
 
-		directionSide = DIRECTIONRIGHT;
-	
-	
-
-		if (current_animation != &right)
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			right.Reset();
-			current_animation = &right;
-		}
-	
-	}
+			directionSide = DIRECTIONLEFT;
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
+			//Make collider follow player's position
 
-		directionVertical = DIRECTIONDOWN;
-		
-		
-
-		if(current_animation != &down)
-		{
-			down.Reset();
-			current_animation = &down;
-		}
-	
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-
-		directionVertical = DIRECTIONUP;
-
-		
-		if(current_animation != &up)
-		{
-			up.Reset();
-			current_animation = &up;
+			if (current_animation != &left)
+			{
+				left.Reset();
+				current_animation = &left;
+			}
 		}
 
-		
-	}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+
+			directionSide = DIRECTIONRIGHT;
+
+
+
+			if (current_animation != &right)
+			{
+				right.Reset();
+				current_animation = &right;
+			}
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+
+			directionVertical = DIRECTIONDOWN;
+
+
+
+			if (current_animation != &down)
+			{
+				down.Reset();
+				current_animation = &down;
+			}
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+
+			directionVertical = DIRECTIONUP;
+
+
+			if (current_animation != &up)
+			{
+				up.Reset();
+				current_animation = &up;
+			}
+
+
+		}
+
+
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			int delay = 100;
+			bombPosition = bombPos(playerCollider);
+
+			App->particles->AddParticle(App->particles->bombR, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+			App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER);
+			
+			//TODO: bomba centrada en una posici�
+			LOG("bomba");
+		}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+		{
+			directionVertical = NODIRECTIONVERTICAL;
+			directionSide = NODIRECTIONSIDE;
+			current_animation = &idle;
+
+		}
+
+	}//Condició per si esta mort
+
 
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		int delay = 100;
-		bombPosition = bombPos(playerCollider);
-		 
-
-		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
-		//TODO: bomba centrada en una posici�
-		LOG("bomba");
-	}
-	
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-	{
-		directionVertical = NODIRECTIONVERTICAL;
-		directionSide = NODIRECTIONSIDE;
-		current_animation = &idle;
-		
-	}
 
 
 	
-
-	if (bombOn)
-	{
-		App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
-
-	}
-
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-
+	for (int i = 0; i < speedValue; i++)
+	{  
 	
 		leftRightCollision(directionSide);
 		upDownCollision(directionVertical);
+	
+		UpdatePosition();
 
-	
-	
-	UpdatePosition();
+
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+
+	}
 
 	directionSide = NODIRECTIONSIDE;
 	directionVertical = NODIRECTIONVERTICAL;
+	hasCollided = false;
+
 	return UPDATE_CONTINUE;
 }
 void ModulePlayer::UpdatePosition()
@@ -227,6 +244,8 @@ void ModulePlayer::UpdatePosition()
 	playerCollider.x += speed.x;
 	playerCollider.y += speed.y;
 
+
+	hasCollided = false;
 	collider->SetPos(playerCollider.x, playerCollider.y);
 
 }
@@ -240,6 +259,7 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 	{
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			hasCollided = true;
 
 			speed.x = 0;
 
@@ -247,21 +267,25 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 		else
 		{
 			speed.x = -1;
+		
 		}
+	
 	}
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
-
+			
 			speed.x = 0;
 		
 		}
 		else
 		{
 			speed.x = 1;
+
 		}
+		
 	}
 
 	if (directionSide == 2)//Idle
@@ -278,26 +302,32 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 	{
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
 			speed.y = -1;
+
 		}
+	
 	}
 
 	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
 			speed.y = 1;
+
 		}
+	
 	}
 
 	if (directionVertical == 2)//Idle
@@ -312,11 +342,25 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
-	
-
-	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
+	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
-		
+		App->particles->speedpowerUp.life = 0;
+		speedValue++;
+	}
+
+
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION)
+	{
+		dead = true;
+		current_animation = &dying;
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+	}
+
+	if (c2->type == COLLIDER_ENEMY)
+	{
+		dead = true;
+		current_animation = &dying;
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 	if (c2->type == COLLIDER_FINISH)
 	{
@@ -327,6 +371,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 
 }
+
 
 
 void ModulePlayer:: isWalkable()
@@ -391,3 +436,4 @@ p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 
 	return res;
 }
+

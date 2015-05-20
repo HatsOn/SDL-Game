@@ -27,7 +27,7 @@ enum update_status
 #define TITLE "Super Bomberman"
 #define GUIOffset 64
 #define SCOREOFFSET 4
-#define MAX_MAP_X 16
+#define MAX_MAP_X 17
 #define MAX_MAP_Y 17
 #define TILE_SIZE 16
 

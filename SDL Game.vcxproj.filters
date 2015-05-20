@@ -78,6 +78,12 @@
     <ClInclude Include="ModuleWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -126,6 +132,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bomb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
