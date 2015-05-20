@@ -10,6 +10,8 @@ private:
 
 public:
 	Map map;
+	p2Point<int> speedPowerUpLocation;
+	p2Point<int> sizeExplosionPowerUPLocation;
 	SDL_Texture* tilesReference;
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;

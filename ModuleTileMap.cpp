@@ -246,6 +246,9 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(28);
 
 
+	//speedPowerUpLocation.x 
+
+
 }
 
 

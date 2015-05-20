@@ -11,11 +11,11 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	collider = NULL;
 	current_animation = NULL;
 	bombAnimation = NULL;
-	bombOn = false;
+	bombOn = true;
 	speed.x = 1;
 	speed.y = 1;
 
-	// 
+	
 	bombPower = 1;
 
 
@@ -70,6 +70,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	hasCollided = false;
 
+	current_animation = &idle;
 	
 }
 
@@ -95,8 +96,8 @@ bool ModulePlayer::Start()
 	speed.x = 0;
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
-
-	
+	dead = false;
+	speedValue = 2;
 
 	hasCollided = false;
 
@@ -211,25 +212,21 @@ update_status ModulePlayer::Update()
 
 	
 
-	if (bombOn)
-	{
-		App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
 
-	}
 
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-
+	
+	for (int i = 0; i < speedValue; i++)
+	{  
 	
 		leftRightCollision(directionSide);
 		upDownCollision(directionVertical);
-
 	
-	
-	
-	UpdatePosition();
+		UpdatePosition();
 
 
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
+	}
 
 	directionSide = NODIRECTIONSIDE;
 	directionVertical = NODIRECTIONVERTICAL;
@@ -274,7 +271,7 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 16 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
 			
 			speed.x = 0;
