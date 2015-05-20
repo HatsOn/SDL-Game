@@ -345,10 +345,19 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
 		
+		speedValue++;
+
 	}
 
 
-	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION)
+	{
+		dead = true;
+		current_animation = &dying;
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+	}
+
+	if (c2->type == COLLIDER_ENEMY)
 	{
 		dead = true;
 		current_animation = &dying;

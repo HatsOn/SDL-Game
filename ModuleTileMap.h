@@ -16,6 +16,7 @@ public:
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;
 	SDL_Texture* enemyImg;
+	SDL_Texture* scoreImg;
 	
 	p2DynArray<int> nonWalkableTiles;
 
@@ -52,6 +53,7 @@ public:
 
 	SDL_Rect portal;
 	SDL_Rect enemy1;
+	SDL_Rect score;
 
 	bool isSpeedPowerUp;
 	
