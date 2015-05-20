@@ -116,7 +116,7 @@ bool ModuleParticles::Start()
 	speedpowerUp.anim.frames.PushBack({ 233, 114, 16, 16 });
 	speedpowerUp.life = 10000;
 	speedpowerUp.anim.speed = 0.05f;
-	speedpowerUp.anim.loop = false;
+	speedpowerUp.anim.loop = true;
 
 	return true;
 }
@@ -147,6 +147,8 @@ update_status ModuleParticles::Update()
 				///////////////
 				generateBomb(App->player->bombPower, p);
 			}
+
+
 			delete p;
 			active.del(tmp);
 		}		
@@ -174,12 +176,22 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 
 	while(tmp != NULL)
 	{
+		/*
 		if(tmp->data->collider == c1 )
 		{	
 			delete tmp->data;
 			active.del(tmp);
 			break;
 		}
+		*/
+		if (c1->type == COLLIDER_PLAYER)
+		{
+			delete tmp->data;
+			active.del(tmp);
+			break;
+		}
+
+
 
 		tmp = tmp->next;
 	}
@@ -403,7 +415,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 					
 					speedPowerUpLocation.x = (particlePosition.x + 16);
 
-					speedPowerUpLocation.y = (particlePosition.y - 8);
+					speedPowerUpLocation.y = (particlePosition.y);
 
 					App->particles->AddParticle(App->particles->speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
 				}
