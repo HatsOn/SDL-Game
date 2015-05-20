@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "ModuletileMap.h"
 #include "ctype.h"
+#include <time.h>
 
 ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app, start_Enabled)
 {
@@ -44,7 +45,7 @@ bool ModuleTileMap::Start()
 	App->player->Enable();
 
 
-
+	isSpeedPowerUp = false;
 
 
 }
@@ -245,9 +246,9 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(27);
 	nonWalkableTiles.PushBack(28);
 
+	srand(time(NULL));
 
-	//speedPowerUpLocation.x 
-
+	
 
 }
 
@@ -523,6 +524,14 @@ update_status ModuleTileMap::Update()
 
 	BuildMap();
 	
+	if (isSpeedPowerUp)
+	{
+	
+		App->renderer->Blit(enemyImg, enemy1.x, enemy1.y, &enemy1);
+
+	}
+
+
 	return UPDATE_CONTINUE;
 }
 

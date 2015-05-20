@@ -54,4 +54,6 @@ public:
 	Particle horizontal;
 	Particle vertical;
 
+	p2Point<int> speedPowerUpLocation;
+
 };

@@ -389,6 +389,13 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
+				if ((rand()% 100 + 1) <= 25)
+				{
+					
+					App->tileMap->isSpeedPowerUp = true;
+				
+				}
+
 				App->particles->AddParticle(App->particles->bomb,
 					p->position.x + size*i,
 					p->position.y,

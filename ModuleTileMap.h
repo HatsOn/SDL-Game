@@ -52,6 +52,9 @@ public:
 
 	SDL_Rect portal;
 	SDL_Rect enemy1;
+
+	bool isSpeedPowerUp;
+
 	
 public:
 
