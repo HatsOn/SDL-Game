@@ -79,6 +79,7 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	dead = false;
 	LOG("Loading player");
 
 	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
