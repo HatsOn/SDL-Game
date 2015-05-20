@@ -18,7 +18,7 @@ class ModuleEnemy : public Module
 
 public: 
 	//Properties
-	p2List<Enemy> enemyList;
+//	p2List<Enemy> enemyList;
 	
 
 
