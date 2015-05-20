@@ -58,7 +58,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	dying.frames.PushBack({ 82, 75, 15, 25 });
 	dying.frames.PushBack({ 99, 75, 15, 25 });
 	dying.frames.PushBack({ 117, 75, 15, 25 });
-	dying.speed = 0.1f;
+	dying.speed = 0.05f;
 	dying.loop = false;
 
 	// Set Bombs
@@ -350,7 +350,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		dead = true;
 		current_animation = &dying;
-		App->fade->FadeToBlack(App->tileMap, App->scene_intro);
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 	if (c2->type == COLLIDER_FINISH)
 	{
