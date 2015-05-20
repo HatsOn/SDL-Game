@@ -46,6 +46,7 @@ private:
 
 public:
 	Particle bomb;
+	Particle bombR;
 	Particle explosion;
 	Particle explosionUp;
 	Particle explosionDown;
@@ -53,6 +54,11 @@ public:
 	Particle explosionRight;
 	Particle horizontal;
 	Particle vertical;
+
+	Particle evaporatingWall;
+
+	int bombLife;
+	int explosionLife;
 
 	p2Point<int> speedPowerUpLocation;
 

@@ -110,6 +110,7 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	//delete collider;
 	App->textures->Unload(graphics);
 	App->textures->Unload(bombs);
 
@@ -193,8 +194,9 @@ update_status ModulePlayer::Update()
 			int delay = 100;
 			bombPosition = bombPos(playerCollider);
 
-
-			/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+			App->particles->AddParticle(App->particles->bombR, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+			App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER);
+			
 			//TODO: bomba centrada en una posici�
 			LOG("bomba");
 		}
