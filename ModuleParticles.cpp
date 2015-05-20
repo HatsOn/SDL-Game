@@ -18,15 +18,35 @@ bool ModuleParticles::Start()
 
 	LOG("Loading particles");
 	graphics = App->textures->Load("BombermanTiles.png");
-	int life = 2000;
+
+	bombLife = 2000;
+	explosionLife = 2000;
 	// Bomb particle
 
-	bomb.anim.frames.PushBack({ 509, 185, 16, 16});
-	bomb.anim.frames.PushBack({ 526, 185, 16, 16 });
-	bomb.anim.frames.PushBack({ 543, 185, 16, 16 });
-	bomb.life = life;
+	bomb.anim.frames.PushBack({ 356, 151, 16, 16 });
+	bomb.anim.frames.PushBack({ 373, 151, 16, 16 });
+	bomb.anim.frames.PushBack({ 390, 151, 16, 16 });
+	bomb.anim.frames.PushBack({ 373, 151, 16, 16 });
+	bomb.life = bombLife;
 	bomb.anim.speed = 0.05f;
-	//bomb.anim.loop = true;
+
+	bombR.anim.frames.PushBack({ 255, 83, 16, 16 });
+	bombR.anim.frames.PushBack({ 271, 83, 16, 16 });
+	bombR.anim.frames.PushBack({ 288, 83, 16, 16 });
+	bombR.anim.frames.PushBack({ 271, 83, 16, 16 });
+	bombR.life = bombLife*1.5;
+	bombR.anim.speed = 0.05f;
+		
+
+	evaporatingWall.anim.frames.PushBack({ 254, 151, 16, 16 });
+	evaporatingWall.anim.frames.PushBack({ 271, 151, 16, 16 });
+	evaporatingWall.anim.frames.PushBack({ 288, 151, 16, 16 });
+	evaporatingWall.anim.frames.PushBack({ 305, 151, 16, 16 });
+	evaporatingWall.anim.frames.PushBack({ 322, 151, 16, 16 });
+	evaporatingWall.anim.frames.PushBack({ 339, 151, 16, 16 });
+	evaporatingWall.life = bombLife*1.5;
+	evaporatingWall.anim.speed = 0.05f;
+	evaporatingWall.anim.loop = false;
 
 	// Explosion particle
 	
@@ -36,7 +56,7 @@ bool ModuleParticles::Start()
 	explosion.anim.frames.PushBack({ 373, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 322, 117, 16, 16 });
 	explosion.anim.speed = 0.05f;
-	explosion.life = life;
+	explosion.life = explosionLife;
 	explosion.anim.loop = false;
 	
 
@@ -48,7 +68,7 @@ bool ModuleParticles::Start()
 	explosionUp.anim.frames.PushBack({ 356, 82, 16, 16 });
 	explosionUp.anim.frames.PushBack({ 339, 82, 16, 16 });
 	explosionUp.anim.frames.PushBack({ 322, 82, 16, 16 });
-	explosionUp.life = life;
+	explosionUp.life = explosionLife;
 	explosionUp.anim.speed = 0.05f;
 	explosionUp.anim.loop = false;
 	
@@ -61,7 +81,7 @@ bool ModuleParticles::Start()
 	explosionDown.anim.frames.PushBack({ 373, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 322, 134, 16, 16 });
 	explosionDown.anim.frames.PushBack({ 305, 83, 16, 16 });
-	explosionDown.life = life;
+	explosionDown.life = explosionLife;
 	explosionDown.anim.speed = 0.05f;
 	explosionDown.anim.loop = false;
 	
@@ -71,7 +91,7 @@ bool ModuleParticles::Start()
 	explosionLeft.anim.frames.PushBack({ 288, 66, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 271, 66, 16, 16 });
 	explosionLeft.anim.frames.PushBack({ 254, 66, 16, 16 });
-	explosionLeft.life = life;
+	explosionLeft.life = explosionLife;
 	explosionLeft.anim.speed = 0.05f;
 	explosionLeft.anim.loop = false;
 	
@@ -82,7 +102,7 @@ bool ModuleParticles::Start()
 	explosionRight.anim.frames.PushBack({ 271, 134, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 305, 100, 16, 16 });
 	explosionRight.anim.frames.PushBack({ 305, 117, 16, 16 });
-	explosionRight.life = life;
+	explosionRight.life = explosionLife;
 	explosionRight.anim.speed = 0.05f;
 	explosionRight.anim.loop = false;
 	
@@ -92,7 +112,7 @@ bool ModuleParticles::Start()
 	horizontal.anim.frames.PushBack({ 254, 134, 16, 16 });
 	horizontal.anim.frames.PushBack({ 288, 100, 16, 16 });
 	horizontal.anim.frames.PushBack({ 288, 117, 16, 16 });
-	horizontal.life = life;
+	horizontal.life = explosionLife;
 	horizontal.anim.speed = 0.05f;
 	horizontal.anim.loop = false;
 
@@ -102,7 +122,7 @@ bool ModuleParticles::Start()
 	vertical.anim.frames.PushBack({ 373, 117, 16, 16 });
 	vertical.anim.frames.PushBack({ 288, 134, 16, 16 });
 	vertical.anim.frames.PushBack({ 305, 134, 16, 16 });
-	vertical.life = life;
+	vertical.life = explosionLife;
 	vertical.anim.speed = 0.05f;
 	vertical.anim.loop = false;
 
@@ -254,96 +274,91 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	
 	
 	//Center
-	App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	power = 4;
+	AddParticle(explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	power = 5;
 	//Arms
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
 	{
-		// aixi era avans, ara li sumo sixe*i per anar de particula en particula
-		// if (canExplode(p->position, 'n')) 
 		if (canExplode(particlePosition, 'n'))
 		{
-			App->particles->AddParticle(App->particles->vertical,
-										p->position.x,
-										p->position.y - size*i,
-										COLLIDER_PLAYER_EXPLOSION);
+			AddParticle(vertical,
+						p->position.x,
+						p->position.y - size*i,
+						COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y -= 16;
 		}
 		else 
 		{
-			
-			
 			if (canDestroy(particlePosition, 'n')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
-				App->particles->AddParticle(App->particles->bomb,
-										p->position.x,
-										p->position.y - size*i,
-										COLLIDER_PLAYER_EXPLOSION);
+				AddParticle(evaporatingWall,
+							p->position.x,
+							p->position.y - size*i,
+							COLLIDER_PLAYER_EXPLOSION);
 			}
-
 			upHand = true;
-
-		}
-		if (!upHand && canExplode(particlePosition, 'n'))
-			App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - (size+size)*i, COLLIDER_PLAYER_EXPLOSION);
-		else if (canDestroy(particlePosition, 'n'))
-		{
-			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
-			App->particles->AddParticle(App->particles->bomb,
-				p->position.x,
-				p->position.y - 16,
-				COLLIDER_PLAYER_EXPLOSION);
-		}
+			break;
+		}		
 	}
-
+	if (!upHand && canExplode(particlePosition, 'n'))
+		AddParticle(explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
+	else if (canDestroy(particlePosition, 'n'))
+	{
+		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		AddParticle(evaporatingWall,
+					p->position.x,
+					p->position.y - size*i,
+					COLLIDER_PLAYER_EXPLOSION);
+	}
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
 	{
 		if (canExplode(particlePosition, 's'))
 		{
-			App->particles->AddParticle(App->particles->vertical,
-										p->position.x,
-										p->position.y + size*i,
-										COLLIDER_PLAYER_EXPLOSION);
+			AddParticle(vertical,
+						p->position.x,
+						p->position.y + size*i,
+						COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.y += 16;
-		}
-		
+		}		
 		else
 		{
 			if (canDestroy(particlePosition, 's')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-				App->particles->AddParticle(App->particles->bomb,
+				AddParticle(evaporatingWall,
+							p->position.x,
+							p->position.y + size*i,
+							COLLIDER_PLAYER_EXPLOSION);
+			}
+			downHand = true;
+			break;
+		}		
+	}
+	if (!downHand && canExplode(particlePosition, 's'))
+		AddParticle(explosionDown, p->position.x, p->position.y +size*i, COLLIDER_PLAYER_EXPLOSION);
+	else if (canDestroy(particlePosition, 's'))
+	{
+		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		AddParticle(evaporatingWall,
 					p->position.x,
 					p->position.y + size*i,
 					COLLIDER_PLAYER_EXPLOSION);
-			}
-			downHand = true;
-		}
-		if (!downHand && canExplode(particlePosition, 's'))
-			App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + (size+size)*i, COLLIDER_PLAYER_EXPLOSION);
-		else if (canDestroy(particlePosition, 's'))
-		{
-			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-			App->particles->AddParticle(App->particles->bomb,
-				p->position.x,
-				p->position.y,
-				COLLIDER_PLAYER_EXPLOSION);
-		}
 	}
-
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
-	{
-		
+	{		
 		if (canExplode(particlePosition, 'o'))
 		{
-			App->particles->AddParticle(App->particles->horizontal,
-										p->position.x - size*i,
-										p->position.y,
-										COLLIDER_PLAYER_EXPLOSION);
+			AddParticle(horizontal,
+						p->position.x - size*i,
+						p->position.y,
+						COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x -= 16;
 		}		
 		else
@@ -351,36 +366,36 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'o')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-				App->particles->AddParticle(App->particles->bomb,
-					p->position.x - size*i,
-					p->position.y,
-					COLLIDER_PLAYER_EXPLOSION);
+				AddParticle(evaporatingWall,
+							p->position.x - size*i,
+							p->position.y,
+							COLLIDER_PLAYER_EXPLOSION);
 			}
 
 			leftHand = true;
-		}
-		if (!leftHand && canExplode(particlePosition, 'o'))
-			App->particles->AddParticle(App->particles->explosionLeft, p->position.x - (size + size)*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-		else if (canDestroy(particlePosition, 'o'))
-		{
-			App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-			App->particles->AddParticle(App->particles->bomb,
-				p->position.x - 16,
-				p->position.y,
-				COLLIDER_PLAYER_EXPLOSION);
-		}
+			break;
+		}		
 	}
-
+	if (!leftHand && canExplode(particlePosition, 'o'))
+		AddParticle(explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	else if (canDestroy(particlePosition, 'o'))
+	{
+		App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		AddParticle(evaporatingWall,
+					p->position.x - size*i,
+					p->position.y,
+					COLLIDER_PLAYER_EXPLOSION);
+	}
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
-	{
-		
+	{	
 		if (canExplode(particlePosition, 'e'))
 		{
-			App->particles->AddParticle(App->particles->horizontal,
-										p->position.x + size*i,
-										p->position.y,
-										COLLIDER_PLAYER_EXPLOSION);
+			AddParticle(horizontal,
+						p->position.x + size*i,
+						p->position.y,
+						COLLIDER_PLAYER_EXPLOSION);
 			particlePosition.x += 16;
 		}
 		else
@@ -390,42 +405,30 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
 				if ((rand()% 100 + 1) <= 25)
-				{
-					
-					App->tileMap->isSpeedPowerUp = true;
-				
+				{					
+					App->tileMap->isSpeedPowerUp = true;				
 				}
-
-				App->particles->AddParticle(App->particles->bomb,
+				AddParticle(evaporatingWall,
+							p->position.x + size*i,
+							p->position.y,
+							COLLIDER_PLAYER_EXPLOSION);
+			}
+			rightHand = true;
+			break;
+		}		
+	}
+	if (!rightHand && canExplode(particlePosition, 'e'))
+		App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+	else if (canDestroy(particlePosition, 'e'))
+	{
+		App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		AddParticle(evaporatingWall,
 					p->position.x + size*i,
 					p->position.y,
 					COLLIDER_PLAYER_EXPLOSION);
-			}
-
-			rightHand = true;
-		}
-		if (!rightHand && canExplode(particlePosition, 'e'))
-			App->particles->AddParticle(App->particles->explosionRight, p->position.x + (size + size)*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-		else if (canDestroy(particlePosition, 'e'))
-		{
-			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-			App->particles->AddParticle(App->particles->bomb,
-				p->position.x,
-				p->position.y,
-				COLLIDER_PLAYER_EXPLOSION);
-		}
 	}
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	
-	//Hands
-	/*if (!upHand && canExplode(particlePosition, 'n'))
-		App->particles->AddParticle(App->particles->explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
-	if (!downHand && canExplode(particlePosition, 's'))
-		App->particles->AddParticle(App->particles->explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
-	if (!leftHand && canExplode(particlePosition, 'o'))
-		App->particles->AddParticle(App->particles->explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	if (!rightHand && canExplode(particlePosition, 'e'))
-		App->particles->AddParticle(App->particles->explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);*/
 }
 
 bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
