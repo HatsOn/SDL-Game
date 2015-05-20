@@ -74,9 +74,15 @@ public:
 	p2Point<int> bombPosition;
 	bool bombOn;
 	int bombPower;
-	bool dead = false;
+
+	
 	p2Point<int> speed;
 	int speedValue;
+
+	bool dead;
+
+
+
 
 
 
