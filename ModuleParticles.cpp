@@ -141,9 +141,9 @@ bool ModuleParticles::Start()
 
 	sizeExplosionPowerUp.anim.frames.PushBack({233, 66, 16, 16});
 	sizeExplosionPowerUp.anim.frames.PushBack({233, 83, 16, 16});
-	speedpowerUp.life = 10000;
-	speedpowerUp.anim.speed = 0.05f;
-	speedpowerUp.anim.loop = true;
+	sizeExplosionPowerUp.life = 10000;
+	sizeExplosionPowerUp.anim.speed = 0.05f;
+	sizeExplosionPowerUp.anim.loop = true;
 
 	return true;
 }
@@ -345,7 +345,34 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		{
 			if (canDestroy(particlePosition, 'n')) // Si es destruible
 			{
-				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
+				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 20;
+				
+				int random;
+				random = (rand() % 100 + 1);
+				LOG("%d", random);
+				//if (random <= 10)
+				if (false)
+				{
+					speedPowerUpLocation.x = (particlePosition.x);
+
+					speedPowerUpLocation.y = (particlePosition.y - 16);
+
+					AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+				}
+				//if (random > 10 && random <= 20)
+				if (true)
+				{
+
+					sizeExplosionPowerUpLocation.x = (particlePosition.x);
+
+					sizeExplosionPowerUpLocation.y = (particlePosition.y + 16);
+
+					AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+				}
+
+				
+				
+				
 				AddParticle(evaporatingWall,
 					p->position.x,
 					p->position.y - size*i,
@@ -359,7 +386,51 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
 	else if (canDestroy(particlePosition, 'n'))
 	{
-		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
+
+
+		/*****************************************/
+
+
+		App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 20;
+
+		int random;
+		random = (rand() % 100 + 1);
+		LOG("%d", random);
+		if (random <= 10)
+		{
+			speedPowerUpLocation.x = (particlePosition.x);
+
+			speedPowerUpLocation.y = (particlePosition.y - 16);
+
+			AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+		}
+		if (random > 10 && random <= 20)
+		{
+
+			sizeExplosionPowerUpLocation.x = (particlePosition.x);
+
+			sizeExplosionPowerUpLocation.y = (particlePosition.y - 16);
+
+			AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+		}
+
+		/*****************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		AddParticle(evaporatingWall,
 			p->position.x,
 			p->position.y - size*i,
@@ -379,9 +450,36 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		}
 		else
 		{
+
+			int random;
+			random = (rand() % 100 + 1);
+			LOG("%d", random);
+
 			if (canDestroy(particlePosition, 's')) // Si es destruible
 			{
-				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 20;
+				
+				if (false)
+				{
+					speedPowerUpLocation.x = (particlePosition.x);
+
+					speedPowerUpLocation.y = (particlePosition.y + 16);
+
+					AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+				}
+				if (random > 10 && random <= 20)
+				{
+
+					sizeExplosionPowerUpLocation.x = (particlePosition.x);
+
+					sizeExplosionPowerUpLocation.y = (particlePosition.y + 16);
+
+					AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+				}
+				
+				
+				
+				
 				AddParticle(evaporatingWall,
 					p->position.x,
 					p->position.y + size*i,
@@ -395,7 +493,46 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
 	else if (canDestroy(particlePosition, 's'))
 	{
-		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+
+		/*****************************************/
+
+
+		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 20;
+
+		int random;
+		random = (rand() % 100 + 1);
+		LOG("%d", random);
+		
+		if (random <= 10)
+		
+		{
+			speedPowerUpLocation.x = (particlePosition.x);
+
+			speedPowerUpLocation.y = (particlePosition.y + 16);
+
+			AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+		}
+		if (random > 10 && random <= 20)
+		{
+
+			sizeExplosionPowerUpLocation.x = (particlePosition.x);
+
+			sizeExplosionPowerUpLocation.y = (particlePosition.y + 16);
+
+			AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+		}
+
+		/*****************************************/
+
+
+
+
+
+
+
+
+
+	
 		AddParticle(evaporatingWall,
 			p->position.x,
 			p->position.y + size*i,
@@ -418,6 +555,36 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'o')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+				
+				int random;
+				random = (rand() % 100 + 1);
+				LOG("%d", random);
+				
+				if (random <= 10)
+				{
+					speedPowerUpLocation.x = (particlePosition.x - 16);
+
+					speedPowerUpLocation.y = (particlePosition.y);
+
+					AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+				}
+				
+				if (random > 10 && random <= 20)
+				{
+
+					sizeExplosionPowerUpLocation.x = (particlePosition.x - 16);
+
+					sizeExplosionPowerUpLocation.y = (particlePosition.y);
+
+					AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+				}
+				
+				
+				
+				
+				
+				
+				
 				AddParticle(evaporatingWall,
 					p->position.x - size*i,
 					p->position.y,
@@ -432,7 +599,61 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 	else if (canDestroy(particlePosition, 'o'))
 	{
+
+
+		/*****************************************/
+
 		App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+
+		int random;
+		random = (rand() % 100 + 1);
+		LOG("%d", random);
+		
+		if (random <= 10)
+		{
+			speedPowerUpLocation.x = (particlePosition.x - 16);
+
+			speedPowerUpLocation.y = (particlePosition.y);
+
+			AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+		}
+		
+		if (random > 10 && random <= 20)
+		{
+
+			sizeExplosionPowerUpLocation.x = (particlePosition.x - 16);
+
+			sizeExplosionPowerUpLocation.y = (particlePosition.y);
+
+			AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+		}
+
+
+		/*****************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 		AddParticle(evaporatingWall,
 			p->position.x - size*i,
 			p->position.y,
@@ -455,7 +676,12 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'e')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-				if ((rand() % 100 + 1) <= 20)
+
+				int random;
+				random = (rand() % 100 + 1);
+				
+
+				if (random <= 10)
 				{
 					App->tileMap->isSpeedPowerUp = true;
 				
@@ -469,7 +695,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 								
 				}
 
-				if (true)
+				if (random > 10 && random <= 20)
 				{
 					App->tileMap->isExplosionSizePowerUp = true;
 
@@ -483,7 +709,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 
 				}
 
-
+				
 				AddParticle(evaporatingWall,
 					p->position.x + size*i,
 					p->position.y,
@@ -498,33 +724,32 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 
 		App->tileMap->isSpeedPowerUp = true;
-		//
+		
 	
 	}
 	else if (canDestroy(particlePosition, 'e'))
 	{
 		App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-		if ((rand() % 100 + 1) <= 25)
+
+		int random;
+		random = (rand() % 100 + 1);
+		LOG("%d", random);
+		if (random <= 10)
 		{
 			speedPowerUpLocation.x = (particlePosition.x + 16);
 
 			speedPowerUpLocation.y = (particlePosition.y);
 
-
 			AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
 		}
-		if (true)
+		if (random > 10 && random <= 20 )
 		{
-			App->tileMap->isExplosionSizePowerUp = true;
-
 
 			sizeExplosionPowerUpLocation.x = (particlePosition.x + 16);
 
 			sizeExplosionPowerUpLocation.y = (particlePosition.y);
 
-
 			AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
-
 		}
 		AddParticle(evaporatingWall,
 			p->position.x + size*i,
