@@ -127,6 +127,8 @@ update_status ModuleSceneIntro::Update()
 	{
 		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
+
+		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
 
 	return UPDATE_CONTINUE;
