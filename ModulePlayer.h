@@ -44,8 +44,8 @@ public:
 
 
 
-
-
+	int speedPowerUpCounter;
+	int sizeBombPowerUpCounter;
 	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;
 	LookingUpDown directionVertical;

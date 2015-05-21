@@ -12,7 +12,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	current_animation = NULL;
 	bombAnimation = NULL;
 	bombOn = true;
-	
+	sizeBombPowerUpCounter = 0;
 	speed.x = 1;
 	speed.y = 1;
 
@@ -115,6 +115,8 @@ bool ModulePlayer::Start()
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
 	dead = false;
 	speedValue = 1;
+
+	speedPowerUpCounter = 0;
 
 	hasCollided = false;
 
@@ -367,13 +369,29 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
 		App->particles->findParticle(COLLIDER_SPEEDPOWERUP);
-		speedValue++;	
+		
+		speedPowerUpCounter++;
+
+		if (speedPowerUpCounter >= 2)
+		{
+			speedValue++;	
+			LOG("L'speed del player es: %d", speedValue);
+			speedPowerUpCounter = 0;
+		}
 	}
 
 	if (c2->type == COLLIDER_SIZEXPLOSIONPOWERUP)
 	{
 		App->particles->findParticle(COLLIDER_SIZEXPLOSIONPOWERUP);
-		bombPower++;		
+
+		sizeBombPowerUpCounter++;
+
+		
+			LOG("La potencia del player es: %d",bombPower);
+			bombPower++;
+			sizeBombPowerUpCounter = 0;
+		
+				
 	}
 
 
