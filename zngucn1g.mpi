@@ -82,6 +82,7 @@ public:
 	int speedValue;
 
 	bool dead;
+	bool end;
 
 
 

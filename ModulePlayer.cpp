@@ -61,6 +61,19 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	dying.speed = 0.05f;
 	dying.loop = false;
 
+	//Ending
+	ending.frames.PushBack({ 5, 132, 15, 21 });
+	ending.frames.PushBack({ 22, 132, 15, 21 });
+	ending.frames.PushBack({ 39, 132, 15, 21 });
+	ending.frames.PushBack({ 57, 132, 15, 21 });
+	ending.frames.PushBack({ 74, 132, 15, 21 });
+	ending.frames.PushBack({ 91, 132, 15, 21 });
+	ending.frames.PushBack({ 108, 132, 15, 21 });
+	ending.frames.PushBack({ 128, 132, 15, 21 });
+	ending.frames.PushBack({ 142, 132, 15, 21 });
+	ending.speed = 0.05f;
+	ending.loop = false;
+
 	// Set Bombs
 	bomb.frames.PushBack({ 356, 151 ,16,16});
 	bomb.frames.PushBack({ 373, 151, 16,16});
@@ -82,8 +95,8 @@ bool ModulePlayer::Start()
 {
 	App->particles->Enable();
 	App->collision->Enable();
-	dead = false;
 	finished = false;
+	dead = false;
 	LOG("Loading player");
 
 	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
@@ -133,7 +146,7 @@ update_status ModulePlayer::Update()
 	LOG("Finished: %d", finished);
 	lastPosition = position;
 
-	if (dead == false)
+	if (dead == false && finished == false)
 	{
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -382,7 +395,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		LOG("PORTAL ACTIVADO");
 		//App->player->Disable();
 		finished = true;
-		App->fade->FadeToBlack(App->tileMap, App->scene_intro);
+		position.x = 3*16;
+		position.y = (3+3)*16;
+		current_animation = &ending;
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 		
 	}
 	if (c2->type == COLLIDER_PLAYER)
