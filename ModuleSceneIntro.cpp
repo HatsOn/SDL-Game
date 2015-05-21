@@ -44,7 +44,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		
+		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
 	}
 

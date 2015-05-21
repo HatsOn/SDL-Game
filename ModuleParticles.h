@@ -61,7 +61,7 @@ public:
 
 	int bombLife;
 	int explosionLife;
-
+	int wallLife;
 	p2Point<int> speedPowerUpLocation;
 	p2Point<int> sizeExplosionPowerUpLocation;
 

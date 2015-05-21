@@ -14,6 +14,13 @@ ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app,
 
 bool ModuleTileMap::Start()
 {
+	LoadMap("DebugLevel.txt");
+	//LoadMap("FirstLevel.txt");
+	//LoadMap("firstLevel.txt");
+
+	PrintMap();
+
+
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
@@ -49,7 +56,6 @@ bool ModuleTileMap::Start()
 	
 	App->bombs->Enable();
 	App->player->Enable();
-
 
 	isSpeedPowerUp = false;
 
@@ -268,11 +274,7 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-	LoadMap("DebugLevel.txt");
-	//LoadMap("FirstLevel.txt");
-	//LoadMap("firstLevel.txt");
-
-	PrintMap();
+	
 	//CollisionMap();
 	return true;
 	

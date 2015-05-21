@@ -12,6 +12,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	current_animation = NULL;
 	bombAnimation = NULL;
 	bombOn = true;
+	
 	speed.x = 1;
 	speed.y = 1;
 
@@ -79,7 +80,10 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	App->particles->Enable();
+	App->collision->Enable();
 	dead = false;
+	finished = false;
 	LOG("Loading player");
 
 	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
@@ -110,8 +114,13 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 	//delete collider;
+
+	App->particles->Disable();
+	App->collision->Disable();
+	//App->collision->CleanUp();
 	App->textures->Unload(graphics);
 	App->textures->Unload(bombs);
+	App->tileMap->Disable();
 
 	return true;
 }
@@ -121,6 +130,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	LOG("Finished: %d", finished);
 	lastPosition = position;
 
 	if (dead == false)
@@ -344,38 +354,43 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
 		App->particles->findParticle(COLLIDER_SPEEDPOWERUP);
-		speedValue++;
-	
+		speedValue++;	
 	}
 
 	if (c2->type == COLLIDER_SIZEXPLOSIONPOWERUP)
 	{
 		App->particles->findParticle(COLLIDER_SIZEXPLOSIONPOWERUP);
-		bombPower++;
-		
+		bombPower++;		
 	}
 
 
-	if (c2->type == COLLIDER_PLAYER_EXPLOSION)
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION && !dead)
 	{
 		dead = true;
 		current_animation = &dying;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 
-	if (c2->type == COLLIDER_ENEMY)
+	if (c2->type == COLLIDER_ENEMY && !dead)
 	{
 		dead = true;
-		current_animation = &dying;
+		current_animation = &dying;		
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
-	if (c2->type == COLLIDER_FINISH)
+	if (c2->type == COLLIDER_FINISH && !finished)
 	{
 		LOG("PORTAL ACTIVADO");
 		//App->player->Disable();
+		finished = true;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro);
 		
 	}
+	if (c2->type == COLLIDER_PLAYER)
+	{
+		speed.SetToZero();
+	}
+
+	
 
 }
 

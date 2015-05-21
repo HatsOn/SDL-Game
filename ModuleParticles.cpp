@@ -21,6 +21,7 @@ bool ModuleParticles::Start()
 
 	bombLife = 2000;
 	explosionLife = 2000;
+	wallLife = 1500;
 	// Bomb particle
 
 	bomb.anim.frames.PushBack({ 356, 151, 16, 16 });
@@ -44,7 +45,7 @@ bool ModuleParticles::Start()
 	evaporatingWall.anim.frames.PushBack({ 305, 151, 16, 16 });
 	evaporatingWall.anim.frames.PushBack({ 322, 151, 16, 16 });
 	evaporatingWall.anim.frames.PushBack({ 339, 151, 16, 16 });
-	evaporatingWall.life = bombLife*1.5;
+	evaporatingWall.life = wallLife;
 	evaporatingWall.anim.speed = 0.05f;
 	evaporatingWall.anim.loop = false;
 
@@ -175,7 +176,6 @@ update_status ModuleParticles::Update()
 				///////////////
 				generateBomb(App->player->bombPower, p);
 			}
-
 
 			delete p;
 			active.del(tmp);
