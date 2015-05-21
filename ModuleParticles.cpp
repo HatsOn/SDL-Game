@@ -138,6 +138,12 @@ bool ModuleParticles::Start()
 	speedpowerUp.anim.speed = 0.05f;
 	speedpowerUp.anim.loop = true;
 
+	sizeExplosionPowerUp.anim.frames.PushBack({233, 66, 16, 16});
+	sizeExplosionPowerUp.anim.frames.PushBack({233, 83, 16, 16});
+	speedpowerUp.life = 10000;
+	speedpowerUp.anim.speed = 0.05f;
+	speedpowerUp.anim.loop = true;
+
 	return true;
 }
 
@@ -154,6 +160,8 @@ update_status ModuleParticles::Update()
 {
 	p2List_item<Particle*>* tmp = active.getFirst();
 	p2List_item<Particle*>* tmp_next = active.getFirst();
+
+	
 
 	while(tmp != NULL)
 	{
@@ -279,6 +287,24 @@ bool Particle::Update()
 	return ret;
 }
 
+void ModuleParticles::findParticle(COLLIDER_TYPE type)
+{
+
+	p2List_item<Particle*>* tmp = active.getFirst();
+
+	while (tmp != NULL)
+	{
+		if (tmp->data->collider->type == COLLIDER_SPEEDPOWERUP)
+		{
+			tmp->data->born = 0;
+		}
+
+		tmp = tmp->next;
+	}
+
+}
+
+
 
 void ModuleParticles::generateBomb(int power, Particle* p)
 {
@@ -295,19 +321,19 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 
 	//Center
 	AddParticle(explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	power = 5;
+	//power = 5;
 	//Arms
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;
 	for (i = 1; i < power; i++)
 	{
-<<<<<<< HEAD
+
 		// aixi era avans, ara li sumo size*i per anar de particula en particula
 		// if (canExplode(p->position, 'n')) 
-		if (canExplode(particlePosition, 'n')) 
-=======
+		
+
 		if (canExplode(particlePosition, 'n'))
->>>>>>> origin/InProgress
+
 		{
 			AddParticle(vertical,
 				p->position.x,
@@ -429,20 +455,35 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'e')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-				if ((rand() % 100 + 1) <= 25)
+				if ((rand() % 100 + 1) <= 20)
 				{
 					App->tileMap->isSpeedPowerUp = true;
-					//(rand()% 100 + 1) <= 25
-					if (true)
-					{
+				
+					
 						speedPowerUpLocation.x = (particlePosition.x + 16);
 
 						speedPowerUpLocation.y = (particlePosition.y);
 
 
 						AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
-					}					
+								
 				}
+
+				if (true)
+				{
+					App->tileMap->isExplosionSizePowerUp = true;
+
+
+					sizeExplosionPowerUpLocation.x = (particlePosition.x + 16);
+
+					sizeExplosionPowerUpLocation.y = (particlePosition.y);
+
+
+					AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+
+				}
+
+
 				AddParticle(evaporatingWall,
 					p->position.x + size*i,
 					p->position.y,
@@ -453,10 +494,38 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		}
 	}
 	if (!rightHand && canExplode(particlePosition, 'e'))
+	{ 
 		AddParticle(explosionRight, p->position.x + size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
+
+		App->tileMap->isSpeedPowerUp = true;
+		//
+	
+	}
 	else if (canDestroy(particlePosition, 'e'))
 	{
 		App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		if ((rand() % 100 + 1) <= 25)
+		{
+			speedPowerUpLocation.x = (particlePosition.x + 16);
+
+			speedPowerUpLocation.y = (particlePosition.y);
+
+
+			AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
+		}
+		if (true)
+		{
+			App->tileMap->isExplosionSizePowerUp = true;
+
+
+			sizeExplosionPowerUpLocation.x = (particlePosition.x + 16);
+
+			sizeExplosionPowerUpLocation.y = (particlePosition.y);
+
+
+			AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
+
+		}
 		AddParticle(evaporatingWall,
 			p->position.x + size*i,
 			p->position.y,

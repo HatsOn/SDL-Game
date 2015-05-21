@@ -38,7 +38,7 @@ public:
 	void generateBomb(int power, Particle* p);
 	bool ModuleParticles::canExplode(p2Point<int> p, char orientation);
 	bool ModuleParticles::canDestroy(p2Point<int> p, char orientation);
-
+	void findParticle(COLLIDER_TYPE);
 private:
 
 	SDL_Texture* graphics;
@@ -46,6 +46,7 @@ private:
 
 public:
 	Particle speedpowerUp;
+	Particle sizeExplosionPowerUp;
 	Particle bomb;
 	Particle bombR;
 	Particle explosion;
@@ -62,5 +63,6 @@ public:
 	int explosionLife;
 
 	p2Point<int> speedPowerUpLocation;
+	p2Point<int> sizeExplosionPowerUpLocation;
 
 };

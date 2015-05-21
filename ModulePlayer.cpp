@@ -18,7 +18,6 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	
 	bombPower = 1;
 
-
 	// idle animation (just the bomberman
 	idle.frames.PushBack({72, 46, 15, 23});
 
@@ -98,7 +97,7 @@ bool ModulePlayer::Start()
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
 	dead = false;
-	speedValue = 2;
+	speedValue = 1;
 
 	hasCollided = false;
 
@@ -344,8 +343,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	
 	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
-		App->particles->speedpowerUp.life = 0;
+		App->particles->findParticle(COLLIDER_SPEEDPOWERUP);
 		speedValue++;
+	
+	}
+
+	if (c2->type == COLLIDER_SIZEXPLOSIONPOWERUP)
+	{
+		App->particles->findParticle(COLLIDER_SIZEXPLOSIONPOWERUP);
+		bombPower++;
+		
 	}
 
 
