@@ -16,7 +16,7 @@ bool ModuleTileMap::Start()
 {
 	LoadMap("DebugLevel.txt");
 	//LoadMap("FirstLevel.txt");
-	//LoadMap("firstLevel.txt");
+	LoadMap("firstLevel.txt");
 
 	PrintMap();
 
@@ -34,16 +34,14 @@ bool ModuleTileMap::Start()
 	portal.h = 16;
 	portal.w = 16;
 
-	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
+	//Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
 
-	enemyImg = App->textures->Load("portal.png");
+	
 
-	enemy1.x = 3;
-	enemy1.y = 2;
-	enemy1.h = 24;
-	enemy1.w = 16;
+	//Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 16 }, COLLIDER_ENEMY);
 
-	Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 16 }, COLLIDER_ENEMY);
+	paintEnemies();
+
 
 	score.x = 0;
 	score.y = 0;
@@ -61,6 +59,50 @@ bool ModuleTileMap::Start()
 
 
 }
+
+void ModuleTileMap::paintEnemies()
+{
+	enemyImg = App->textures->Load("portal.png");
+	
+	rEnemy1.x = 3;
+	rEnemy1.y = 2;
+	rEnemy1.h = 24;
+	rEnemy1.w = 16;
+
+	enemy1.position.x = 10 * 16;
+	enemy1.position.y = 11 * 16;
+
+	enemy2.position.x = 3 * 16;
+	enemy2.position.y = 8 * 16;
+
+	enemy3.position.x = 10 * 16;
+	enemy3.position.y = 6 * 16;
+
+	enemies.PushBack(enemy1);
+	enemies.PushBack(enemy2);
+	enemies.PushBack(enemy3);
+
+
+	/*enemy1.x = 11 * 16;
+	enemy1.y = (9 + 4) * 16;
+	enemy1.h = 24;
+	enemy1.w = 16;*/
+	for (int i = 0; i < enemies.Count(); i++)
+	{
+		enemy1.collider = App->collision->AddCollider({ enemies[i].position.x, enemies[i].position.y, 16, 16 }, COLLIDER_ENEMY);
+	}	
+}
+
+void ModuleTileMap::moveEnemy()
+{
+	
+}
+
+void ModuleTileMap::enemyMovement()
+{
+
+}
+
 
 
 void ModuleTileMap::prepareTiles()
@@ -489,7 +531,8 @@ void ModuleTileMap::BuildMap()
 	}
 
 	App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
-	App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
+	//App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
+	App->renderer->Blit(enemyImg, enemy1.position.x, enemy1.position.y, &rEnemy1, 0.75f);
 	App->renderer->Blit(scoreImg, 0 * TILE_SIZE, 0 * TILE_SIZE, &score, 0.75f);
 	App->player->Enable();
 }
@@ -533,7 +576,7 @@ update_status ModuleTileMap::Update()
 
 	BuildMap();
 	
-
+	moveEnemy();
 
 	return UPDATE_CONTINUE;
 }

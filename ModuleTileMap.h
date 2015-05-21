@@ -2,7 +2,11 @@
 
 #include "Module.h"
 //#include "SDL/include/SDL.h"
-
+struct enemy
+{
+	p2Point<int> position;
+	Collider* collider;
+};
 
 class ModuleTileMap : public Module
 {
@@ -53,12 +57,15 @@ public:
 
 
 	SDL_Rect portal;
-	SDL_Rect enemy1;
+	SDL_Rect rEnemy1;
 	SDL_Rect score;
 
+	//Enemy
+	p2DynArray<enemy> enemies;
+	enemy enemy1;
+	enemy enemy2;
+	enemy enemy3;
 	
-
-
 	bool isSpeedPowerUp;
 	bool isExplosionSizePowerUp;
 	
@@ -90,7 +97,8 @@ public:
 	void LoadMap(char*);
 
 	void PrintMap()const;
-
-
+	void paintEnemies();
+	void moveEnemy();
+	void enemyMovement();
 };
 
