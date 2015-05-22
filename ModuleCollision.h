@@ -26,7 +26,7 @@ struct Collider
 	bool to_delete;
 	COLLIDER_TYPE type;
 	Module* callback;
-
+	int n;
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, Module* callback = NULL) :
 		rect(rectangle),
 		type(type),

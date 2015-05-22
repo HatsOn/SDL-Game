@@ -76,7 +76,7 @@ public:
 	bool bombOn;
 	int bombPower;
 	bool finished;
-
+	int enemiesAlive;
 	
 	p2Point<int> speed;
 	int speedValue;

@@ -97,6 +97,8 @@ bool ModulePlayer::Start()
 	App->collision->Enable();
 	finished = false;
 	dead = false;
+	bombPower = 1;
+	enemiesAlive = 3;
 	LOG("Loading player");
 
 	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
@@ -145,7 +147,8 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	LOG("Finished: %d", finished);
+	LOG("%d", bombPower);
+	//LOG("Finished: %d", finished);
 	lastPosition = position;
 
 	if (dead == false && finished == false)
@@ -211,8 +214,6 @@ update_status ModulePlayer::Update()
 
 		}
 
-
-
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 		{
 			int delay = 100;
@@ -235,10 +236,6 @@ update_status ModulePlayer::Update()
 		}
 
 	}//Condició per si esta mort
-
-
-	
-
 
 
 	
@@ -408,15 +405,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		current_animation = &dying;		
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
-	if (c2->type == COLLIDER_FINISH && !finished)
+	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
 	{
 		LOG("PORTAL ACTIVADO");
 		//App->player->Disable();
-		finished = true;
-		position.x = 3*16;
-		position.y = (3+3)*16;
+		finished = true;		
+		position.x = c2->rect.x;
+		position.y = c2->rect.y-16;
 		current_animation = &ending;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		App->particles->findParticle(COLLIDER_FINISH);
 		
 	}
 	if (c2->type == COLLIDER_PLAYER)
@@ -428,7 +426,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 }
 
-
+/*
 
 void ModulePlayer:: isWalkable()
 {
@@ -468,7 +466,7 @@ void ModulePlayer:: isWalkable()
 		speed.y = 0;
 	}	
 }
-
+*/
 p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 {
 	//Antes

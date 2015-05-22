@@ -6,7 +6,26 @@ struct enemy
 {
 	p2Point<int> position;
 	Collider* collider;
+	p2Point<int> speed;
+	LookingLeftRight directionSide;
+	LookingUpDown directionVertical;
+	int n;
 };
+
+/*enum LookingLeftRight {
+	DIRECTIONLEFT = 0,
+	DIRECTIONRIGHT = 1,
+	NODIRECTIONSIDE = 2
+
+};
+
+enum LookingUpDown {
+	DIRECTIONUP = 0,
+	DIRECTIONDOWN = 1,
+	NODIRECTIONVERTICAL = 2
+
+};
+*/
 
 class ModuleTileMap : public Module
 {
@@ -16,7 +35,7 @@ public:
 	Map map;
 	p2Point<int> speedPowerUpLocation;
 	
-
+	int deathCount;
 	SDL_Texture* tilesReference;
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;
@@ -95,10 +114,14 @@ public:
 	bool CleanUp();
 
 	void LoadMap(char*);
-
+	void OnCollision(Collider* c1, Collider* c2);
 	void PrintMap()const;
 	void paintEnemies();
 	void moveEnemy();
 	void enemyMovement();
+	void leftRightCollision(enemy*, LookingLeftRight&);
+	void UpDownCollision(enemy*, LookingUpDown&);
+
+
 };
 

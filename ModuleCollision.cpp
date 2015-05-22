@@ -73,9 +73,6 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_SIZEXPLOSIONPOWERUP][COLLIDER_FINISH] = false;
 	
 
-
-
-
 	matrix[COLLIDER_PLAYER_EXPLOSION][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER_EXPLOSION][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_PLAYER_EXPLOSION][COLLIDER_ENEMY] = true;

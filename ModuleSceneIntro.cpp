@@ -18,7 +18,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	//App->particles->findParticle(COLLIDER_FINISH);
 	graphics = App->textures->Load("BombermanIntro.png");
 	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
