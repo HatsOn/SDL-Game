@@ -36,10 +36,11 @@ Application::Application()
 	AddModule(scene_intro);
 	
 	// Characters
+	AddModule(particles);
 	AddModule(player);
 	//AddModule(enemies);
 	// Misc
-	AddModule(particles);
+	
 	AddModule(collision);
 	AddModule(fade); // let this after all drawing
 }
