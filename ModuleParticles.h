@@ -35,10 +35,20 @@ public:
 	void OnCollision(Collider*, Collider*);
 
 	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Uint32 delay = 0);
+
 	void generateBomb(int power, Particle* p);
+	void generateArm(int power, p2Point<int> particlePosition, p2Point<int> orientation);
+
+	void addHorizontal(p2Point<int> orientation, int sizeExplosion, p2Point<int> particlePosition);
+	void addVertical(p2Point<int> orientation, int sizeExplosion, p2Point<int> particlePosition);
+	void addExplosionUp(p2Point<int> orientation, int sizeExplosion, p2Point<int> particlePosition);
+	void addEvaporatingWall(p2Point<int> orientation, int sizeExplosion, p2Point<int> particlePosition);
+
 	bool canExplode(p2Point<int> p, char orientation);
 	bool canDestroy(p2Point<int> p, char orientation);
+
 	void dropPowerUp(p2Point<int> particlePosition, int sizeX, int sizeY);
+
 	void findParticle(COLLIDER_TYPE);
 
 
