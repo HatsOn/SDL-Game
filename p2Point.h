@@ -14,6 +14,11 @@ public:
 
 	p2Point()
 	{}
+	p2Point(int _x, int _y)
+	{
+		x = _x;
+		y = _y;
+	}
 
 	p2Point(const p2Point& p)
 	{
