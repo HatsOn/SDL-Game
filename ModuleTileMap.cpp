@@ -213,14 +213,6 @@ void ModuleTileMap::UpDownCollision(enemy* e, LookingUpDown& direction)
 
 
 
-
-void ModuleTileMap::enemyMovement()
-{
-
-}
-
-
-
 void ModuleTileMap::prepareTiles()
 {
 
@@ -382,9 +374,103 @@ void ModuleTileMap::prepareTiles()
 	tile27.w = 16;
 
 	tile28.x = 234;
-	tile22.y = 49;
+	tile28.y = 49;
 	tile28.h = 16;
 	tile28.w = 16;
+	//---------------------- BOOS
+	// --- 1
+	tile29.x = 835;
+	tile29.y = 32;
+	tile29.h = 16;
+	tile29.w = 16;
+
+	tile30.x = 835;
+	tile30.y = 49;
+	tile30.h = 16;
+	tile30.w = 16;
+
+	tile31.x = 835;
+	tile31.y = 66;
+	tile31.h = 16;
+	tile31.w = 16;
+
+	tile32.x = 835;
+	tile32.y = 83;
+	tile32.h = 16;
+	tile32.w = 16;
+	// --- 2
+	tile33.x = 852;
+	tile33.y = 32;
+	tile33.h = 16;
+	tile33.w = 16;
+
+	tile34.x = 852;
+	tile34.y = 49;
+	tile34.h = 16;
+	tile34.w = 16;
+
+	tile35.x = 852;
+	tile35.y = 66;
+	tile35.h = 16;
+	tile35.w = 16;
+
+	tile36.x = 852;
+	tile36.y = 83;
+	tile36.h = 16;
+	tile36.w = 16;
+	// --- 3
+	tile37.x = 869;
+	tile37.y = 32;
+	tile37.h = 16;
+	tile37.w = 16;
+
+	tile38.x = 869;
+	tile38.y = 49;
+	tile38.h = 16;
+	tile38.w = 16;
+
+	tile39.x = 869;
+	tile39.y = 66;
+	tile39.h = 16;
+	tile39.w = 16;
+
+	tile40.x = 869;
+	tile40.y = 83;
+	tile40.h = 16;
+	tile40.w = 16;
+	// --- 4
+	tile41.x = 886;
+	tile41.y = 32;
+	tile41.h = 16;
+	tile41.w = 16;
+
+	tile42.x = 886;
+	tile42.y = 49;
+	tile42.h = 16;
+	tile42.w = 16;
+
+	tile43.x = 886;
+	tile43.y = 66;
+	tile43.h = 16;
+	tile43.w = 16;
+
+	tile44.x = 886;
+	tile44.y = 83;
+	tile44.h = 16;
+	tile44.w = 16;
+	// --- 5
+	tile45.x = 903;
+	tile45.y = 32;
+	tile45.h = 16;
+	tile45.w = 16;
+
+	tile45.x = 903;
+	tile45.y = 49;
+	tile45.h = 16;
+	tile45.w = 16;
+
+	
+	//---------------------- BOSS
 
 	nonWalkableTiles.PushBack(0);
 	nonWalkableTiles.PushBack(1);
@@ -414,7 +500,14 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(25);
 	nonWalkableTiles.PushBack(26);
 	nonWalkableTiles.PushBack(27);
-	nonWalkableTiles.PushBack(28);
+
+	nonWalkableTiles.PushBack(29);
+	nonWalkableTiles.PushBack(30);
+	nonWalkableTiles.PushBack(31);
+	nonWalkableTiles.PushBack(32);
+	nonWalkableTiles.PushBack(33); 
+	nonWalkableTiles.PushBack(34);
+	nonWalkableTiles.PushBack(36);
 
 	srand(time(NULL));
 

@@ -75,6 +75,30 @@ public:
 	SDL_Rect tile28;
 
 
+
+	SDL_Rect tile29;
+	SDL_Rect tile30;
+	SDL_Rect tile31;
+	SDL_Rect tile32;
+	// --- 2
+	SDL_Rect tile33;
+	SDL_Rect tile34;
+	SDL_Rect tile35;
+	SDL_Rect tile36;
+	// --- 3
+	SDL_Rect tile37;
+	SDL_Rect tile38;
+	SDL_Rect tile39;
+	SDL_Rect tile40;
+	// --- 4
+	SDL_Rect tile41;
+	SDL_Rect tile42;
+	SDL_Rect tile43;
+	SDL_Rect tile44;
+	// --- 5
+	SDL_Rect tile45;
+	SDL_Rect tile45;
+
 	SDL_Rect portal;
 	SDL_Rect rEnemy1;
 	SDL_Rect score;
