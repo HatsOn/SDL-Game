@@ -62,6 +62,7 @@ bool ModuleParticles::Start()
 
 	// Explosion particle
 	
+	//App->audio->PlayFx(explosio_fx);
 	explosion.anim.frames.PushBack({322, 100, 16, 16});
 	explosion.anim.frames.PushBack({ 339, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 356, 100, 16, 16 });

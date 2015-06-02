@@ -14,13 +14,11 @@ ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app,
 
 bool ModuleTileMap::Start()
 {
-
 	//LoadMap("DebugLevel.txt");
 	LoadMap("FirstLevel.txt");
 	//LoadMap("firstLevel.txt");
 
 	PrintMap();
-
 
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
