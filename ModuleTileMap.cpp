@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "ModuletileMap.h"
 #include "ctype.h"
+#include <time.h>
 
 ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app, start_Enabled)
 {
@@ -13,9 +14,16 @@ ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app,
 
 bool ModuleTileMap::Start()
 {
+	//LoadMap("DebugLevel.txt");
+	LoadMap("FirstLevel.txt");
+	//LoadMap("firstLevel.txt");
+
+	PrintMap();
+
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
+	scoreImg = App->textures->Load("Marcador.png");
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = 0;
@@ -25,31 +33,188 @@ bool ModuleTileMap::Start()
 	portal.h = 16;
 	portal.w = 16;
 
-	Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
+	//Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
 
-	enemyImg = App->textures->Load("portal.png");
+	//Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 16 }, COLLIDER_ENEMY);
 
-	enemy1.x = 3;
-	enemy1.y = 2;
-	enemy1.h = 24;
-	enemy1.w = 16;
+	paintEnemies();
+	for (int i = 0; i < enemies.Count(); i++)
+	{
+		enemies[i].collider = App->collision->AddCollider({ enemies[i].position.x, enemies[i].position.y+8, 16, 16 }, COLLIDER_ENEMY, this);
+	}
 
-	Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 24 }, COLLIDER_ENEMY);
+	score.x = 0;
+	score.y = 0;
+	score.h = 64;
+	score.w = 256;
 
 	prepareTiles();
 
-	return 1;
-	
+	enemies[0].directionSide = NODIRECTIONSIDE;
+	enemies[0].directionVertical = DIRECTIONUP;
+	enemies[0].collider->n = 0;
+
+	enemies[1].directionSide = DIRECTIONLEFT;
+	enemies[1].directionVertical = NODIRECTIONVERTICAL;
+	enemies[1].collider->n = 1;
+
+	enemies[2].directionSide = DIRECTIONLEFT;
+	enemies[2].directionVertical = NODIRECTIONVERTICAL;
+	enemies[2].collider->n = 2;
+
 	App->bombs->Enable();
 	App->player->Enable();
 
+	deathCount = 0;
+
+	return 1;
+	
+	
+
+//	isSpeedPowerUp = false;
+
+
 }
+
+void ModuleTileMap::paintEnemies()
+{
+	enemyImg = App->textures->Load("portal.png");
+	
+	rEnemy1.x = 3;
+	rEnemy1.y = 2;
+	rEnemy1.h = 24;
+	rEnemy1.w = 16;
+
+	enemy1.position.x = 10 * 16;
+	enemy1.position.y = 11 * 16;
+
+	enemy2.position.x = 3 * 16;
+	enemy2.position.y = 8 * 16+8;
+
+	enemy3.position.x = 10 * 16;
+	enemy3.position.y = 6 * 16 +8;
+
+	enemies.PushBack(enemy1);
+	enemies.PushBack(enemy2);
+	enemies.PushBack(enemy3);
+
+
+	/*enemy1.x = 11 * 16;
+	enemy1.y = (9 + 4) * 16;
+	enemy1.h = 24;
+	enemy1.w = 16;*/
+	
+}
+
+void ModuleTileMap::moveEnemy()
+{
+	for (int i = 0; i < enemies.Count(); i++)
+	{
+	
+
+		leftRightCollision(&enemies[i],enemies[i].directionSide);
+		UpDownCollision(&enemies[i], enemies[i].directionVertical);
+
+
+
+
+		enemies[i].position.x += enemies[i].speed.x;
+		enemies[i].position.y += enemies[i].speed.y;
+	}
+}
+
+void ModuleTileMap::leftRightCollision(enemy* e, LookingLeftRight& direction)
+{
+
+	if (direction == 0)
+	{
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x - 1) / TILE_SIZE][((e->collider->rect.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x - 1) / TILE_SIZE][((e->collider->rect.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		{
+
+			e->speed.x *= -1;
+			direction = DIRECTIONRIGHT;
+		}
+		else
+		{
+			e->speed.x = -1;
+
+		}
+	}
+
+	else if (direction == 1)
+	{
+
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x + 15 + 1) / TILE_SIZE][((e->collider->rect.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x + 15 + 1) / TILE_SIZE][((e->collider->rect.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		{
+
+			e->speed.x *= -1;
+			direction = DIRECTIONLEFT;
+		}
+		else
+		{
+			e->speed.x = 1;
+
+		}
+
+	}
+
+	else if (direction == 2)//Idle
+	{
+
+		e->speed.x = 0;
+	}
+
+}
+
+void ModuleTileMap::UpDownCollision(enemy* e, LookingUpDown& direction)
+{
+
+	if (direction == 0)
+	{
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x) / TILE_SIZE][((e->collider->rect.y - 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x + 15) / TILE_SIZE][((e->collider->rect.y - 1) / TILE_SIZE) - SCOREOFFSET]))
+		{
+
+			e->speed.y *= -1;
+			direction = DIRECTIONDOWN;
+		}
+		else
+		{
+			e->speed.y = -1;
+
+		}
+
+	}
+
+	else if (direction == 1)
+	{
+
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x) / TILE_SIZE][((e->collider->rect.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(e->collider->rect.x + 15) / TILE_SIZE][((e->collider->rect.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]))
+		{
+
+			e->speed.y *= -1;
+			direction = DIRECTIONUP;
+		}
+		else
+		{
+			e->speed.y = 1;
+
+		}
+
+	}
+	else if (direction == 2)//Idle
+	{
+
+		e->speed.y = 0;
+	}
+}
+
+
 
 
 void ModuleTileMap::prepareTiles()
 {
 
-	tile1.x = 255;
+	tile1.x = 254;
 	tile1.y = 15;
 	tile1.h = 16;
 	tile1.w = 16;
@@ -96,7 +261,7 @@ void ModuleTileMap::prepareTiles()
 	tile8.w = 16;
 	//--------------- SECOND ROW
 
-	tile9.x = 255;
+	tile9.x = 254;
 	tile9.y = 32;
 	tile9.h = 16;
 	tile9.w = 16;
@@ -145,7 +310,7 @@ void ModuleTileMap::prepareTiles()
 	//--------------- THIRD ROW
 
 
-	tile17.x = 255;
+	tile17.x = 254;
 	tile17.y = 49;
 	tile17.h = 16;
 	tile17.w = 16;
@@ -181,6 +346,130 @@ void ModuleTileMap::prepareTiles()
 	tile22.h = 16;
 	tile22.w = 16;
 
+	tile23.x = 216;
+	tile23.y = 15;
+	tile23.h = 16;
+	tile23.w = 16;
+
+	tile24.x = 234;
+	tile24.y = 15;
+	tile24.h = 16;
+	tile24.w = 16;
+
+	tile25.x = 216;
+	tile25.y = 32;
+	tile25.h = 16;
+	tile25.w = 16;
+
+	tile26.x = 234;
+	tile26.y = 32;
+	tile26.h = 16;
+	tile26.w = 16;
+
+	tile27.x = 216;
+	tile27.y = 49;
+	tile27.h = 16;
+	tile27.w = 16;
+
+	tile28.x = 234;
+	tile28.y = 49;
+	tile28.h = 16;
+	tile28.w = 16;
+	//---------------------- BOOS
+	// --- 1
+	tile29.x = 835;
+	tile29.y = 32;
+	tile29.h = 16;
+	tile29.w = 16;
+
+	tile30.x = 835;
+	tile30.y = 49;
+	tile30.h = 16;
+	tile30.w = 16;
+
+	tile31.x = 835;
+	tile31.y = 66;
+	tile31.h = 16;
+	tile31.w = 16;
+
+	tile32.x = 835;
+	tile32.y = 83;
+	tile32.h = 16;
+	tile32.w = 16;
+	// --- 2
+	tile33.x = 852;
+	tile33.y = 32;
+	tile33.h = 16;
+	tile33.w = 16;
+
+	tile34.x = 852;
+	tile34.y = 49;
+	tile34.h = 16;
+	tile34.w = 16;
+
+	tile35.x = 852;
+	tile35.y = 66;
+	tile35.h = 16;
+	tile35.w = 16;
+
+	tile36.x = 852;
+	tile36.y = 83;
+	tile36.h = 16;
+	tile36.w = 16;
+	// --- 3
+	tile37.x = 869;
+	tile37.y = 32;
+	tile37.h = 16;
+	tile37.w = 16;
+
+	tile38.x = 869;
+	tile38.y = 49;
+	tile38.h = 16;
+	tile38.w = 16;
+
+	tile39.x = 869;
+	tile39.y = 66;
+	tile39.h = 16;
+	tile39.w = 16;
+
+	tile40.x = 869;
+	tile40.y = 83;
+	tile40.h = 16;
+	tile40.w = 16;
+	// --- 4
+	tile41.x = 886;
+	tile41.y = 32;
+	tile41.h = 16;
+	tile41.w = 16;
+
+	tile42.x = 886;
+	tile42.y = 49;
+	tile42.h = 16;
+	tile42.w = 16;
+
+	tile43.x = 886;
+	tile43.y = 66;
+	tile43.h = 16;
+	tile43.w = 16;
+
+	tile44.x = 886;
+	tile44.y = 83;
+	tile44.h = 16;
+	tile44.w = 16;
+	// --- 5
+	tile45.x = 903;
+	tile45.y = 32;
+	tile45.h = 16;
+	tile45.w = 16;
+
+	tile45.x = 903;
+	tile45.y = 49;
+	tile45.h = 16;
+	tile45.w = 16;
+
+	
+	//---------------------- BOSS
+
 	nonWalkableTiles.PushBack(0);
 	nonWalkableTiles.PushBack(1);
 	nonWalkableTiles.PushBack(2);
@@ -203,6 +492,24 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(44);
 	nonWalkableTiles.PushBack(55);
 	nonWalkableTiles.PushBack(21);
+	nonWalkableTiles.PushBack(22);
+	nonWalkableTiles.PushBack(23);
+	nonWalkableTiles.PushBack(24);
+	nonWalkableTiles.PushBack(25);
+	nonWalkableTiles.PushBack(26);
+	nonWalkableTiles.PushBack(27);
+
+	nonWalkableTiles.PushBack(29);
+	nonWalkableTiles.PushBack(30);
+	nonWalkableTiles.PushBack(31);
+	nonWalkableTiles.PushBack(32);
+	nonWalkableTiles.PushBack(33); 
+	nonWalkableTiles.PushBack(34);
+	nonWalkableTiles.PushBack(36);
+
+	srand(time(NULL));
+
+	
 
 }
 
@@ -216,11 +523,15 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
+<<<<<<< HEAD
 	//LoadMap("DebugLevel.txt");
 	//LoadMap("FirstLevel.txt");
 	LoadMap("firstLevel.txt");
 
 	PrintMap();
+=======
+	
+>>>>>>> origin/InProgress
 	//CollisionMap();
 	return true;
 	
@@ -275,6 +586,7 @@ void ModuleTileMap::PrintMap()const
 
 bool ModuleTileMap::CleanUp()
 {
+	enemies.Clear();
 	App->bombs->Disable();
 	App->player->Disable();
 	return 0;
@@ -401,140 +713,119 @@ void ModuleTileMap::BuildMap()
 			{
 				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile22, 0.75f);
 			}
+			if (map.tile[x][y] == 22)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile23, 0.75f);
+			}
+
+			if (map.tile[x][y] == 23)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile24, 0.75f);
+			}
+
+			if (map.tile[x][y] == 24)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile25, 0.75f);
+			}
+
+			if (map.tile[x][y] == 25)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile26, 0.75f);
+			}
+
+			if (map.tile[x][y] == 26)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile27, 0.75f);
+			}
+			if (map.tile[x][y] == 27)
+			{
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile28, 0.75f);
+			}
+
 
 		}
 	}
 
-	App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
-	App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
-	App->player->Enable();
-}
-
-void ModuleTileMap::CollisionMap()
-{
-	int x, y;
-
-
-
-	for (y = 0; y<MAX_MAP_Y; y++)
+	//App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
+	//App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
+	for (int i = 0; i < enemies.Count(); i++)
 	{
-		for (x = 0; x<MAX_MAP_X; x++)
-		{
-			if (map.tile[x][y] == 0)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 14, 14 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 1)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 2)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 3)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 4)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 5)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 6)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 7)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 8)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 9)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-			if (map.tile[x][y] == 10)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 11)
-			{
-				//App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 12)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 13)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 14)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 15)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 16)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 17)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 18)
-			{
-				App->collision->AddCollider({ x*TILE_SIZE, y*TILE_SIZE, 16, 16 }, COLLIDER_WALL, this);
-			}
-
-			if (map.tile[x][y] == 19)
-			{
-			}
-
-			if (map.tile[x][y] == 20)
-			{
-			}
-
-			if (map.tile[x][y] == 21)
-			{
-			}
-
-		}
+		App->renderer->Blit(enemyImg, enemies[i].position.x, enemies[i].position.y, &rEnemy1, 0.75f);
+		enemies[i].collider->SetPos(enemies[i].position.x, enemies[i].position.y+8);
 	}
+	
+	App->renderer->Blit(scoreImg, 0 * TILE_SIZE, 0 * TILE_SIZE, &score, 0.75f);
+	//App->player->Enable();
 }
+
+void ModuleTileMap::OnCollision(Collider* c1, Collider* c2)
+{
+	/*if (c2->type == COLLIDER_PLAYER_EXPLOSION)
+	{
+		switch (c1->n)
+		{
+			case 0:
+				if (deathCount > 1)
+				{
+					enemies.Pop(enemy1);
+					c2->to_delete;
+					deathCount = 0;
+				}
+				deathCount++;
+				break;
+			case 1:
+				if (deathCount > 1)
+				{
+					enemies.Pop(enemy2);
+					c2->to_delete;
+					deathCount = 0;
+				}
+				deathCount++;
+				break;
+			case 2:
+				if (deathCount > 1)
+				{
+					enemies.Pop(enemy3);
+					c2->to_delete;
+					deathCount = 0;
+				}
+				deathCount++;
+				break;
+
+			default:
+				break;
+		}
+		
+	}
+	for (int i = 0; i < enemies.Count(); i++)
+	{
+		enemies[i].collider->rect.x = -160;
+		enemies[i].collider->rect.y = -160;
+		enemies[i].collider->to_delete;
+		//enemies[i].collider->SetPos(-106, -160);
+	}*/
+
+
+		for (int i = 0; i < enemies.Count(); i++)
+		{
+			if (enemies[i].collider == c1)
+			{
+				enemies[i].collider->SetPos(-101,101);
+				enemies.Pop(enemies[i]);
+				App->player->enemiesAlive--;
+				break;
+			}
+		}
+}
+
 
 update_status ModuleTileMap::Update()
 {
 
 	BuildMap();
 	
+	moveEnemy();
+
 	return UPDATE_CONTINUE;
 }
 

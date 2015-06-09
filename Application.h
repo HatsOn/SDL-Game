@@ -17,6 +17,7 @@
 #include "ModuleCollision.h"
 #include "ModuleTileMap.h"
 #include "bomb.h"
+#include "ModuleEnemy.h"
 
 class Application
 {
@@ -33,6 +34,7 @@ public:
 	ModuleParticles* particles;
 	ModuleCollision* collision;
 	ModuleTileMap* tileMap;
+	ModuleEnemy* enemies;
 	bomb* bombs;
 
 private:

@@ -11,13 +11,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	collider = NULL;
 	current_animation = NULL;
 	bombAnimation = NULL;
-	bombOn = false;
+	bombOn = true;
+	sizeBombPowerUpCounter = 0;
 	speed.x = 1;
 	speed.y = 1;
 
-	// 
+	
 	bombPower = 1;
-
 
 	// idle animation (just the bomberman
 	idle.frames.PushBack({72, 46, 15, 23});
@@ -58,8 +58,21 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	dying.frames.PushBack({ 82, 75, 15, 25 });
 	dying.frames.PushBack({ 99, 75, 15, 25 });
 	dying.frames.PushBack({ 117, 75, 15, 25 });
-	dying.speed = 0.1f;
+	dying.speed = 0.05f;
 	dying.loop = false;
+
+	//Ending
+	ending.frames.PushBack({ 5, 132, 15, 21 });
+	ending.frames.PushBack({ 22, 132, 15, 21 });
+	ending.frames.PushBack({ 39, 132, 15, 21 });
+	ending.frames.PushBack({ 57, 132, 15, 21 });
+	ending.frames.PushBack({ 74, 132, 15, 21 });
+	ending.frames.PushBack({ 91, 132, 15, 21 });
+	ending.frames.PushBack({ 108, 132, 15, 21 });
+	ending.frames.PushBack({ 128, 132, 15, 21 });
+	ending.frames.PushBack({ 142, 132, 15, 21 });
+	ending.speed = 0.05f;
+	ending.loop = false;
 
 	// Set Bombs
 	bomb.frames.PushBack({ 356, 151 ,16,16});
@@ -70,6 +83,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	hasCollided = false;
 
+	current_animation = &idle;
 	
 }
 
@@ -79,19 +93,39 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	App->particles->Enable();
+	App->collision->Enable();
+	finished = false;
+	dead = false;
+	bombPower = 1;
+	enemiesAlive = 3;
 	LOG("Loading player");
+
+	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
+	//Cada vegada mes rapid fins que es tot blanc durant l'ultim segon 
+
+	//caminar_fx = App->audio->LoadFx("caminar.ogg");
+	bomba_fx = App->audio->LoadFx("PosarBomba.ogg");
+	powerup_fx = App->audio->LoadFx("AgafarPowerUp.ogg");
+	explosio_fx = App->audio->LoadFx("Explosio.ogg");
 
 	graphics = App->textures->Load("bombermanPC.png");
 	
 	bombs = App->tileMap->tilesReference;
 	position.x = 48;
-	position.y = GUIOffset + 16;
+	position.y = GUIOffset + 8;
 	playerCollider.x = 48;
-	playerCollider.y = GUIOffset + 26;
+	playerCollider.y = GUIOffset+16;
 	speed.x = 0;
 	speed.y = 0;
 	collider = App->collision->AddCollider({ (playerCollider.x), (playerCollider.y), 16, 16 }, COLLIDER_PLAYER, this);
-	
+	dead = false;
+	speedValue = 1;
+
+	speedPowerUpCounter = 0;
+
+	hasCollided = false;
+
 
 	return true;
 }
@@ -100,8 +134,14 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	//delete collider;
+
+	App->particles->Disable();
+	App->collision->Disable();
+	//App->collision->CleanUp();
 	App->textures->Unload(graphics);
 	App->textures->Unload(bombs);
+	App->tileMap->Disable();
 
 	return true;
 }
@@ -111,113 +151,115 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	LOG("%d", bombPower);
+	//LOG("Finished: %d", finished);
 	lastPosition = position;
 
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		directionSide = DIRECTIONLEFT;
-
-	//Make collider follow player's position
-
-		if (current_animation != &left)
-		{
-			left.Reset();
-			current_animation = &left;
-		}
-	}
-
-
-
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (dead == false && finished == false)
 	{
 
-		directionSide = DIRECTIONRIGHT;
-	
-	
-
-		if (current_animation != &right)
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			right.Reset();
-			current_animation = &right;
-		}
-	
-	}
+			directionSide = DIRECTIONLEFT;
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
+			//Make collider follow player's position
 
-		directionVertical = DIRECTIONDOWN;
-		
-		
-
-		if(current_animation != &down)
-		{
-			down.Reset();
-			current_animation = &down;
-		}
-	
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-
-		directionVertical = DIRECTIONUP;
-
-		
-		if(current_animation != &up)
-		{
-			up.Reset();
-			current_animation = &up;
+			if (current_animation != &left)
+			{
+				left.Reset();
+				current_animation = &left;
+			}
 		}
 
-		
-	}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+
+			directionSide = DIRECTIONRIGHT;
+
+
+			if (current_animation != &right)
+			{
+				right.Reset();
+				current_animation = &right;
+			}
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+
+			directionVertical = DIRECTIONDOWN;
+
+
+
+			if (current_animation != &down)
+			{
+				down.Reset();
+				current_animation = &down;
+			}
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+
+			directionVertical = DIRECTIONUP;
+
+
+			if (current_animation != &up)
+			{
+				up.Reset();
+				current_animation = &up;
+			}
+
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			int delay = 100;
+			bombPosition = bombPos(playerCollider);
+
+			App->particles->AddParticle(App->particles->bombR, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
+			App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER);
+			App->audio->PlayFx(bomba_fx);
+			
+			//TODO: bomba centrada en una posici�
+			LOG("bomba");
+		}
+
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+		{
+			directionVertical = NODIRECTIONVERTICAL;
+			directionSide = NODIRECTIONSIDE;
+			current_animation = &idle;
+
+		}
+
+	}//Condició per si esta mort
+
 
 	
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		int delay = 100;
-		bombPosition = bombPos(position);
-		 
-
-		/*last_bomb = */App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
-		//TODO: bomba centrada en una posici�
-		LOG("bomba");
-	}
-	
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-	{
-		directionVertical = NODIRECTIONVERTICAL;
-		directionSide = NODIRECTIONSIDE;
-		current_animation = &idle;
-		
-	}
-
-
-	
-
-	if (bombOn)
-	{
-		App->renderer->Blit(bombs, bombPosition.x, bombPosition.y, &(bombAnimation->GetCurrentFrame()));
-
-	}
-
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
-
+	for (int i = 0; i < speedValue; i++)
+	{  
 	
 		leftRightCollision(directionSide);
 		upDownCollision(directionVertical);
+	
+		UpdatePosition();
 
-	
-	
-	UpdatePosition();
+
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+
+	}
 
 	directionSide = NODIRECTIONSIDE;
 	directionVertical = NODIRECTIONVERTICAL;
+	hasCollided = false;
+
 	return UPDATE_CONTINUE;
 }
 void ModulePlayer::UpdatePosition()
@@ -227,6 +269,8 @@ void ModulePlayer::UpdatePosition()
 	playerCollider.x += speed.x;
 	playerCollider.y += speed.y;
 
+
+	hasCollided = false;
 	collider->SetPos(playerCollider.x, playerCollider.y);
 
 }
@@ -240,6 +284,7 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 	{
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			hasCollided = true;
 
 			speed.x = 0;
 
@@ -247,21 +292,25 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 		else
 		{
 			speed.x = -1;
+		
 		}
+	
 	}
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 17) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]))
 		{
-
+			
 			speed.x = 0;
 		
 		}
 		else
 		{
 			speed.x = 1;
+
 		}
+		
 	}
 
 	if (directionSide == 2)//Idle
@@ -278,26 +327,32 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 	{
 		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
 			speed.y = -1;
+
 		}
+	
 	}
 
 	if (directionVertical == 1)//Down
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]))
 		{
+			
 			speed.y = 0;
 			
 		}
 		else
 		{
 			speed.y = 1;
+
 		}
+	
 	}
 
 	if (directionVertical == 2)//Idle
@@ -312,22 +367,72 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	
-	
-
-	if (c2->type == COLLIDER_PLAYER_EXPLOSION || c2->type == COLLIDER_ENEMY)
+	if (c2->type == COLLIDER_SPEEDPOWERUP)
 	{
+		App->particles->findParticle(COLLIDER_SPEEDPOWERUP);
 		
+		speedPowerUpCounter++;
+		App->audio->PlayFx(powerup_fx);
+
+		if (speedPowerUpCounter >= 2)
+		{
+			speedValue++;	
+			LOG("L'speed del player es: %d", speedValue);
+			speedPowerUpCounter = 0;
+		}
 	}
-	if (c2->type == COLLIDER_FINISH)
+
+	if (c2->type == COLLIDER_SIZEXPLOSIONPOWERUP)
+	{
+		App->particles->findParticle(COLLIDER_SIZEXPLOSIONPOWERUP);
+
+		sizeBombPowerUpCounter++;
+		App->audio->PlayFx(powerup_fx);
+
+		
+			LOG("La potencia del player es: %d",bombPower);
+			bombPower++;
+			sizeBombPowerUpCounter = 0;
+		
+				
+	}
+
+
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION && !dead)
+	{
+		dead = true;
+		current_animation = &dying;
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+	}
+
+	if (c2->type == COLLIDER_ENEMY && !dead)
+	{
+		dead = true;
+		current_animation = &dying;		
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+	}
+	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
 	{
 		LOG("PORTAL ACTIVADO");
 		//App->player->Disable();
-		App->fade->FadeToBlack(App->tileMap, App->scene_intro);
+		finished = true;		
+		position.x = c2->rect.x;
+		position.y = c2->rect.y-16;
+		current_animation = &ending;
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		App->particles->findParticle(COLLIDER_FINISH);
 		
 	}
+	if (c2->type == COLLIDER_PLAYER)
+	{
+		speed.SetToZero();
+	}
+
+	
 
 }
 
+/*
 
 void ModulePlayer:: isWalkable()
 {
@@ -367,7 +472,7 @@ void ModulePlayer:: isWalkable()
 		speed.y = 0;
 	}	
 }
-
+*/
 p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 {
 	//Antes
@@ -378,16 +483,17 @@ p2Point<int> ModulePlayer::bombPos(p2Point<int> p)
 	//Despues
 	// Li sumo 8 per a trobar el punt mitg del personatge, no se si funciona, 
 	// s'ha de comprobar al debug level
-	int tileX = p.x+8 / TILE_SIZE;
-	int tileY = p.y+8 / TILE_SIZE - SCOREOFFSET;
+ 	int tileX = (p.x+8) / TILE_SIZE;
+	int tileY = (p.y+8) / TILE_SIZE - SCOREOFFSET;
 	//Despues	
 	
 	
 	p2Point<int> res;
 
 	res.x = tileX * 16;
-	res.y = (tileY + SCOREOFFSET + 1) * 16;
+	res.y = (tileY + SCOREOFFSET) * 16;
 
 
 	return res;
 }
+

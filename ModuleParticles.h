@@ -36,7 +36,11 @@ public:
 
 	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Uint32 delay = 0);
 	void generateBomb(int power, Particle* p);
-	bool ModuleParticles::canExplode(p2Point<int> p, char orientation);
+	bool canExplode(p2Point<int> p, char orientation);
+	bool canDestroy(p2Point<int> p, char orientation);
+	void dropPowerUp(p2Point<int> particlePosition, int sizeX, int sizeY);
+	void findParticle(COLLIDER_TYPE);
+
 
 private:
 
@@ -44,7 +48,10 @@ private:
 	p2List<Particle*> active;
 
 public:
+	Particle speedpowerUp;
+	Particle sizeExplosionPowerUp;
 	Particle bomb;
+	Particle bombR;
 	Particle explosion;
 	Particle explosionUp;
 	Particle explosionDown;
@@ -52,5 +59,15 @@ public:
 	Particle explosionRight;
 	Particle horizontal;
 	Particle vertical;
+	Particle portal;
+
+	Particle evaporatingWall;
+
+	int bombLife;
+	int explosionLife;
+	int wallLife;
+	bool spawned;
+	p2Point<int> speedPowerUpLocation;
+	p2Point<int> sizeExplosionPowerUpLocation;
 
 };

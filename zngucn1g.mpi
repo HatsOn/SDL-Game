@@ -42,14 +42,10 @@ public:
 	bool hasCollided;
 
 
-	//Effectes Sonors
-	unsigned int caminar_fx;
-	unsigned int bomba_fx;
-	unsigned int powerup_fx;
-	unsigned int explosio_fx;
 
-	int speedPowerUpCounter;
-	int sizeBombPowerUpCounter;
+
+
+
 	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;
 	LookingUpDown directionVertical;
@@ -80,12 +76,13 @@ public:
 	bool bombOn;
 	int bombPower;
 	bool finished;
-	int enemiesAlive;
+
 	
 	p2Point<int> speed;
 	int speedValue;
 
 	bool dead;
+	bool end;
 
 
 

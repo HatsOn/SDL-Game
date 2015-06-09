@@ -15,6 +15,8 @@ enum COLLIDER_TYPE
 	COLLIDER_PLAYER_EXPLOSION,
 	COLLIDER_ENEMY_SHOT,
 	COLLIDER_FINISH,
+	COLLIDER_SPEEDPOWERUP,
+	COLLIDER_SIZEXPLOSIONPOWERUP,
 	COLLIDER_MAX
 };
 
@@ -24,7 +26,7 @@ struct Collider
 	bool to_delete;
 	COLLIDER_TYPE type;
 	Module* callback;
-
+	int n;
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, Module* callback = NULL) :
 		rect(rectangle),
 		type(type),

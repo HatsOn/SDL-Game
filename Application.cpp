@@ -16,6 +16,7 @@ Application::Application()
 	particles = new ModuleParticles(this);
 	collision = new ModuleCollision(this, true);
 	bombs = new bomb(this, false);
+	//enemies = new ModuleEnemy(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -35,10 +36,11 @@ Application::Application()
 	AddModule(scene_intro);
 	
 	// Characters
-	AddModule(player);
-
-	// Misc
 	AddModule(particles);
+	AddModule(player);
+	//AddModule(enemies);
+	// Misc
+	
 	AddModule(collision);
 	AddModule(fade); // let this after all drawing
 }
@@ -54,6 +56,7 @@ Application::~Application()
 	delete scene_intro;
 	delete scene_space;
 	delete player;
+	delete enemies;
 	delete fade;
 	delete collision;
 }
