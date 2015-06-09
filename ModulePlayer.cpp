@@ -383,12 +383,14 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		sizeBombPowerUpCounter++;
 
-		
-			LOG("La potencia del player es: %d",bombPower);
+		if (sizeBombPowerUpCounter >= 2)
+		{
 			bombPower++;
+			LOG("La potencia del player es: %d", bombPower);
 			sizeBombPowerUpCounter = 0;
+			
+		}
 		
-				
 	}
 
 
@@ -396,6 +398,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		dead = true;
 		current_animation = &dying;
+		App->particles->portalBackup->life = 0;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 
@@ -414,15 +417,14 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		position.y = c2->rect.y-16;
 		current_animation = &ending;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
-		App->particles->findParticle(COLLIDER_FINISH);
+		App->particles->portalBackup->life = 0;
+		//App->particles->findParticle(COLLIDER_FINISH);
 		
 	}
 	if (c2->type == COLLIDER_PLAYER)
 	{
 		speed.SetToZero();
 	}
-
-	
 
 }
 

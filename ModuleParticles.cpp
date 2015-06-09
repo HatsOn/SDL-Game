@@ -233,7 +233,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
+Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;
@@ -246,6 +246,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 	}
 
 	active.add(p);
+	return p;
 }
 
 // -------------------------------------------------------------
@@ -328,7 +329,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 
 	//Center
 	AddParticle(explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	power = 4;
+	
 	//Arms
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;
@@ -522,6 +523,9 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 	int random;
 	random = (rand() % 100 + 1);
 	LOG("%d", random);
+
+	Particle* p;
+
 	if (random <= 10)
 	{
 		speedPowerUpLocation.x = (particlePosition.x + sizeX);
@@ -541,7 +545,7 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 	}
 	else if (random > 20 && random <= 60 && !spawned)
 	{
-		AddParticle(portal, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_FINISH);
+		portalBackup = AddParticle(portal, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_FINISH);
 		spawned = !spawned;
 	}
 }

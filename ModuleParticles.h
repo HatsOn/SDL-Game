@@ -34,7 +34,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
 
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Uint32 delay = 0);
+	Particle* AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Uint32 delay = 0);
 	void generateBomb(int power, Particle* p);
 	bool canExplode(p2Point<int> p, char orientation);
 	bool canDestroy(p2Point<int> p, char orientation);
@@ -48,6 +48,7 @@ private:
 	p2List<Particle*> active;
 
 public:
+
 	Particle speedpowerUp;
 	Particle sizeExplosionPowerUp;
 	Particle bomb;
@@ -60,6 +61,7 @@ public:
 	Particle horizontal;
 	Particle vertical;
 	Particle portal;
+	Particle* portalBackup;
 
 	Particle evaporatingWall;
 
