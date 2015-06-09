@@ -104,10 +104,6 @@ bool ModulePlayer::Start()
 	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
 	//Cada vegada mes rapid fins que es tot blanc durant l'ultim segon 
 
-	//caminar_fx = App->audio->LoadFx("caminar.ogg");
-	bomba_fx = App->audio->LoadFx("PosarBomba.ogg");
-	powerup_fx = App->audio->LoadFx("AgafarPowerUp.ogg");
-	explosio_fx = App->audio->LoadFx("Explosio.ogg");
 
 	graphics = App->textures->Load("bombermanPC.png");
 	
@@ -179,6 +175,7 @@ update_status ModulePlayer::Update()
 			directionSide = DIRECTIONRIGHT;
 
 
+
 			if (current_animation != &right)
 			{
 				right.Reset();
@@ -224,7 +221,6 @@ update_status ModulePlayer::Update()
 
 			App->particles->AddParticle(App->particles->bombR, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
 			App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER);
-			App->audio->PlayFx(bomba_fx);
 			
 			//TODO: bomba centrada en una posici�
 			LOG("bomba");
@@ -372,7 +368,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->particles->findParticle(COLLIDER_SPEEDPOWERUP);
 		
 		speedPowerUpCounter++;
-		App->audio->PlayFx(powerup_fx);
 
 		if (speedPowerUpCounter >= 2)
 		{
@@ -387,7 +382,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->particles->findParticle(COLLIDER_SIZEXPLOSIONPOWERUP);
 
 		sizeBombPowerUpCounter++;
-		App->audio->PlayFx(powerup_fx);
 
 		
 			LOG("La potencia del player es: %d",bombPower);
