@@ -10,6 +10,7 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	scene_space = new ModuleSceneSpace(this, false);
 	tileMap = new ModuleTileMap(this, false);
+	tileBoss = new ModuleTileMapBoss(this, false);
 	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this, true);
 	fade = new ModuleFadeToBlack(this);
@@ -32,6 +33,7 @@ Application::Application()
 	
 	// Scenes
 	AddModule(tileMap);
+	AddModule(tileBoss);
 	AddModule(scene_space);
 	AddModule(scene_intro);
 	

@@ -2,46 +2,37 @@
 
 #include "Module.h"
 //#include "SDL/include/SDL.h"
-struct enemy
-{
-	p2Point<int> position;
-	Collider* collider;
-	p2Point<int> speed;
-	LookingLeftRight directionSide;
-	LookingUpDown directionVertical;
-	int n;
-};
 
 /*enum LookingLeftRight {
-	DIRECTIONLEFT = 0,
-	DIRECTIONRIGHT = 1,
-	NODIRECTIONSIDE = 2
+DIRECTIONLEFT = 0,
+DIRECTIONRIGHT = 1,
+NODIRECTIONSIDE = 2
 
 };
 
 enum LookingUpDown {
-	DIRECTIONUP = 0,
-	DIRECTIONDOWN = 1,
-	NODIRECTIONVERTICAL = 2
+DIRECTIONUP = 0,
+DIRECTIONDOWN = 1,
+NODIRECTIONVERTICAL = 2
 
 };
 */
 
-class ModuleTileMap : public Module
+class ModuleTileMapBoss : public Module
 {
 private:
 
 public:
 	Map map;
 	p2Point<int> speedPowerUpLocation;
-	
+
 	int deathCount;
 	SDL_Texture* tilesReference;
 	SDL_Texture* bomblvl1;
 	SDL_Texture* portalImg;
 	SDL_Texture* enemyImg;
 	SDL_Texture* scoreImg;
-	
+
 	p2DynArray<int> nonWalkableTiles;
 
 	SDL_Rect tile1;
@@ -107,18 +98,18 @@ public:
 	enemy enemy1;
 	enemy enemy2;
 	enemy enemy3;
-	
+
 	bool isSpeedPowerUp;
 	bool isExplosionSizePowerUp;
-	
+
 public:
 
-	ModuleTileMap(Application* app, bool start_enabled);
+	ModuleTileMapBoss(Application* app, bool start_enabled);
 
 	// Destructor
-	virtual ~ModuleTileMap()
+	virtual ~ModuleTileMapBoss()
 	{
-		
+
 	}
 
 	bool Start();

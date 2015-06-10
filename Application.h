@@ -16,6 +16,7 @@
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
 #include "ModuleTileMap.h"
+#include "ModuleTileMapBoss.h"
 #include "bomb.h"
 #include "ModuleEnemy.h"
 
@@ -34,6 +35,7 @@ public:
 	ModuleParticles* particles;
 	ModuleCollision* collision;
 	ModuleTileMap* tileMap;
+	ModuleTileMapBoss* tileBoss;
 	ModuleEnemy* enemies;
 	bomb* bombs;
 

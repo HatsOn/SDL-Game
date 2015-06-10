@@ -78,6 +78,7 @@
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleTileMap.h" />
+    <ClInclude Include="ModuleTileMapBoss.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
@@ -111,9 +112,11 @@
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTileMap.cpp" />
+    <ClCompile Include="ModuleTileMapBoss.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="BossLevel.txt" />
     <Text Include="DebugLevel.txt" />
     <Text Include="firstLevel.txt" />
   </ItemGroup>
