@@ -83,7 +83,8 @@ public:
 
 	bool dead;
 
-
+	bool canWalkUpperCorner;
+	bool canWalkLowerCorner;
 
 
 
