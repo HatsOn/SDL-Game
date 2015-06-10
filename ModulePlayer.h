@@ -47,6 +47,7 @@ public:
 	unsigned int bomba_fx;
 	unsigned int powerup_fx;
 	unsigned int mortpj_fx;
+	unsigned int camina_fx;
 
 	int speedPowerUpCounter;
 	int sizeBombPowerUpCounter;

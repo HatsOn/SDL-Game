@@ -108,6 +108,7 @@ bool ModulePlayer::Start()
 	bomba_fx = App->audio->LoadFx("PosarBomba.ogg");
 	powerup_fx = App->audio->LoadFx("AgafarPowerUp.ogg");
 	mortpj_fx = App->audio->LoadFx("MortPJ.ogg");
+	camina_fx = App->audio->LoadFx("Caminar.ogg");
 	graphics = App->textures->Load("bombermanPC.png");
 	
 	bombs = App->tileMap->tilesReference;
@@ -161,6 +162,8 @@ update_status ModulePlayer::Update()
 		{
 			directionSide = DIRECTIONLEFT;
 
+			App->audio->PlayFx(camina_fx);
+
 			//Make collider follow player's position
 
 			if (current_animation != &left)
@@ -177,7 +180,7 @@ update_status ModulePlayer::Update()
 
 			directionSide = DIRECTIONRIGHT;
 
-
+			App->audio->PlayFx(camina_fx);
 
 			if (current_animation != &right)
 			{
@@ -192,7 +195,7 @@ update_status ModulePlayer::Update()
 
 			directionVertical = DIRECTIONDOWN;
 
-
+			App->audio->PlayFx(camina_fx);
 
 			if (current_animation != &down)
 			{
@@ -207,6 +210,7 @@ update_status ModulePlayer::Update()
 
 			directionVertical = DIRECTIONUP;
 
+			App->audio->PlayFx(camina_fx);
 
 			if (current_animation != &up)
 			{
@@ -449,6 +453,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		position.x = c2->rect.x;
 		position.y = c2->rect.y-16;
 		current_animation = &ending;
+		App->audio->PlayMusic("Win.ogg", 0.5f);
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 		App->particles->portalBackup->life = 0;
 		//App->particles->findParticle(COLLIDER_FINISH);
