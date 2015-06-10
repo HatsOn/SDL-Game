@@ -87,6 +87,9 @@
     <ClInclude Include="ModuleTileMapBoss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+	<ClInclude Include="ModuleBoss.h">
+	 <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -143,7 +146,11 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="ModuleTileMapBoss.cpp">
+=======
+    <ClCompile Include="ModuleBoss.cpp">
+>>>>>>> origin/InProgress
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

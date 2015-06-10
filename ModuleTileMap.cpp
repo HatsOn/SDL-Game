@@ -14,11 +14,13 @@ ModuleTileMap::ModuleTileMap(Application* app, bool start_Enabled) : Module(app,
 
 bool ModuleTileMap::Start()
 {
+
 	//LoadMap("DebugLevel.txt");
 	LoadMap("FirstLevel.txt");
 	//LoadMap("firstLevel.txt");
 
 	PrintMap();
+
 
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
@@ -523,7 +525,15 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
+<<<<<<< HEAD
+	//LoadMap("DebugLevel.txt");
+	//LoadMap("FirstLevel.txt");
+	LoadMap("firstLevel.txt");
+
+	PrintMap();
+=======
 	
+>>>>>>> origin/InProgress
 	//CollisionMap();
 	return true;
 	
@@ -738,8 +748,7 @@ void ModuleTileMap::BuildMap()
 		}
 	}
 
-	//App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
-	//App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
+
 	for (int i = 0; i < enemies.Count(); i++)
 	{
 		App->renderer->Blit(enemyImg, enemies[i].position.x, enemies[i].position.y, &rEnemy1, 0.75f);
@@ -752,62 +761,100 @@ void ModuleTileMap::BuildMap()
 
 void ModuleTileMap::OnCollision(Collider* c1, Collider* c2)
 {
-	/*if (c2->type == COLLIDER_PLAYER_EXPLOSION)
-	{
-		switch (c1->n)
-		{
-			case 0:
-				if (deathCount > 1)
-				{
-					enemies.Pop(enemy1);
-					c2->to_delete;
-					deathCount = 0;
-				}
-				deathCount++;
-				break;
-			case 1:
-				if (deathCount > 1)
-				{
-					enemies.Pop(enemy2);
-					c2->to_delete;
-					deathCount = 0;
-				}
-				deathCount++;
-				break;
-			case 2:
-				if (deathCount > 1)
-				{
-					enemies.Pop(enemy3);
-					c2->to_delete;
-					deathCount = 0;
-				}
-				deathCount++;
-				break;
 
-			default:
-				break;
-		}
-		
-	}
-	for (int i = 0; i < enemies.Count(); i++)
+
+
+	if (c2->type == COLLIDER_PLAYER_EXPLOSION)
 	{
+		/*switch (c1->n)
+		{
+		case 0:
+		if (deathCount > 1)
+		{
+		enemies.Pop(enemy1);
+		c2->to_delete;
+		deathCount = 0;
+		}
+		deathCount++;
+		break;
+		case 1:
+		if (deathCount > 1)
+		{
+		enemies.Pop(enemy2);
+		c2->to_delete;
+		deathCount = 0;
+		}
+		deathCount++;
+		break;
+		case 2:
+		if (deathCount > 1)
+		{
+		enemies.Pop(enemy3);
+		c2->to_delete;
+		deathCount = 0;
+		}
+		deathCount++;
+		break;
+
+		default:
+		break;
+		}
+
+		}
+		for (int i = 0; i < enemies.Count(); i++)
+		{
 		enemies[i].collider->rect.x = -160;
 		enemies[i].collider->rect.y = -160;
 		enemies[i].collider->to_delete;
 		//enemies[i].collider->SetPos(-106, -160);
-	}*/
-
+		}
+		*/
 
 		for (int i = 0; i < enemies.Count(); i++)
 		{
 			if (enemies[i].collider == c1)
 			{
-				enemies[i].collider->SetPos(-101,101);
+				enemies[i].collider->SetPos(-101, 101);
 				enemies.Pop(enemies[i]);
 				App->player->enemiesAlive--;
 				break;
 			}
 		}
+	}
+	else if (c2->type == COLLIDER_PLAYER_SHOT)
+	{
+		for (int i = 0; i < enemies.Count(); i++)
+		{
+			if (enemies[i].collider == c1)
+			{
+				if (enemies[i].directionSide == DIRECTIONLEFT)
+				{
+					enemies[i].directionSide = DIRECTIONRIGHT;
+					enemies[i].position.x += 2;
+				}
+				else if (enemies[i].directionSide == DIRECTIONRIGHT)
+				{
+					enemies[i].directionSide = DIRECTIONLEFT;
+					enemies[i].position.x -= 2;
+				}
+				if (enemies[i].directionVertical == DIRECTIONUP)
+				{
+					enemies[i].directionVertical = DIRECTIONDOWN;
+					enemies[i].position.y += 2;
+					
+				}
+				else if (enemies[i].directionVertical == DIRECTIONDOWN)
+				{
+					enemies[i].directionVertical = DIRECTIONUP;
+					enemies[i].position.y -= 2;
+				}
+				
+			}
+		}
+
+	
+	
+	}
 }
 
 

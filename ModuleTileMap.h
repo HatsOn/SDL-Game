@@ -98,6 +98,8 @@ public:
 	// --- 5
 	SDL_Rect tile45;
 
+	SDL_Rect tile46;
+
 	SDL_Rect portal;
 	SDL_Rect rEnemy1;
 	SDL_Rect score;
@@ -107,6 +109,8 @@ public:
 	enemy enemy1;
 	enemy enemy2;
 	enemy enemy3;
+
+	enemy changeDirection;
 	
 	bool isSpeedPowerUp;
 	bool isExplosionSizePowerUp;
