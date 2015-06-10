@@ -64,7 +64,7 @@ bool ModuleTileMapBoss::Start()
 
 	App->bombs->Enable();
 	App->player->Enable();
-
+	App->boss->Enable();
 	deathCount = 0;
 
 	return 1;

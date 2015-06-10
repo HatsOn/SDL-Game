@@ -12,6 +12,7 @@ Application::Application()
 	tileMap = new ModuleTileMap(this, false);
 	tileBoss = new ModuleTileMapBoss(this, false);
 	player = new ModulePlayer(this, false);
+	boss = new ModuleBoss(this, false);
 	scene_intro = new ModuleSceneIntro(this, true);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
@@ -39,6 +40,7 @@ Application::Application()
 	
 	// Characters
 	AddModule(particles);
+	AddModule(boss);
 	AddModule(player);
 	//AddModule(enemies);
 	// Misc

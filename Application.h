@@ -11,6 +11,7 @@
 #include "ModuleAudio.h"
 #include "ModuleSceneSpace.h"
 #include "ModulePlayer.h"
+#include "ModuleBoss.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleParticles.h"
@@ -30,6 +31,7 @@ public:
 	ModuleAudio* audio;
 	ModuleSceneSpace* scene_space;
 	ModulePlayer* player;
+	ModuleBoss* boss;
 	ModuleFadeToBlack* fade;
 	ModuleSceneIntro* scene_intro;
 	ModuleParticles* particles;

@@ -11,7 +11,7 @@ ModuleBoss::ModuleBoss(Application* app, bool start_enabled) : Module(app, start
 
 
 	// idle animation (just the bomberman
-	smashing.frames.PushBack({ 515, 213, 77, 100 });
+	idle.frames.PushBack({ 515, 213, 77, 100 });
 	// move upwards
 	smashing.frames.PushBack({ 515, 213, 77, 100 });
 	smashing.frames.PushBack({ 591, 213, 56, 100 });
@@ -48,5 +48,25 @@ bool ModuleBoss::Start()
 	position.x = 100;
 	position.y = 100;
 
+	bossCollider = App->collision->AddCollider({ (position.x), (position.y), 16, 16 }, COLLIDER_BOSS, this);
+
 	return true;
+}
+
+bool ModuleBoss::CleanUp()
+{
+	LOG("Unloading player");
+	//delete collider;
+
+	return true;
+}
+
+update_status ModuleBoss::Update()
+{
+
+	current_animation = &idle;
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	
+
+	return UPDATE_CONTINUE;
 }
