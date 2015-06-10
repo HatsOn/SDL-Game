@@ -525,15 +525,14 @@ void ModuleTileMap::prepareTiles()
 bool ModuleTileMap::Init()
 {
 	LOG("TILE INITIATION");
-<<<<<<< HEAD
+
 	//LoadMap("DebugLevel.txt");
 	//LoadMap("FirstLevel.txt");
 	LoadMap("firstLevel.txt");
 
 	PrintMap();
-=======
-	
->>>>>>> origin/InProgress
+
+
 	//CollisionMap();
 	return true;
 	
