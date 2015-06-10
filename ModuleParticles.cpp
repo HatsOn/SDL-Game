@@ -23,6 +23,8 @@ bool ModuleParticles::Start()
 	explosionLife = 2000;
 	wallLife = 1500;
 
+	explosio_fx = App->audio->LoadFx("Explosio.ogg");
+
 	spawned = false;
 	// Bomb particle
 
@@ -61,7 +63,7 @@ bool ModuleParticles::Start()
 
 
 	// Explosion particle
-	
+
 	explosion.anim.frames.PushBack({322, 100, 16, 16});
 	explosion.anim.frames.PushBack({ 339, 100, 16, 16 });
 	explosion.anim.frames.PushBack({ 356, 100, 16, 16 });
@@ -329,7 +331,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 
 	//Center
 	AddParticle(explosion, p->position.x, p->position.y, COLLIDER_PLAYER_EXPLOSION);
-	
+	App->audio->PlayFx(explosio_fx);
 	//Arms
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 	particlePosition = p->position;

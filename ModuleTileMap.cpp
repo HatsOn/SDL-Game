@@ -21,7 +21,7 @@ bool ModuleTileMap::Start()
 
 	PrintMap();
 
-
+	mortenemic_fx = App->audio->LoadFx("MortEnemic.ogg");
 	App->audio->PlayMusic("bombermanlvl1.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
@@ -816,6 +816,7 @@ void ModuleTileMap::OnCollision(Collider* c1, Collider* c2)
 				enemies[i].collider->SetPos(-101, 101);
 				enemies.Pop(enemies[i]);
 				App->player->enemiesAlive--;
+				App->audio->PlayFx(mortenemic_fx);
 				break;
 			}
 		}

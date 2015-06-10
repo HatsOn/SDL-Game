@@ -107,7 +107,7 @@ bool ModulePlayer::Start()
 	//variables audio
 	bomba_fx = App->audio->LoadFx("PosarBomba.ogg");
 	powerup_fx = App->audio->LoadFx("AgafarPowerUp.ogg");
-	explosio_fx = App->audio->LoadFx("Explosio.ogg");
+	mortpj_fx = App->audio->LoadFx("MortPJ.ogg");
 	graphics = App->textures->Load("bombermanPC.png");
 	
 	bombs = App->tileMap->tilesReference;
@@ -428,14 +428,17 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		dead = true;
 		current_animation = &dying;
+		App->audio->PlayFx(mortpj_fx);
 		App->particles->portalBackup->life = 0;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		
 	}
 
 	if (c2->type == COLLIDER_ENEMY && !dead)
 	{
 		dead = true;
 		current_animation = &dying;		
+		App->audio->PlayFx(mortpj_fx);
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
