@@ -33,15 +33,6 @@ bool ModuleTileMapBoss::Start()
 	portal.h = 16;
 	portal.w = 16;
 
-	//Collider* portalCollider = App->collision->AddCollider({ 3*TILE_SIZE, GUIOffset + 3*TILE_SIZE, 16, 16 }, COLLIDER_FINISH);
-
-	//Collider* enemy1Collider = App->collision->AddCollider({ 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, 16, 16 }, COLLIDER_ENEMY);
-
-	paintEnemies();
-	for (int i = 0; i < enemies.Count(); i++)
-	{
-		enemies[i].collider = App->collision->AddCollider({ enemies[i].position.x, enemies[i].position.y + 8, 16, 16 }, COLLIDER_ENEMY, this);
-	}
 
 	score.x = 0;
 	score.y = 0;
@@ -50,22 +41,11 @@ bool ModuleTileMapBoss::Start()
 
 	prepareTiles();
 
-	enemies[0].directionSide = NODIRECTIONSIDE;
-	enemies[0].directionVertical = DIRECTIONUP;
-	enemies[0].collider->n = 0;
-
-	enemies[1].directionSide = DIRECTIONLEFT;
-	enemies[1].directionVertical = NODIRECTIONVERTICAL;
-	enemies[1].collider->n = 1;
-
-	enemies[2].directionSide = DIRECTIONLEFT;
-	enemies[2].directionVertical = NODIRECTIONVERTICAL;
-	enemies[2].collider->n = 2;
+	
 
 	App->bombs->Enable();
 	App->player->Enable();
 	App->boss->Enable();
-	deathCount = 0;
 
 	return 1;
 
@@ -75,139 +55,6 @@ bool ModuleTileMapBoss::Start()
 
 
 }
-
-void ModuleTileMapBoss::paintEnemies()
-{
-	enemyImg = App->textures->Load("portal.png");
-
-	rEnemy1.x = 3;
-	rEnemy1.y = 2;
-	rEnemy1.h = 24;
-	rEnemy1.w = 16;
-
-	enemy1.position.x = 10 * 16;
-	enemy1.position.y = 11 * 16;
-
-	enemy2.position.x = 3 * 16;
-	enemy2.position.y = 8 * 16 + 8;
-
-	enemy3.position.x = 10 * 16;
-	enemy3.position.y = 6 * 16 + 8;
-
-	enemies.PushBack(enemy1);
-	enemies.PushBack(enemy2);
-	enemies.PushBack(enemy3);
-
-
-	/*enemy1.x = 11 * 16;
-	enemy1.y = (9 + 4) * 16;
-	enemy1.h = 24;
-	enemy1.w = 16;*/
-
-}
-
-void ModuleTileMapBoss::moveEnemy()
-{
-	for (int i = 0; i < enemies.Count(); i++)
-	{
-
-
-		leftRightCollision(&enemies[i], enemies[i].directionSide);
-		UpDownCollision(&enemies[i], enemies[i].directionVertical);
-
-
-
-
-		enemies[i].position.x += enemies[i].speed.x;
-		enemies[i].position.y += enemies[i].speed.y;
-	}
-}
-
-void ModuleTileMapBoss::leftRightCollision(enemy* e, LookingLeftRight& direction)
-{
-
-	if (direction == 0)
-	{
-		if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x - 1) / TILE_SIZE][((e->collider->rect.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x - 1) / TILE_SIZE][((e->collider->rect.y + 15) / TILE_SIZE) - SCOREOFFSET]))
-		{
-
-			e->speed.x *= -1;
-			direction = DIRECTIONRIGHT;
-		}
-		else
-		{
-			e->speed.x = -1;
-
-		}
-	}
-
-	else if (direction == 1)
-	{
-
-		if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x + 15 + 1) / TILE_SIZE][((e->collider->rect.y) / TILE_SIZE) - SCOREOFFSET]) || App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x + 15 + 1) / TILE_SIZE][((e->collider->rect.y + 15) / TILE_SIZE) - SCOREOFFSET]))
-		{
-
-			e->speed.x *= -1;
-			direction = DIRECTIONLEFT;
-		}
-		else
-		{
-			e->speed.x = 1;
-
-		}
-
-	}
-
-	else if (direction == 2)//Idle
-	{
-
-		e->speed.x = 0;
-	}
-
-}
-
-void ModuleTileMapBoss::UpDownCollision(enemy* e, LookingUpDown& direction)
-{
-
-	if (direction == 0)
-	{
-		if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x) / TILE_SIZE][((e->collider->rect.y - 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x + 15) / TILE_SIZE][((e->collider->rect.y - 1) / TILE_SIZE) - SCOREOFFSET]))
-		{
-
-			e->speed.y *= -1;
-			direction = DIRECTIONDOWN;
-		}
-		else
-		{
-			e->speed.y = -1;
-
-		}
-
-	}
-
-	else if (direction == 1)
-	{
-
-		if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x) / TILE_SIZE][((e->collider->rect.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]) || App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(e->collider->rect.x + 15) / TILE_SIZE][((e->collider->rect.y + 15 + 1) / TILE_SIZE) - SCOREOFFSET]))
-		{
-
-			e->speed.y *= -1;
-			direction = DIRECTIONUP;
-		}
-		else
-		{
-			e->speed.y = 1;
-
-		}
-
-	}
-	else if (direction == 2)//Idle
-	{
-
-		e->speed.y = 0;
-	}
-}
-
 
 
 
@@ -392,6 +239,7 @@ bool ModuleTileMapBoss::CleanUp()
 	enemies.Clear();
 	App->bombs->Disable();
 	App->player->Disable();
+	App->boss->Disable();
 	return 0;
 }
 
@@ -551,11 +399,6 @@ void ModuleTileMapBoss::BuildMap()
 
 	//App->renderer->Blit(portalImg, 3 * TILE_SIZE, GUIOffset + 3 * TILE_SIZE, &portal, 0.75f);
 	//App->renderer->Blit(enemyImg, 9 * TILE_SIZE, GUIOffset + 4 * TILE_SIZE, &enemy1, 0.75f);
-	for (int i = 0; i < enemies.Count(); i++)
-	{
-		App->renderer->Blit(enemyImg, enemies[i].position.x, enemies[i].position.y, &rEnemy1, 0.75f);
-		enemies[i].collider->SetPos(enemies[i].position.x, enemies[i].position.y + 8);
-	}
 
 	App->renderer->Blit(scoreImg, 0 * TILE_SIZE, 0 * TILE_SIZE, &score, 0.75f);
 	//App->player->Enable();
@@ -563,62 +406,9 @@ void ModuleTileMapBoss::BuildMap()
 
 void ModuleTileMapBoss::OnCollision(Collider* c1, Collider* c2)
 {
-	/*if (c2->type == COLLIDER_PLAYER_EXPLOSION)
-	{
-	switch (c1->n)
-	{
-	case 0:
-	if (deathCount > 1)
-	{
-	enemies.Pop(enemy1);
-	c2->to_delete;
-	deathCount = 0;
-	}
-	deathCount++;
-	break;
-	case 1:
-	if (deathCount > 1)
-	{
-	enemies.Pop(enemy2);
-	c2->to_delete;
-	deathCount = 0;
-	}
-	deathCount++;
-	break;
-	case 2:
-	if (deathCount > 1)
-	{
-	enemies.Pop(enemy3);
-	c2->to_delete;
-	deathCount = 0;
-	}
-	deathCount++;
-	break;
-
-	default:
-	break;
-	}
-
-	}
-	for (int i = 0; i < enemies.Count(); i++)
-	{
-	enemies[i].collider->rect.x = -160;
-	enemies[i].collider->rect.y = -160;
-	enemies[i].collider->to_delete;
-	//enemies[i].collider->SetPos(-106, -160);
-	}*/
+	
 
 
-	for (int i = 0; i < enemies.Count(); i++)
-	{
-		if (enemies[i].collider == c1)
-		{
-			enemies[i].collider->SetPos(-101, 101);
-			enemies.Pop(enemies[i]);
-			App->player->enemiesAlive--;
-			break;
-		}
-	}
 }
 
 
@@ -627,7 +417,6 @@ update_status ModuleTileMapBoss::Update()
 
 	BuildMap();
 
-	moveEnemy();
 
 	return UPDATE_CONTINUE;
 }

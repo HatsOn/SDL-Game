@@ -53,6 +53,7 @@ public:
 
 	Particle speedpowerUp;
 	Particle sizeExplosionPowerUp;
+	Particle bombNumberPowerUp;
 	Particle bomb;
 	Particle bombR;
 	Particle explosion;
@@ -73,5 +74,6 @@ public:
 	bool spawned;
 	p2Point<int> speedPowerUpLocation;
 	p2Point<int> sizeExplosionPowerUpLocation;
+	p2Point<int> bombNumberPowerUpLocation;
 
 };

@@ -42,8 +42,9 @@ Application::Application()
 	
 	// Characters
 	AddModule(particles);
-	AddModule(boss);
 	AddModule(player);
+	AddModule(boss);
+	
 	//AddModule(enemies);
 	// Misc
 	
