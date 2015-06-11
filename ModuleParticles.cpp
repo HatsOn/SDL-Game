@@ -366,7 +366,31 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	else if (canDestroy(particlePosition, 'n'))
 	{
 		/*****************************************/
-		App->tileMap->map.tile[(particlePosition.x + 8 ) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] = 20;
+		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] = 19;
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 3)
+		{  
+			App->tileMap->map.tile[(particlePosition.x + 8 ) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] = 11;
+		}
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 11)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] == 20)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] == 20)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+
+
+
+		
+
 		dropPowerUp(particlePosition, 0, -16);		
 		/*****************************************/
 		AddParticle(evaporatingWall,
@@ -390,7 +414,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		{
 			if (canDestroy(particlePosition, 's')) // Si es destruible
 			{
-				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 20;
+				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
 				dropPowerUp(particlePosition, 0, +16);
 				AddParticle(evaporatingWall,
 					p->position.x,
@@ -408,7 +432,20 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	else if (canDestroy(particlePosition, 's'))
 	{
 		/*****************************************/
-		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 20;
+		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 + 32) / TILE_SIZE - SCOREOFFSET] == 20)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 32 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 11)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 16 + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+
+		
 		dropPowerUp(particlePosition, 0, +16);
 		/*****************************************/	
 		AddParticle(evaporatingWall,
@@ -451,9 +488,22 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	else if (canDestroy(particlePosition, 'o'))
 	{
 		/*****************************************/
+		App->tileMap->map.tile[(particlePosition.x + 8 - 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
-		App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 3)
+		{
+			App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 11;
+		}
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 11)
+		{
+			App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
 
+		if (App->tileMap->map.tile[(particlePosition.x + 8 - 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] == 20)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8 - 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+		
 		dropPowerUp(particlePosition, -16, 0);
 
 
@@ -506,6 +556,50 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	{
 		App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
+		if (App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 3 || 
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 10 ||
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 4)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 11;
+			if (!App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] == 10)
+			{
+				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
+			}
+			if (App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] == 4)
+			{
+				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
+			}
+		}
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] == 11)
+		{ 
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+		
+		if (App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] == 4 && 
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] == 20)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 11)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 11 && (App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] == 20))
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+		if (App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] == 20)
+		{
+			App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
+		}
+
+
 		dropPowerUp(particlePosition, 16, 0);
 		
 		AddParticle(evaporatingWall,
@@ -515,6 +609,11 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------
 }
+
+
+
+
+
 
 
 
