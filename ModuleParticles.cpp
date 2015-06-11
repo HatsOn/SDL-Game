@@ -151,6 +151,13 @@ bool ModuleParticles::Start()
 	sizeExplosionPowerUp.anim.speed = 0.05f;
 	sizeExplosionPowerUp.anim.loop = true;
 
+	bombNumberPowerUp.anim.frames.PushBack({216, 98, 16, 16});
+	bombNumberPowerUp.anim.frames.PushBack({216, 114, 16, 16});
+	bombNumberPowerUp.life = 10000;
+	bombNumberPowerUp.anim.speed = 0.05f;
+	bombNumberPowerUp.anim.loop = true;
+
+
 	return true;
 }
 
@@ -647,6 +654,11 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 		portalBackup = AddParticle(portal, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_FINISH);
 		spawned = !spawned;
 	}
+	else if (random > 20 && random <= 90)
+	{
+		AddParticle(bombNumberPowerUp, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_NUMEXPLOSIONPOWERUP);
+	}
+
 }
 
 bool ModuleParticles::canExplode(p2Point<int> p, char orientation)

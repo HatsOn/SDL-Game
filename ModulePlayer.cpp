@@ -698,7 +698,9 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		dead = true;
 		current_animation = &dying;
-		App->particles->portalBackup->life = 0;
+		if (App->particles->portalBackup != NULL)
+			App->particles->portalBackup->life = 0;
+
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 
