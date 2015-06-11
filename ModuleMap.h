@@ -16,6 +16,7 @@ public:
 public:
 
 	SDL_Texture* graphics2;
+	SDL_Texture* graphics3;
 	Animation water;
 	unsigned int fx;
 	unsigned int counter;
