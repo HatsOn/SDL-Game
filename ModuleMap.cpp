@@ -56,7 +56,7 @@ update_status ModuleMap::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP)
 	{
 		//App->tileMap->Enable();
-		App->fade->FadeToBlack(this, App->map, 3.0f);
+		App->fade->FadeToBlack(this, App->tileBoss, 3.0f);
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
 
