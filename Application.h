@@ -20,6 +20,7 @@
 #include "ModuleTileMapBoss.h"
 #include "bomb.h"
 #include "ModuleEnemy.h"
+#include "ModuleMap.h"
 
 class Application
 {
@@ -39,6 +40,7 @@ public:
 	ModuleTileMap* tileMap;
 	ModuleTileMapBoss* tileBoss;
 	ModuleEnemy* enemies;
+	ModuleMap* map;
 	bomb* bombs;
 
 private:

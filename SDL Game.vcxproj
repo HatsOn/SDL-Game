@@ -78,6 +78,7 @@
     <ClInclude Include="ModuleBoss.h" />
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleEnemy.h" />
+    <ClInclude Include="ModuleMap.h" />
     <ClInclude Include="ModuleTileMap.h" />
     <ClInclude Include="ModuleTileMapBoss.h" />
     <ClInclude Include="p2List.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="ModuleBoss.cpp" />
     <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleEnemy.cpp" />
+    <ClCompile Include="ModuleMap.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModuleSceneSpace.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />

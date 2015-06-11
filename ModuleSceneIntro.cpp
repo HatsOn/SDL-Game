@@ -48,7 +48,7 @@ update_status ModuleSceneIntro::Update(){
 	{
 		App->audio->PlayFx(select_fx);
 		//App->tileMap->Enable();
-		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
+		App->fade->FadeToBlack(this, App->map, 3.0f);
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP)

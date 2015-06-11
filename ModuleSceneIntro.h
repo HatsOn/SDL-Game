@@ -19,8 +19,6 @@ public:
 	Animation water;
 	unsigned int fx;
 
-
-
 	unsigned int select_fx;
 
 };

@@ -6,7 +6,7 @@
 
 ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	graphics = NULL;
+	graphics2 = NULL;
 	fx = 0;
 }
 
@@ -18,9 +18,10 @@ bool ModuleMap::Start()
 {
 	LOG("Loading Map assets");
 	bool ret = true;
+	counter = 0;
 
 	//App->particles->findParticle(COLLIDER_FINISH);
-	graphics = App->textures->Load("BombermanIntro.png");
+	graphics2 = App->textures->Load("MapV1.png");
 	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -28,26 +29,28 @@ bool ModuleMap::Start()
 }
 
 // Load assets
-bool ModuleSceneIntro::CleanUp()
+bool ModuleMap::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
-	App->textures->Unload(graphics);
+	App->textures->Unload(graphics2);
 
 	return true;
 }
 
 // Update: draw background
-update_status ModuleSceneIntro::Update()
+update_status ModuleMap::Update()
 {
-	App->renderer->Blit(graphics, 0, 0, NULL);
-
+	App->renderer->Blit(graphics2, 0, 0, NULL);
+	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		//App->tileMap->Enable();
-		App->fade->FadeToBlack(this, App->tileBoss, 3.0f);
+		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
+	
 
+	
 	return UPDATE_CONTINUE;
 }

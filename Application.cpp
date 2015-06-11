@@ -18,6 +18,7 @@ Application::Application()
 	particles = new ModuleParticles(this);
 	collision = new ModuleCollision(this, true);
 	bombs = new bomb(this, false);
+	map = new ModuleMap(this, false);
 	//enemies = new ModuleEnemy(this, false);
 
 	// The order of calls is very important!
@@ -37,6 +38,7 @@ Application::Application()
 	AddModule(tileBoss);
 	AddModule(scene_space);
 	AddModule(scene_intro);
+	AddModule(map);
 	
 	// Characters
 	AddModule(particles);
@@ -63,6 +65,7 @@ Application::~Application()
 	delete enemies;
 	delete fade;
 	delete collision;
+	delete map;
 }
 
 bool Application::Init()
