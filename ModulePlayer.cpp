@@ -476,6 +476,17 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		speed.SetToZero();
 	}
 
+	if (c2->type == COLLIDER_BOSS  && !dead)
+	{
+		dead = true;
+		current_animation = &dying;
+		App->audio->PlayFx(mortpj_fx);
+		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+	}
+
+
+
+
 }
 
 /*

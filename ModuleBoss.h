@@ -5,11 +5,23 @@
 #include "p2Point.h"
 #include "bomb.h"
 
+enum bossState
+{
+	TOP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	CENTERED
+};
+
+
 class ModuleBoss :
 	public Module
 {
 
 public:
+
+	bossState state;
 
 	SDL_Texture* graphics;
 	Collider* bossCollider;
@@ -21,7 +33,7 @@ public:
 
 	p2Point<int> speed;
 	p2Point<int> position;
-	
+	int framesMove;
 
 
 	ModuleBoss(Application* app, bool start_enabled = true);
@@ -34,5 +46,8 @@ public:
 
 
 	void changeBossPosition(p2Point<int> position);
+	void changeBossPosition(int x, int y);
+	void changeMovementState(bossState _state);
+	bool playerInDangerZone();
 };
 

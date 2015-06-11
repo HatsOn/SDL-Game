@@ -20,7 +20,22 @@ public:
 		x = p.x;
 		y = p.y;
 	}
+	p2Point(int _x, int _y)
+	{
+		x = _x;
+		y = _y;
+	}
 
+	void setPosition(int x, int y)
+	{
+		x = _x;
+		y = _y;
+	}
+	void setPosition(const p2Point& p)
+	{
+		x = p.x;
+		y = p.y;
+	}
 	// Math ------------------------------------------------
 	p2Point operator -(const p2Point &v) const
 	{

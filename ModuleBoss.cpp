@@ -2,13 +2,16 @@
 #include "Application.h"
 #include "ModuleBoss.h"
 
+
+
+
 ModuleBoss::ModuleBoss(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	graphics = NULL;
 	current_animation = NULL;
 	speed.x = 1;
 	speed.y = 1;
-
+	framesMove = 1;
 
 	// idle animation (just the bomberman
 	idle.frames.PushBack({ 525, 248, 601 - 525, 399 - 248 }); //525,248 10,35
@@ -49,6 +52,7 @@ bool ModuleBoss::Start()
 	position.y = 64 + 16 + SCOREOFFSET;
 
 	bossCollider = App->collision->AddCollider({ (position.x), (position.y), 55, 63 }, COLLIDER_BOSS, this);
+	state = CENTERED;
 
 	return true;
 }
@@ -88,11 +92,38 @@ update_status ModuleBoss::Update()
 
 
 	//position.y += 1;
-	bossCollider->SetPos(position.x+10, position.y+35);
+	//bossCollider->SetPos(position.x+10, position.y+35);
+	
+	
 	current_animation = &idle;
 
+	if (position.y > (SCOREOFFSET*16) - 19 && (state == LEFT || state == CENTERED))
+	{
+		changeBossPosition(position.x, position.y - 1);
+
+		changeMovementState(TOP);
+	}
+	else if (state == TOP && position.x < 208-60)
+	{
+		changeBossPosition(position.x + 1, position.y);
+
+		changeMovementState(RIGHT);
+	}
+	else if (state == RIGHT && position.y < (SCOREOFFSET*16)+240 - 151)
+	{
+		changeBossPosition(position.x, position.y + 1);
+		
+		changeMovementState(DOWN);
+	}
+	else if (state == DOWN && position.x > 16)
+	{
+		changeBossPosition(position.x - 1, position.y);
+		
+		changeMovementState(LEFT);
+	}
 
 
+	//current_animation = &smashing;
 
 
 
@@ -104,6 +135,64 @@ update_status ModuleBoss::Update()
 
 void ModuleBoss::changeBossPosition(p2Point<int> _position)
 {
-	position = _position;
-	bossCollider->SetPos(_position.x, _position.y);
+	if (framesMove == 1)
+	{
+		position = _position;
+		bossCollider->SetPos(_position.x, _position.y);
+	}
+	framesMove++;
+	if (framesMove >= 3)
+	{
+		framesMove = 1;
+	}
+}
+void ModuleBoss::changeBossPosition(int x, int y)
+{
+	if (framesMove == 1)
+	{
+		position.x = x;
+		position.y = y;
+		bossCollider->SetPos(x + 10, y + 35);
+	}
+	framesMove++;
+	if (framesMove >= 3)
+	{
+		framesMove = 1;
+	}
+	
+}
+
+void ModuleBoss::changeMovementState(bossState _state)
+{
+	if (position.y == (SCOREOFFSET * 16) - 19 && (state == LEFT || state == CENTERED))
+	{
+		state = _state;
+		LOG("TOP");
+	}
+	else if (position.x == 208 - 60 && state == TOP)
+	{
+		state = _state;
+		LOG("RIGHT");
+	}
+	else if (position.y == (SCOREOFFSET * 16) + 240 - 151 - 16 * 2 && state == RIGHT)
+	{
+		state = _state;
+		LOG("DOWN");
+	}
+	else if (position.x == 16 && state == DOWN)
+	{
+		state = _state;
+		LOG("LEFT");
+	}
+}
+
+bool ModuleBoss::playerInDangerZone()
+{
+	p2Point<int> tmp(8, 8);
+	p2Point<int> playerCenter(App->player->position);
+	playerCenter += tmp;
+
+	tmp.setPosition(37, 119);
+	p2Point<int> dangerZoneCenter;
+	
 }
