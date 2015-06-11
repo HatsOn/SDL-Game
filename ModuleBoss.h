@@ -31,5 +31,8 @@ public:
 	bool Start();
 	bool CleanUp();
 	update_status Update();
+
+
+	void changeBossPosition(p2Point<int> position);
 };
 
