@@ -161,9 +161,12 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			directionSide = DIRECTIONLEFT;
-
-			App->audio->PlayFx(camina_fx);
-
+			
+				if (!App->audio->IsPlaying(audioChannel))
+				{
+					audioChannel = App->audio->PlayFx(camina_fx);
+				}
+			
 			//Make collider follow player's position
 
 			if (current_animation != &left)
@@ -180,7 +183,10 @@ update_status ModulePlayer::Update()
 
 			directionSide = DIRECTIONRIGHT;
 
-			App->audio->PlayFx(camina_fx);
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(camina_fx);
+			}
 
 			if (current_animation != &right)
 			{
@@ -195,7 +201,10 @@ update_status ModulePlayer::Update()
 
 			directionVertical = DIRECTIONDOWN;
 
-			App->audio->PlayFx(camina_fx);
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(camina_fx);
+			}
 
 			if (current_animation != &down)
 			{
@@ -210,7 +219,10 @@ update_status ModulePlayer::Update()
 
 			directionVertical = DIRECTIONUP;
 
-			App->audio->PlayFx(camina_fx);
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(camina_fx);
+			}
 
 			if (current_animation != &up)
 			{
