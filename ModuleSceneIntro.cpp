@@ -38,14 +38,10 @@ bool ModuleSceneIntro::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleSceneIntro::Update()
-<<<<<<< HEAD
-{	
-=======
-{
+update_status ModuleSceneIntro::Update(){
 	
 	// Draw everything --------------------------------------	
->>>>>>> origin/InProgress
+
 	App->renderer->Blit(graphics, 0, 0, NULL);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
