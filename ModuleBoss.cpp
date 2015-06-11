@@ -195,4 +195,5 @@ bool ModuleBoss::playerInDangerZone()
 	tmp.setPosition(37, 119);
 	p2Point<int> dangerZoneCenter;
 	
+	return true;
 }

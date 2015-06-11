@@ -26,7 +26,7 @@ public:
 		y = _y;
 	}
 
-	void setPosition(int x, int y)
+	void setPosition(int _x, int _y)
 	{
 		x = _x;
 		y = _y;
