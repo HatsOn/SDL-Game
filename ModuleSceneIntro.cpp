@@ -55,7 +55,6 @@ update_status ModuleSceneIntro::Update(){
 		App->audio->PlayFx(select_fx);
 		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->map, 3.0f);
-		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
 	
 
