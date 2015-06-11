@@ -48,6 +48,7 @@ public:
 	unsigned int powerup_fx;
 	unsigned int mortpj_fx;
 	unsigned int camina_fx;
+	int audioChannel;
 
 	int speedPowerUpCounter;
 	int sizeBombPowerUpCounter;
