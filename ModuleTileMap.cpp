@@ -68,6 +68,8 @@ bool ModuleTileMap::Start()
 	App->player->Enable();
 
 	deathCount = 0;
+	sceneActive = true;
+
 
 	return 1;
 	
@@ -588,6 +590,7 @@ void ModuleTileMap::PrintMap()const
 bool ModuleTileMap::CleanUp()
 {
 	enemies.Clear();
+	sceneActive = false;
 	App->bombs->Disable();
 	App->player->Disable();
 	return 0;

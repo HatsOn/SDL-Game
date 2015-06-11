@@ -99,6 +99,8 @@ public:
 	enemy enemy2;
 	enemy enemy3;
 
+	bool sceneActive;
+
 	bool isSpeedPowerUp;
 	bool isExplosionSizePowerUp;
 
