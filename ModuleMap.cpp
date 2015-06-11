@@ -17,6 +17,7 @@ bool ModuleMap::Start()
 {
 	LOG("Loading Map assets");
 	bool ret = true;
+	counter = SDL_GetTicks();
 
 	//App->particles->findParticle(COLLIDER_FINISH);
 	graphics2 = App->textures->Load("MapV1.png");
@@ -41,6 +42,8 @@ bool ModuleMap::CleanUp()
 // Update: draw background
 update_status ModuleMap::Update()
 {
+	counter = SDL_GetTicks() - counter;
+
 	App->renderer->Blit(graphics2, 0, 0, NULL);
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
@@ -50,14 +53,6 @@ update_status ModuleMap::Update()
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
 
+	App->renderer->Blit(graphics3, 0, 0, NULL);
 	return UPDATE_CONTINUE;
 }
-
-/*
-if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-{
-//App->tileMap->Enable();
-App->fade->FadeToBlack(this, App->tileMap, 3.0f);
-App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
-}
-*/
