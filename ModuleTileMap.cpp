@@ -500,14 +500,14 @@ void ModuleTileMap::prepareTiles()
 	nonWalkableTiles.PushBack(25);
 	nonWalkableTiles.PushBack(26);
 	nonWalkableTiles.PushBack(27);
-
+	/*
 	nonWalkableTiles.PushBack(29);
 	nonWalkableTiles.PushBack(30);
 	nonWalkableTiles.PushBack(31);
 	nonWalkableTiles.PushBack(32);
 	nonWalkableTiles.PushBack(33); 
 	nonWalkableTiles.PushBack(34);
-	nonWalkableTiles.PushBack(36);
+	nonWalkableTiles.PushBack(36);*/
 
 	srand(time(NULL));
 
