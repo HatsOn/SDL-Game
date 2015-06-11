@@ -42,7 +42,13 @@ public:
 	bool hasCollided;
 
 
-
+	//Effectes Sonors
+	unsigned int caminar_fx;
+	unsigned int bomba_fx;
+	unsigned int powerup_fx;
+	unsigned int mortpj_fx;
+	unsigned int camina_fx;
+	int audioChannel;
 
 	int speedPowerUpCounter;
 	int sizeBombPowerUpCounter;

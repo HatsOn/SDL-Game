@@ -104,7 +104,11 @@ bool ModulePlayer::Start()
 	//El personatge ha d'estar 14 segons sent invulnerable i cambiant entre color normal i blanc
 	//Cada vegada mes rapid fins que es tot blanc durant l'ultim segon 
 
-
+	//variables audio
+	bomba_fx = App->audio->LoadFx("PosarBomba.ogg");
+	powerup_fx = App->audio->LoadFx("AgafarPowerUp.ogg");
+	mortpj_fx = App->audio->LoadFx("MortPJ.ogg");
+	camina_fx = App->audio->LoadFx("Caminar.ogg");
 	graphics = App->textures->Load("bombermanPC.png");
 	
 	bombs = App->tileMap->tilesReference;
@@ -157,7 +161,12 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			directionSide = DIRECTIONLEFT;
-
+			
+				if (!App->audio->IsPlaying(audioChannel))
+				{
+					audioChannel = App->audio->PlayFx(camina_fx);
+				}
+			
 			//Make collider follow player's position
 
 			if (current_animation != &left)
@@ -174,7 +183,10 @@ update_status ModulePlayer::Update()
 
 			directionSide = DIRECTIONRIGHT;
 
-
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(camina_fx);
+			}
 
 			if (current_animation != &right)
 			{
@@ -189,7 +201,10 @@ update_status ModulePlayer::Update()
 
 			directionVertical = DIRECTIONDOWN;
 
-
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(camina_fx);
+			}
 
 			if (current_animation != &down)
 			{
@@ -204,6 +219,10 @@ update_status ModulePlayer::Update()
 
 			directionVertical = DIRECTIONUP;
 
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(camina_fx);
+			}
 
 			if (current_animation != &up)
 			{
@@ -221,7 +240,8 @@ update_status ModulePlayer::Update()
 
 			App->particles->AddParticle(App->particles->bombR, bombPosition.x, bombPosition.y, COLLIDER_PLAYER_SHOT);
 			App->particles->AddParticle(App->particles->bomb, bombPosition.x, bombPosition.y, COLLIDER_PLAYER);
-			
+			App->audio->PlayFx(bomba_fx);
+
 			//TODO: bomba centrada en una posici�
 			LOG("bomba");
 		}
@@ -392,6 +412,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->particles->findParticle(COLLIDER_SPEEDPOWERUP);
 		
 		speedPowerUpCounter++;
+		App->audio->PlayFx(powerup_fx);
 
 		if (speedPowerUpCounter >= 2)
 		{
@@ -406,6 +427,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->particles->findParticle(COLLIDER_SIZEXPLOSIONPOWERUP);
 
 		sizeBombPowerUpCounter++;
+		App->audio->PlayFx(powerup_fx);
 
 		if (sizeBombPowerUpCounter >= 2)
 		{
@@ -422,14 +444,17 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		dead = true;
 		current_animation = &dying;
+		App->audio->PlayFx(mortpj_fx);
 		App->particles->portalBackup->life = 0;
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		
 	}
 
 	if (c2->type == COLLIDER_ENEMY && !dead)
 	{
 		dead = true;
 		current_animation = &dying;		
+		App->audio->PlayFx(mortpj_fx);
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 	}
 	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
@@ -440,6 +465,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		position.x = c2->rect.x;
 		position.y = c2->rect.y-16;
 		current_animation = &ending;
+		App->audio->PlayMusic("Win.ogg", 0.5f);
 		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
 		App->particles->portalBackup->life = 0;
 		//App->particles->findParticle(COLLIDER_FINISH);

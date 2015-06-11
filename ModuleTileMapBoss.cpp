@@ -20,7 +20,7 @@ bool ModuleTileMapBoss::Start()
 
 	PrintMap();
 
-	App->audio->PlayMusic("bombermanlvl1.ogg");
+	App->audio->PlayMusic("Boss.ogg");
 	tilesReference = App->textures->Load("BombermanTiles.png");
 	portalImg = App->textures->Load("portal.png");
 	scoreImg = App->textures->Load("Marcador.png");
@@ -64,7 +64,7 @@ bool ModuleTileMapBoss::Start()
 
 	App->bombs->Enable();
 	App->player->Enable();
-
+	App->boss->Enable();
 	deathCount = 0;
 
 	return 1;

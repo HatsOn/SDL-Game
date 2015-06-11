@@ -22,6 +22,7 @@ bool ModuleSceneIntro::Start()
 	graphics = App->textures->Load("BombermanIntro.png");
 	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
+	select_fx = App->audio->LoadFx("Select.ogg");
 
 	return ret;
 }
@@ -38,15 +39,30 @@ bool ModuleSceneIntro::CleanUp()
 
 // Update: draw background
 update_status ModuleSceneIntro::Update()
+<<<<<<< HEAD
 {	
+=======
+{
+	
+	// Draw everything --------------------------------------	
+>>>>>>> origin/InProgress
 	App->renderer->Blit(graphics, 0, 0, NULL);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
+		App->audio->PlayFx(select_fx);
+		//App->tileMap->Enable();
+		App->fade->FadeToBlack(this, App->tileMap, 3.0f);
+		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP)
+	{
+		App->audio->PlayFx(select_fx);
 		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->tileBoss, 3.0f);
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
+	
 
 	return UPDATE_CONTINUE;
 }

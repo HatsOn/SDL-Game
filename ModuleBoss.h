@@ -21,7 +21,7 @@ public:
 
 	p2Point<int> speed;
 	p2Point<int> position;
-
+	
 
 
 	ModuleBoss(Application* app, bool start_enabled = true);
@@ -29,5 +29,10 @@ public:
 	~ModuleBoss();
 
 	bool Start();
+	bool CleanUp();
+	update_status Update();
+
+
+	void changeBossPosition(p2Point<int> position);
 };
 

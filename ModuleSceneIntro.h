@@ -18,5 +18,9 @@ public:
 	SDL_Texture* graphics;
 	Animation water;
 	unsigned int fx;
+<<<<<<< HEAD
 
+=======
+	unsigned int select_fx;
+>>>>>>> origin/InProgress
 };

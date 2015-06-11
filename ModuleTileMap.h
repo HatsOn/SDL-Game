@@ -117,6 +117,8 @@ public:
 	
 public:
 
+	unsigned int mortenemic_fx;
+
 	ModuleTileMap(Application* app, bool start_enabled);
 
 	// Destructor
