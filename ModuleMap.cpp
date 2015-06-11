@@ -53,7 +53,9 @@ update_status ModuleMap::Update()
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
 
+
 	else if (App->input->GetKey(SDL_SCANCODE_B) == KEY_UP)
+
 	{
 		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->tileBoss, 3.0f);

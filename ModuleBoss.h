@@ -34,7 +34,7 @@ public:
 	p2Point<int> speed;
 	p2Point<int> position;
 	int framesMove;
-
+	int mazeCounter;
 
 	ModuleBoss(Application* app, bool start_enabled = true);
 

@@ -12,7 +12,7 @@ ModuleBoss::ModuleBoss(Application* app, bool start_enabled) : Module(app, start
 	speed.x = 1;
 	speed.y = 1;
 	framesMove = 1;
-
+	mazeCounter = 1;
 	// idle animation (just the bomberman
 	idle.frames.PushBack({ 525, 248, 601 - 525, 399 - 248 }); //525,248 10,35
 	// move upwards
@@ -52,6 +52,7 @@ bool ModuleBoss::Start()
 	position.y = 64 + 16 + SCOREOFFSET;
 
 	bossCollider = App->collision->AddCollider({ (position.x), (position.y), 55, 63 }, COLLIDER_BOSS, this);
+	mazeCollider = App->collision->AddCollider({ (-100), (-100), 37, 32 }, COLLIDER_BOSS, this);
 	state = CENTERED;
 
 	return true;
@@ -93,36 +94,51 @@ update_status ModuleBoss::Update()
 
 	//position.y += 1;
 	//bossCollider->SetPos(position.x+10, position.y+35);
-	
-	
-	current_animation = &idle;
-
-	if (position.y > (SCOREOFFSET*16) - 19 && (state == LEFT || state == CENTERED))
+	if (!playerInDangerZone() && mazeCounter != 1)
 	{
-		changeBossPosition(position.x, position.y - 1);
 
-		changeMovementState(TOP);
+		current_animation = &idle;
+		mazeCollider->SetPos(-100, -100);
+		if (position.y > (SCOREOFFSET * 16) - 19 && (state == LEFT || state == CENTERED))
+		{
+			changeBossPosition(position.x, position.y - 1);
+
+			changeMovementState(TOP);
+		}
+		else if (state == TOP && position.x < 208 - 60)
+		{
+			changeBossPosition(position.x + 1, position.y);
+
+			changeMovementState(RIGHT);
+		}
+		else if (state == RIGHT && position.y < (SCOREOFFSET * 16) + 240 - 151)
+		{
+			changeBossPosition(position.x, position.y + 1);
+
+			changeMovementState(DOWN);
+		}
+		else if (state == DOWN && position.x > 16)
+		{
+			changeBossPosition(position.x - 1, position.y);
+
+			changeMovementState(LEFT);
+		}
+
 	}
-	else if (state == TOP && position.x < 208-60)
+	else if (mazeCounter == 1 && playerInDangerZone())
 	{
-		changeBossPosition(position.x + 1, position.y);
-
-		changeMovementState(RIGHT);
+		current_animation = &smashing;
+		mazeCollider->SetPos(-100, -100);
+		if(current_animation->GetCurrentFrame().x == 768)
+			mazeCollider->SetPos(position.x + 37/2, position.y + 119);
 	}
-	else if (state == RIGHT && position.y < (SCOREOFFSET*16)+240 - 151)
+
+	mazeCounter++;
+
+	if (mazeCounter == 10)
 	{
-		changeBossPosition(position.x, position.y + 1);
-		
-		changeMovementState(DOWN);
+		mazeCounter = 1;
 	}
-	else if (state == DOWN && position.x > 16)
-	{
-		changeBossPosition(position.x - 1, position.y);
-		
-		changeMovementState(LEFT);
-	}
-
-
 	//current_animation = &smashing;
 
 
@@ -188,12 +204,22 @@ void ModuleBoss::changeMovementState(bossState _state)
 
 bool ModuleBoss::playerInDangerZone()
 {
-	p2Point<int> tmp(8, 8);
+	bool ret = false;
+	p2Point<int> tmp(8, 16);
 	p2Point<int> playerCenter(App->player->position);
 	playerCenter += tmp;
 
 	tmp.setPosition(37, 119);
-	p2Point<int> dangerZoneCenter;
-	
-	return true;
+	p2Point<int> dangerZoneCenter(App->boss->position);
+	dangerZoneCenter += tmp;
+
+
+
+	if (abs(playerCenter.x - dangerZoneCenter.x) <= 37 && abs(playerCenter.y - dangerZoneCenter.y) <= 32)
+		ret = true;
+	else
+		ret = false;
+
+
+	return ret;	
 }
