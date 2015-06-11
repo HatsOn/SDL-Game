@@ -21,7 +21,7 @@ bool ModuleMap::Start()
 	//App->particles->findParticle(COLLIDER_FINISH);
 	graphics2 = App->textures->Load("MapV1.png");
 	graphics3 = App->textures->Load("MapV2.png");
-	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
+	App->audio->PlayMusic("Map.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	return ret;
