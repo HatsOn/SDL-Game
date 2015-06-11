@@ -15,7 +15,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	sizeBombPowerUpCounter = 0;
 	speed.x = 1;
 	speed.y = 1;
-
+	
 	
 	bombPower = 1;
 
@@ -98,6 +98,7 @@ bool ModulePlayer::Start()
 	finished = false;
 	dead = false;
 	bombPower = 1;
+	numBombs = 1;
 	enemiesAlive = 3;
 	LOG("Loading player");
 	canWalkLowerCorner = true;
@@ -120,6 +121,7 @@ bool ModulePlayer::Start()
 	speedValue = 1;
 
 	speedPowerUpCounter = 0;
+	numBombPowerUpCounter = 0;
 
 	hasCollided = false;
 
@@ -727,6 +729,21 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		speed.SetToZero();
 	}
+
+	if (c2->type == COLLIDER_NUMEXPLOSIONPOWERUP)
+	{
+		App->particles->findParticle(COLLIDER_NUMEXPLOSIONPOWERUP);
+
+		numBombPowerUpCounter++;
+
+		if (numBombPowerUpCounter >= 2)
+		{
+			numBombs++;
+			numBombPowerUpCounter = 0;
+
+		}
+	}
+
 
 }
 

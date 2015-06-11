@@ -46,6 +46,10 @@ public:
 
 	int speedPowerUpCounter;
 	int sizeBombPowerUpCounter;
+	int numBombPowerUpCounter;
+
+	
+
 	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;
 	LookingUpDown directionVertical;
@@ -75,6 +79,7 @@ public:
 	p2Point<int> bombPosition;
 	bool bombOn;
 	int bombPower;
+	int numBombs;
 	bool finished;
 	int enemiesAlive;
 	
