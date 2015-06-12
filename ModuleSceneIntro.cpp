@@ -8,6 +8,14 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 	graphics = NULL;
 	fx = 0;
+	positionZepelin.setPosition(200, 0);
+	//Animation zepelin
+	zepelin.frames.PushBack({ 0, 0, 71, 40 });
+	zepelin.frames.PushBack({ 0, 41, 71, 40 });
+	zepelin.frames.PushBack({ 0, 82, 71, 40 });
+	zepelin.loop = true;
+	zepelin.speed = 0.05f;
+
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -19,10 +27,12 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	//App->particles->findParticle(COLLIDER_FINISH);
-	graphics = App->textures->Load("BombermanIntro.png");
+	graphics = App->textures->Load("buildings.png");
+	zepelin2 = App->textures->Load("planes.png");
 	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	select_fx = App->audio->LoadFx("Select.ogg");
+	
 
 	return ret;
 }
@@ -42,7 +52,7 @@ update_status ModuleSceneIntro::Update(){
 	
 	// Draw everything --------------------------------------	
 
-	App->renderer->Blit(graphics, 0, 0, NULL);
+	current_animation = &zepelin;
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
@@ -55,6 +65,13 @@ update_status ModuleSceneIntro::Update(){
 		App->audio->PlayFx(select_fx);
 		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->map, 3.0f);
+	}
+
+	App->renderer->Blit(graphics, 0, 0, NULL);
+	App->renderer->Blit(zepelin2, positionZepelin.x, positionZepelin.y, &(current_animation->GetCurrentFrame()));
+	if (positionZepelin.x > -71)
+	{
+		positionZepelin.x--;
 	}
 	
 

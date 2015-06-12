@@ -7,6 +7,12 @@ ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_e
 {
 	graphics2 = NULL;
 	fx = 0;
+
+	map.frames.PushBack({ 0, 0, 256, 272 });
+	map.frames.PushBack({ 256, 0, 256, 272 });
+	map.loop = true;
+	map.speed = 0.05f;
+
 }
 
 ModuleMap::~ModuleMap()
@@ -20,7 +26,7 @@ bool ModuleMap::Start()
 	counter = SDL_GetTicks();
 
 	//App->particles->findParticle(COLLIDER_FINISH);
-	graphics2 = App->textures->Load("MapV1.png");
+	graphics2 = App->textures->Load("MapV1.1.png");
 
 	App->audio->PlayMusic("Map.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -42,9 +48,7 @@ bool ModuleMap::CleanUp()
 // Update: draw background
 update_status ModuleMap::Update()
 {
-	counter = SDL_GetTicks() - counter;
-
-	App->renderer->Blit(graphics2, 0, 0, NULL);
+	current_animation = &map;
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
@@ -59,6 +63,8 @@ update_status ModuleMap::Update()
 		App->fade->FadeToBlack(this, App->map, 3.0f);
 		App->audio->PlayMusic("BombermanStart.ogg", 0.5f);
 	}
+
+	App->renderer->Blit(graphics2, 0, 0, &(current_animation->GetCurrentFrame()));
 
 	return UPDATE_CONTINUE;
 }

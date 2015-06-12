@@ -16,9 +16,21 @@ public:
 public:
 
 	SDL_Texture* graphics;
-	Animation water;
+	SDL_Texture* zepelin3;
+	SDL_Texture* balloon;
+	SDL_Texture* zepelin2;
+
+	SDL_Texture* titletop;
+	SDL_Texture* titlebottom;
+
+	p2Point<int> speed;
+	p2Point<int> position;
+
+	Animation zepelin;
+	Animation* current_animation;
+
 	unsigned int fx;
+	p2Point<int> positionZepelin;
 
 	unsigned int select_fx;
-
 };
