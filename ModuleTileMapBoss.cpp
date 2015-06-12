@@ -61,97 +61,97 @@ bool ModuleTileMapBoss::Start()
 
 void ModuleTileMapBoss::prepareTiles()
 {
-	//---------------------- BOSS
+	//---------------------- BOOS
 	// --- 1
-	tile1.x = 835;
-	tile1.y = 32;
-	tile1.h = 16;
-	tile1.w = 16;
+	tile29.x = 835;
+	tile29.y = 32;
+	tile29.h = 16;
+	tile29.w = 16;
 
-	tile2.x = 835;
-	tile2.y = 49;
-	tile2.h = 16;
-	tile2.w = 16;
+	tile30.x = 835;
+	tile30.y = 49;
+	tile30.h = 16;
+	tile30.w = 16;
 
-	tile3.x = 835;
-	tile3.y = 66;
-	tile3.h = 16;
-	tile3.w = 16;
+	tile31.x = 835;
+	tile31.y = 66;
+	tile31.h = 16;
+	tile31.w = 16;
 
-	tile4.x = 835;
-	tile4.y = 83;
-	tile4.h = 16;
-	tile4.w = 16;
+	tile32.x = 835;
+	tile32.y = 83;
+	tile32.h = 16;
+	tile32.w = 16;
 	// --- 2
-	tile5.x = 852;
-	tile5.y = 32;
-	tile5.h = 16;
-	tile5.w = 16;
+	tile33.x = 852;
+	tile33.y = 32;
+	tile33.h = 16;
+	tile33.w = 16;
 
-	tile6.x = 852;
-	tile6.y = 49;
-	tile6.h = 16;
-	tile6.w = 16;
+	tile34.x = 852;
+	tile34.y = 49;
+	tile34.h = 16;
+	tile34.w = 16;
 
-	tile7.x = 852;
-	tile7.y = 66;
-	tile7.h = 16;
-	tile7.w = 16;
+	tile35.x = 852;
+	tile35.y = 66;
+	tile35.h = 16;
+	tile35.w = 16;
 
-	tile8.x = 852;
-	tile8.y = 83;
-	tile8.h = 16;
-	tile8.w = 16;
+	tile36.x = 852;
+	tile36.y = 83;
+	tile36.h = 16;
+	tile36.w = 16;
 	// --- 3
-	tile9.x = 869;
-	tile9.y = 32;
-	tile9.h = 16;
-	tile9.w = 16;
+	tile37.x = 869;
+	tile37.y = 32;
+	tile37.h = 16;
+	tile37.w = 16;
 
-	tile10.x = 869;
-	tile10.y = 49;
-	tile10.h = 16;
-	tile10.w = 16;
+	tile38.x = 869;
+	tile38.y = 49;
+	tile38.h = 16;
+	tile38.w = 16;
 
-	tile11.x = 869;
-	tile11.y = 66;
-	tile11.h = 16;
-	tile11.w = 16;
+	tile39.x = 869;
+	tile39.y = 66;
+	tile39.h = 16;
+	tile39.w = 16;
 
-	tile12.x = 869;
-	tile12.y = 83;
-	tile12.h = 16;
-	tile12.w = 16;
+	tile40.x = 869;
+	tile40.y = 83;
+	tile40.h = 16;
+	tile40.w = 16;
 	// --- 4
-	tile13.x = 886;
-	tile13.y = 32;
-	tile13.h = 16;
-	tile13.w = 16;
+	tile41.x = 886;
+	tile41.y = 32;
+	tile41.h = 16;
+	tile41.w = 16;
 
-	tile14.x = 886;
-	tile14.y = 49;
-	tile14.h = 16;
-	tile14.w = 16;
+	tile42.x = 886;
+	tile42.y = 49;
+	tile42.h = 16;
+	tile42.w = 16;
 
-	tile15.x = 886;
-	tile15.y = 66;
-	tile15.h = 16;
-	tile15.w = 16;
+	tile43.x = 886;
+	tile43.y = 66;
+	tile43.h = 16;
+	tile43.w = 16;
 
-	tile16.x = 886;
-	tile16.y = 83;
-	tile16.h = 16;
-	tile16.w = 16;
+	tile44.x = 886;
+	tile44.y = 83;
+	tile44.h = 16;
+	tile44.w = 16;
 	// --- 5
-	tile17.x = 903;
-	tile17.y = 32;
-	tile17.h = 16;
-	tile17.w = 16;
+	tile45.x = 903;
+	tile45.y = 32;
+	tile45.h = 16;
+	tile45.w = 16;
 
-	tile18.x = 903;
-	tile18.y = 49;
-	tile18.h = 16;
-	tile18.w = 16;
+	tile45.x = 903;
+	tile45.y = 49;
+	tile45.h = 16;
+	tile45.w = 16;
 
 
 	//---------------------- BOSS
@@ -259,140 +259,89 @@ void ModuleTileMapBoss::BuildMap()
 		{
 			if (map.tile[x][y] == 0)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile1, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile29, 0.75f);
 			}
 
 			if (map.tile[x][y] == 1)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile2, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile30, 0.75f);
 			}
 
 			if (map.tile[x][y] == 2)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile3, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile31, 0.75f);
 			}
 
 			if (map.tile[x][y] == 3)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile4, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile32, 0.75f);
 			}
 
 			if (map.tile[x][y] == 4)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile5, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile33, 0.75f);
 			}
 
 			if (map.tile[x][y] == 5)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile6, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile34, 0.75f);
 			}
 
-			if (map.tile[x][y] == 6)
+			if (map.tile[x][y] == 50)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile7, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile35, 0.75f);
 			}
 
 			if (map.tile[x][y] == 7)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile8, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile36, 0.75f);
 			}
 
 			if (map.tile[x][y] == 8)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile9, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile37, 0.75f);
 			}
 
 			if (map.tile[x][y] == 9)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile10, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile38, 0.75f);
 			}
 			if (map.tile[x][y] == 10)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile11, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile39, 0.75f);
 			}
 
 			if (map.tile[x][y] == 11)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile12, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile40, 0.75f);
 			}
 
 			if (map.tile[x][y] == 12)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile13, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile41, 0.75f);
 			}
 
 			if (map.tile[x][y] == 13)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile14, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile42, 0.75f);
 			}
 
 			if (map.tile[x][y] == 14)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile15, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile43, 0.75f);
 			}
 
 			if (map.tile[x][y] == 15)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile16, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile44, 0.75f);
 			}
 
 			if (map.tile[x][y] == 16)
 			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile17, 0.75f);
+				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile45, 0.75f);
 			}
 
-			if (map.tile[x][y] == 17)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile18, 0.75f);
-			}
-
-			if (map.tile[x][y] == 18)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile19, 0.75f);
-			}
-
-			if (map.tile[x][y] == 19)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile20, 0.75f);
-			}
-
-			if (map.tile[x][y] == 20)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile21, 0.75f);
-			}
-
-			if (map.tile[x][y] == 21)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile22, 0.75f);
-			}
-			if (map.tile[x][y] == 22)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile23, 0.75f);
-			}
-
-			if (map.tile[x][y] == 23)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile24, 0.75f);
-			}
-
-			if (map.tile[x][y] == 24)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile25, 0.75f);
-			}
-
-			if (map.tile[x][y] == 25)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile26, 0.75f);
-			}
-
-			if (map.tile[x][y] == 26)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile27, 0.75f);
-			}
-			if (map.tile[x][y] == 27)
-			{
-				App->renderer->Blit(tilesReference, x*TILE_SIZE, GUIOffset + y*TILE_SIZE, &tile28, 0.75f);
-			}
+			
 
 
 		}
