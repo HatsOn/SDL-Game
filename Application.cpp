@@ -19,6 +19,7 @@ Application::Application()
 	collision = new ModuleCollision(this, true);
 	bombs = new bomb(this, false);
 	map = new ModuleMap(this, false);
+	gameover = new ModuleGameOver(this, false);
 	//enemies = new ModuleEnemy(this, false);
 
 	// The order of calls is very important!
@@ -39,6 +40,7 @@ Application::Application()
 	AddModule(scene_space);
 	AddModule(scene_intro);
 	AddModule(map);
+	AddModule(gameover);
 	
 	// Characters
 	AddModule(particles);
@@ -67,6 +69,7 @@ Application::~Application()
 	delete fade;
 	delete collision;
 	delete map;
+	delete gameover;
 }
 
 bool Application::Init()

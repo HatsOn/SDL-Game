@@ -725,7 +725,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(mortpj_fx);
 		if (App->particles->portalBackup != NULL)
 			App->particles->portalBackup->life = 0;
-		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
 		
 	}
 
@@ -734,7 +734,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		dead = true;
 		current_animation = &dying;		
 		App->audio->PlayFx(mortpj_fx);
-		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
 	}
 	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
 	{
@@ -760,7 +760,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		dead = true;
 		current_animation = &dying;
 		App->audio->PlayFx(mortpj_fx);
-		App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
+		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
 	}
 
 	if (c2->type == COLLIDER_NUMEXPLOSIONPOWERUP)

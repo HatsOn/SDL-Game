@@ -6,7 +6,6 @@
 ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	graphics2 = NULL;
-	fx = 0;
 
 	map.frames.PushBack({ 0, 0, 256, 272 });
 	map.frames.PushBack({ 256, 0, 256, 272 });
@@ -23,7 +22,6 @@ bool ModuleMap::Start()
 {
 	LOG("Loading Map assets");
 	bool ret = true;
-	counter = SDL_GetTicks();
 
 	//App->particles->findParticle(COLLIDER_FINISH);
 	graphics2 = App->textures->Load("MapV1.1.png");

@@ -3,11 +3,11 @@
 #include "Animation.h"
 #include "Globals.h"
 
-class ModuleMap : public Module
+class ModuleGameOver : public Module
 {
 public:
-	ModuleMap(Application* app, bool start_enabled = true);
-	~ModuleMap();
+	ModuleGameOver(Application* app, bool start_enabled = true);
+	~ModuleGameOver();
 
 	bool Start();
 	update_status Update();
@@ -15,8 +15,8 @@ public:
 
 public:
 
-	SDL_Texture* graphics2;
-
-	Animation map;
+	SDL_Texture* graphics;
+	
+	Animation gameover;
 	Animation* current_animation;
 };
