@@ -944,20 +944,11 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(mortpj_fx);
 		if (App->particles->portalBackup != NULL)
 			App->particles->portalBackup->life = 0;
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> origin/InProgress
 		if (App->tileMap->sceneActive)
 			App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
 		if (App->tileBoss->sceneActive)
 			App->fade->FadeToBlack(App->tileBoss, App->gameover, 5.0f);
-<<<<<<< HEAD
-
-		
-=======
->>>>>>> origin/InProgress
 	}
 
 	if (c2->type == COLLIDER_ENEMY && !dead)
@@ -991,14 +982,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		dead = true;
 		current_animation = &dying;
 		App->audio->PlayFx(mortpj_fx);
-<<<<<<< HEAD
-
 
 		App->fade->FadeToBlack(App->tileBoss, App->gameover, 5.0f);
-
-=======
-		App->fade->FadeToBlack(App->tileBoss, App->gameover, 5.0f);
->>>>>>> origin/InProgress
 	}
 
 	if (c2->type == COLLIDER_NUMEXPLOSIONPOWERUP)
