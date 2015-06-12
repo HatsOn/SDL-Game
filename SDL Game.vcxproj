@@ -82,6 +82,7 @@
     <ClInclude Include="ModuleMap.h" />
     <ClInclude Include="ModuleTileMap.h" />
     <ClInclude Include="ModuleTileMapBoss.h" />
+    <ClInclude Include="ModuleWin.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTileMap.cpp" />
     <ClCompile Include="ModuleTileMapBoss.cpp" />
+    <ClCompile Include="ModuleWin.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,7 @@ Application::Application()
 	bombs = new bomb(this, false);
 	map = new ModuleMap(this, false);
 	gameover = new ModuleGameOver(this, false);
+	win = new ModuleWin(this, false);
 	//enemies = new ModuleEnemy(this, false);
 
 	// The order of calls is very important!
@@ -41,6 +42,7 @@ Application::Application()
 	AddModule(scene_intro);
 	AddModule(map);
 	AddModule(gameover);
+	AddModule(win);
 	
 	// Characters
 	AddModule(particles);
@@ -70,6 +72,7 @@ Application::~Application()
 	delete collision;
 	delete map;
 	delete gameover;
+	delete win;
 }
 
 bool Application::Init()

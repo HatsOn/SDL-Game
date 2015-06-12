@@ -310,7 +310,7 @@ void ModuleBoss::OnCollision(Collider* c1, Collider* c2)
 		if (life == 0)
 		{
 			fps = 200;
-			App->fade->FadeToBlack(App->tileBoss, App->scene_intro, 5.0f);
+			App->fade->FadeToBlack(App->tileBoss, App->win, 5.0f);
 		}
 
 	}

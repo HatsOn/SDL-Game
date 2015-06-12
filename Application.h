@@ -22,6 +22,7 @@
 #include "ModuleEnemy.h"
 #include "ModuleMap.h"
 #include "ModuleGameOver.h"
+#include "ModuleWin.h"
 
 class Application
 {
@@ -44,6 +45,7 @@ public:
 	ModuleMap* map;
 	bomb* bombs;
 	ModuleGameOver* gameover;
+	ModuleWin* win;
 
 private:
 

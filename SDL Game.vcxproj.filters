@@ -23,6 +23,7 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="ModuleMap.cpp" />
     <ClCompile Include="ModuleGameOver.cpp" />
+    <ClCompile Include="ModuleWin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="ModuleMap.h" />
     <ClInclude Include="ModuleGameOver.h" />
+    <ClInclude Include="ModuleWin.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="BossLevel.txt" />
