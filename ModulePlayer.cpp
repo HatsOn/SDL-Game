@@ -490,7 +490,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(mortpj_fx);
 		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
 	}
-	if (c2->type == COLLIDER_FINISH && !finished /*&& enemiesAlive == 0*/)
+	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
 	{
 		LOG("PORTAL ACTIVADO");
 		//App->player->Disable();
