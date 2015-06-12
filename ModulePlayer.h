@@ -53,8 +53,13 @@ public:
 	int speedPowerUpCounter;
 	int sizeBombPowerUpCounter;
 	int numBombPowerUpCounter;
+	int finishCounter;
+	bool fading;
 
-	
+	int nBombs;
+	int maxBombs;
+	int maxSpeed;
+	int timeBombCounter;
 
 	p2Point<int> playerCollider;
 	LookingLeftRight directionSide;

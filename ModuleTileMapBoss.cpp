@@ -236,7 +236,6 @@ void ModuleTileMapBoss::PrintMap()const
 
 bool ModuleTileMapBoss::CleanUp()
 {
-	enemies.Clear();
 	sceneActive = false;
 	App->bombs->Disable();
 	App->player->Disable();

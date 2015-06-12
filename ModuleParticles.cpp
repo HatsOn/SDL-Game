@@ -22,7 +22,7 @@ bool ModuleParticles::Start()
 	bombLife = 2000;
 	explosionLife = 2000;
 	wallLife = 1500;
-
+	portalSpawnChance = 4;
 	explosio_fx = App->audio->LoadFx("Explosio.ogg");
 
 	spawned = false;
@@ -360,7 +360,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 20;
 				
 				dropPowerUp(particlePosition, 0, -16);
-				
+				portalSpawnChance += 4;
 				AddParticle(evaporatingWall,
 					p->position.x,
 					p->position.y - size*i,
@@ -374,6 +374,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionUp, p->position.x, p->position.y - size*i, COLLIDER_PLAYER_EXPLOSION);
 	else if (canDestroy(particlePosition, 'n'))
 	{
+		portalSpawnChance += 4;
 		/*****************************************/
 		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] = 19;
 
@@ -423,6 +424,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		{
 			if (canDestroy(particlePosition, 's')) // Si es destruible
 			{
+				portalSpawnChance += 4;
 				App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y - 8) / TILE_SIZE - SCOREOFFSET] = 19;
 				dropPowerUp(particlePosition, 0, +16);
 				AddParticle(evaporatingWall,
@@ -440,6 +442,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionDown, p->position.x, p->position.y + size*i, COLLIDER_PLAYER_EXPLOSION);
 	else if (canDestroy(particlePosition, 's'))
 	{
+		portalSpawnChance += 4;
 		/*****************************************/
 		App->tileMap->map.tile[(particlePosition.x + 8) / TILE_SIZE][(particlePosition.y + 8 + 16) / TILE_SIZE - SCOREOFFSET] = 19;
 
@@ -479,7 +482,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'o')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x - 8) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-				
+				portalSpawnChance += 4;
 				dropPowerUp(particlePosition, -16, 0);
 				
 				AddParticle(evaporatingWall,
@@ -496,6 +499,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 		AddParticle(explosionLeft, p->position.x - size*i, p->position.y, COLLIDER_PLAYER_EXPLOSION);
 	else if (canDestroy(particlePosition, 'o'))
 	{
+		portalSpawnChance += 4;
 		/*****************************************/
 		App->tileMap->map.tile[(particlePosition.x + 8 - 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
@@ -541,7 +545,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 			if (canDestroy(particlePosition, 'e')) // Si es destruible
 			{
 				App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
-
+				portalSpawnChance += 4;
 				dropPowerUp(particlePosition, 16, 0);
 
 				AddParticle(evaporatingWall,
@@ -563,6 +567,7 @@ void ModuleParticles::generateBomb(int power, Particle* p)
 	}
 	else if (canDestroy(particlePosition, 'e'))
 	{
+		portalSpawnChance += 4;
 		App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8) / TILE_SIZE - SCOREOFFSET] = 19;
 
 		if (App->tileMap->map.tile[(particlePosition.x + 8 + 16) / TILE_SIZE][(particlePosition.y + 8 - 16) / TILE_SIZE - SCOREOFFSET] == 3 || 
@@ -630,11 +635,18 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 {
 	int random;
 	random = (rand() % 100 + 1);
+	int random2;
+	random2 = (rand() % 100 + 1);
 	LOG("%d", random);
 
 	Particle* p;
 
-	if (random <= 10)
+	if (random2 <= portalSpawnChance && !spawned)
+	{
+		portalBackup = AddParticle(portal, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_FINISH);
+		spawned = !spawned;
+	}
+	else if (random <= 5)
 	{
 		speedPowerUpLocation.x = (particlePosition.x + sizeX);
 
@@ -642,7 +654,7 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 
 		AddParticle(speedpowerUp, speedPowerUpLocation.x, speedPowerUpLocation.y, COLLIDER_SPEEDPOWERUP);
 	}
-	else if (random > 10 && random <= 20)
+	else if (random > 5 && random <= 10)
 	{
 
 		sizeExplosionPowerUpLocation.x = (particlePosition.x + sizeX);
@@ -651,16 +663,11 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 
 		AddParticle(sizeExplosionPowerUp, sizeExplosionPowerUpLocation.x, sizeExplosionPowerUpLocation.y, COLLIDER_SIZEXPLOSIONPOWERUP);
 	}
-	else if (random > 20 && random <= 60 && !spawned)
-	{
-		portalBackup = AddParticle(portal, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_FINISH);
-		spawned = !spawned;
-	}
-	else if (random > 20 && random <= 90)
+	else if (random > 10 && random <= 15)
 	{
 		AddParticle(bombNumberPowerUp, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_NUMEXPLOSIONPOWERUP);
 	}
-
+	
 }
 
 bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
@@ -668,26 +675,42 @@ bool ModuleParticles::canExplode(p2Point<int> p, char orientation)
 	switch (orientation)
 	{
 	case 'n':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET]))
+		if (
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET])
+			||
+			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(p.x + 8) / TILE_SIZE][(p.y - 8) / TILE_SIZE - SCOREOFFSET])
+			)
 		{
 			return false;
 		}
 		break;
 	case 's':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 8 + 16) / TILE_SIZE - SCOREOFFSET]))
+		if (
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 8 + 16) / TILE_SIZE - SCOREOFFSET])
+			||
+			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(p.x + 8) / TILE_SIZE][(p.y + 8 + 16) / TILE_SIZE - SCOREOFFSET])
+			)
 
 		{
 			return false;
 		}
 		break;
 	case 'o':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET]))
+		if (
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET])
+			||
+			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(p.x - 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET])
+			)
 		{
 			return false;
 		}
 		break;
 	case 'e':
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16 +8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET]))
+		if (
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(p.x + 16 +8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET])
+			||
+			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(p.x + 16 + 8) / TILE_SIZE][(p.y + 8) / TILE_SIZE - SCOREOFFSET])
+			)
 		{
 			return false;
 		}

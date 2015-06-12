@@ -33,11 +33,14 @@ public:
 	
 	
 
-	p2Point<int> speed;
+	int speed;
 	p2Point<int> position;
 	int framesMove;
 	int mazeCounter;
-
+	int speedCounter;
+	int life;
+	int fps;
+	bool notShot;
 	ModuleBoss(Application* app, bool start_enabled = true);
 
 	~ModuleBoss();
@@ -45,11 +48,13 @@ public:
 	bool Start();
 	bool CleanUp();
 	update_status Update();
-
+	void OnCollision(Collider* c1, Collider* c2);
 
 	void changeBossPosition(p2Point<int> position);
 	void changeBossPosition(int x, int y);
 	void changeMovementState(bossState _state);
 	bool playerInDangerZone();
+
+
 };
 
