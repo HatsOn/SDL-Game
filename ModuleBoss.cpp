@@ -23,6 +23,16 @@ ModuleBoss::ModuleBoss(Application* app, bool start_enabled) : Module(app, start
 	smashing.loop = true;
 	smashing.speed = 0.05f;
 
+	damage.frames.PushBack({ 525, 248, 601 - 525, 399 - 248 });
+	damage.frames.PushBack({ 849, 248, 925 - 849, 399 - 248 });
+	damage.frames.PushBack({ 525, 248, 601 - 525, 399 - 248 });
+	damage.frames.PushBack({ 849, 248, 925 - 849, 399 - 248 });
+	damage.frames.PushBack({ 525, 248, 601 - 525, 399 - 248 });
+	damage.frames.PushBack({ 849, 248, 925 - 849, 399 - 248 });
+	damage.loop = true;
+	damage.speed = 0.1f;
+
+
 
 	current_animation = &idle;
 
@@ -96,7 +106,6 @@ update_status ModuleBoss::Update()
 	//bossCollider->SetPos(position.x+10, position.y+35);
 	if (!playerInDangerZone() && mazeCounter != 1)
 	{
-
 		current_animation = &idle;
 		mazeCollider->SetPos(-100, -100);
 		if (position.y > (SCOREOFFSET * 16) - 19 && (state == LEFT || state == CENTERED))
@@ -131,6 +140,7 @@ update_status ModuleBoss::Update()
 		mazeCollider->SetPos(-100, -100);
 		if(current_animation->GetCurrentFrame().x == 768)
 			mazeCollider->SetPos(position.x + 37/2, position.y + 119);
+
 	}
 
 	mazeCounter++;
@@ -140,9 +150,7 @@ update_status ModuleBoss::Update()
 		mazeCounter = 1;
 	}
 	//current_animation = &smashing;
-
-
-
+	
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 	
 
@@ -201,6 +209,28 @@ void ModuleBoss::changeMovementState(bossState _state)
 		LOG("LEFT");
 	}
 }
+/*
+bool ModuleBoss::playerInDangerZone()
+{
+	bool ret = false;
+	p2Point<int> tmp(8, 16);
+	p2Point<int> playerCenter(App->player->position);
+	playerCenter += tmp;
+
+	tmp.setPosition(37, 119);
+	p2Point<int> dangerZoneCenter(App->boss->position);
+	dangerZoneCenter += tmp;
+
+
+	if (abs(playerCenter.x - dangerZoneCenter.x) <= 37 && abs(playerCenter.y - dangerZoneCenter.y) <= 32)
+		ret = true;
+	else
+		ret = false;
+
+
+	return ret;	
+}
+*/
 
 bool ModuleBoss::playerInDangerZone()
 {
@@ -214,12 +244,10 @@ bool ModuleBoss::playerInDangerZone()
 	dangerZoneCenter += tmp;
 
 
-
 	if (abs(playerCenter.x - dangerZoneCenter.x) <= 37 && abs(playerCenter.y - dangerZoneCenter.y) <= 32)
 		ret = true;
 	else
 		ret = false;
 
-
-	return ret;	
+	return ret;
 }

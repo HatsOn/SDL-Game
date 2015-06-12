@@ -29,6 +29,8 @@ public:
 	Animation* current_animation;
 	Animation idle;
 	Animation smashing;
+	Animation damage;
+	
 	
 
 	p2Point<int> speed;
