@@ -593,6 +593,7 @@ bool ModuleTileMap::CleanUp()
 	sceneActive = false;
 	App->bombs->Disable();
 	App->player->Disable();
+	App->tileMap->Disable();
 	return 0;
 }
 

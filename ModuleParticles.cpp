@@ -641,7 +641,7 @@ void ModuleParticles::dropPowerUp(p2Point<int> particlePosition, int sizeX, int 
 
 	Particle* p;
 
-	if (random2 <= portalSpawnChance && !spawned)
+	if (random2 <= 100/*portalSpawnChance*/ && !spawned)
 	{
 		portalBackup = AddParticle(portal, particlePosition.x + sizeX, (particlePosition.y + sizeY), COLLIDER_FINISH);
 		spawned = !spawned;
