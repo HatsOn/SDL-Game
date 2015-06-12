@@ -17,6 +17,7 @@ bool ModuleTileMapBoss::Start()
 	//LoadMap("DebugLevel.txt");
 	LoadMap("BossLevel.txt");
 	//LoadMap("firstLevel.txt");
+	App->tileMap->sceneActive = false;
 	sceneActive = true;
 	PrintMap();
 
@@ -414,9 +415,12 @@ void ModuleTileMapBoss::OnCollision(Collider* c1, Collider* c2)
 
 update_status ModuleTileMapBoss::Update()
 {
-
+	if (App->tileMap->IsEnabled())
+		App->tileMap->Disable();
 	BuildMap();
-
+	App->tileMap->sceneActive = false;
+	sceneActive = true;
+	
 
 	return UPDATE_CONTINUE;
 }

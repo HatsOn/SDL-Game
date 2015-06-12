@@ -324,16 +324,13 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 	
 	if (directionSide == 0)//Left
 	{
-		if (
-			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) 
-			|| 
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET])
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET] && App->tileMap->sceneActive)
 			)
 		{
 			canWalkUpperCorner = false;
 		
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -351,7 +348,17 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 			}
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+			
+
+			speed.x = 0;
+
+
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+			canWalkUpperCorner = false;
+
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -367,24 +374,19 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 				}
 
 			}
-
-			speed.x = 0;
-
-
+		
 		}
+
 		else
 		{
 			canWalkUpperCorner = true;
 		}
 
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET])
-			|| 
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET])
-			)
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
 		{
 			canWalkLowerCorner = false;
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -401,7 +403,16 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 			}
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+			
+
+			speed.x = 0;
+
+
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+			canWalkLowerCorner = false;
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -417,11 +428,10 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 
 			}
-
-			speed.x = 0;
-
-
+		
+		
 		}
+
 		else
 		{
 			canWalkLowerCorner = true;
@@ -439,15 +449,12 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 	if (directionSide == 1)//Right
 	{
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) 
-			||
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET])
-			)
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
 		{
 			canWalkUpperCorner = false;
 
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -465,7 +472,15 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 			}
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+
+			speed.x = 0;
+
+
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+		
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -484,21 +499,17 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 			}
 
 			speed.x = 0;
-
-
 		}
 		else
 		{
 			canWalkUpperCorner = true;
 		}
 
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]) ||
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x +15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET])
-			)
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
 		{
 			canWalkLowerCorner = false;
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 
 			{
 
@@ -515,7 +526,16 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 
 
 			}
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+
+
+			speed.x = 0;
+
+
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 15) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+		
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -533,9 +553,8 @@ void ModulePlayer::leftRightCollision(const LookingLeftRight directionSide)
 			}
 
 			speed.x = 0;
-
-
 		}
+
 		else
 		{
 			canWalkLowerCorner = true;
@@ -585,15 +604,13 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 	{
 
 		if (
-			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) 
-			||
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET])
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET] && App->tileMap->sceneActive)
 			)
 		{
 			canWalkUpperCorner = false;
 
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -610,8 +627,13 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 
 
 			}
+			speed.y = 0;
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+		
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -625,8 +647,7 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 					position.y--;
 					playerCollider.y--;
 				}
-
-
+		
 			}
 
 
@@ -641,14 +662,12 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 		}
 
 		if (
-			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) 
-			||
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET])
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET] && App->tileMap->sceneActive)
 			)
 		{
 			canWalkLowerCorner = false;
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -664,7 +683,16 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 
 			}
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+			
+
+			speed.y = 0;
+
+
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+		
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y - 1) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -679,11 +707,10 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 				}
 
 			}
-
 			speed.y = 0;
-
-
 		}
+
+
 		else
 		{
 			canWalkLowerCorner = true;
@@ -719,15 +746,13 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 	{
 		
 		if (
-			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) 
-			||
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET])
+			App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET] && App->tileMap->sceneActive)
 			)
 		{
 			canWalkUpperCorner = false;
 
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 
 			{
 
@@ -745,7 +770,16 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 
 			}
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+			
+
+			speed.y = 0;
+
+
+		}
+		else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+		
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x - 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) )
 			{
 
 				hasCollided = true;
@@ -761,24 +795,23 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 				}
 
 			}
-
+		
 			speed.y = 0;
-
-
 		}
+
+
 		else
 		{
 			canWalkUpperCorner = true;
 		}
 
-		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) 
-			||
-			App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET])
+		if (App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET] && App->tileMap->sceneActive)
+			
 			)
 		{
 			canWalkLowerCorner = false;
 
-			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileMap->sceneActive)
+			if (!App->tileMap->nonWalkableTiles.isThere(App->tileMap->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 
 			{
 
@@ -795,7 +828,16 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 
 			}
 
-			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+			}
+
+			speed.y = 0;
+
+
+		}
+	else if (App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]) && App->tileBoss->sceneActive)
+		{
+	
+			if (!App->tileBoss->nonWalkableTiles.isThere(App->tileBoss->map.tile[(playerCollider.x + 15 + 1) / TILE_SIZE][((playerCollider.y + 16) / TILE_SIZE) - SCOREOFFSET]))
 			{
 
 				hasCollided = true;
@@ -808,14 +850,9 @@ void ModulePlayer::upDownCollision(const LookingUpDown directionVertical)
 					position.y++;
 					playerCollider.y++;
 				}
-
-
-			}
-
-			speed.y = 0;
-
-
+			
 		}
+
 		else
 		{
 			canWalkLowerCorner = true;
@@ -907,15 +944,11 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(mortpj_fx);
 		if (App->particles->portalBackup != NULL)
 			App->particles->portalBackup->life = 0;
-<<<<<<< HEAD
-		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
-=======
-		if (App->tileMap->sceneActive)
-			App->fade->FadeToBlack(App->tileMap, App->scene_intro, 5.0f);
-		if (App->tileBoss->sceneActive)
-			App->fade->FadeToBlack(App->tileBoss, App->scene_intro, 5.0f);
->>>>>>> origin/InProgress
 		
+		if (App->tileMap->sceneActive)
+			App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
+		if (App->tileBoss->sceneActive)
+			App->fade->FadeToBlack(App->tileBoss, App->gameover, 5.0f);
 	}
 
 	if (c2->type == COLLIDER_ENEMY && !dead)
@@ -925,7 +958,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		App->audio->PlayFx(mortpj_fx);
 		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
 	}
-	if (c2->type == COLLIDER_FINISH && !finished && enemiesAlive == 0)
+	if (c2->type == COLLIDER_FINISH && !finished /*&& enemiesAlive == 0*/)
 	{
 		LOG("PORTAL ACTIVADO");
 		//App->player->Disable();
@@ -949,11 +982,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		dead = true;
 		current_animation = &dying;
 		App->audio->PlayFx(mortpj_fx);
-<<<<<<< HEAD
-		App->fade->FadeToBlack(App->tileMap, App->gameover, 5.0f);
-=======
-		App->fade->FadeToBlack(App->tileBoss, App->scene_intro, 5.0f);
->>>>>>> origin/InProgress
+		App->fade->FadeToBlack(App->tileBoss, App->gameover, 5.0f);
 	}
 
 	if (c2->type == COLLIDER_NUMEXPLOSIONPOWERUP)
