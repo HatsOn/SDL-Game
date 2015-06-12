@@ -112,6 +112,8 @@ public:
 
 	enemy changeDirection;
 	
+	bool sceneActive;
+
 	bool isSpeedPowerUp;
 	bool isExplosionSizePowerUp;
 	

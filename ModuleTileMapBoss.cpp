@@ -17,7 +17,7 @@ bool ModuleTileMapBoss::Start()
 	//LoadMap("DebugLevel.txt");
 	LoadMap("BossLevel.txt");
 	//LoadMap("firstLevel.txt");
-
+	sceneActive = true;
 	PrintMap();
 
 	App->audio->PlayMusic("Boss.ogg");
@@ -236,7 +236,7 @@ void ModuleTileMapBoss::PrintMap()const
 
 bool ModuleTileMapBoss::CleanUp()
 {
-	enemies.Clear();
+	sceneActive = false;
 	App->bombs->Disable();
 	App->player->Disable();
 	App->boss->Disable();

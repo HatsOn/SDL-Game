@@ -72,6 +72,9 @@ public:
 	int explosionLife;
 	int wallLife;
 	bool spawned;
+
+	int portalSpawnChance;
+
 	p2Point<int> speedPowerUpLocation;
 	p2Point<int> sizeExplosionPowerUpLocation;
 	p2Point<int> bombNumberPowerUpLocation;

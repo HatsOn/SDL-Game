@@ -84,7 +84,7 @@ update_status ModuleSceneIntro::Update(){
 		//App->tileMap->Enable();
 		App->fade->FadeToBlack(this, App->map, 3.0f);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP)
+	else if (App->input->GetKey(SDL_SCANCODE_B) == KEY_UP)
 	{
 		App->audio->PlayFx(select_fx);
 		//App->tileMap->Enable();
