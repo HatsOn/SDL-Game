@@ -10,21 +10,23 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	fx = 0;
 
 	zepelinFPS = 1;
-	positionZepelin.setPosition(200, 110);
+
 	//Animation zepelin
 	zepelin.frames.PushBack({ 0, 0, 71, 40 });
 	zepelin.frames.PushBack({ 0, 41, 71, 40 });
 	zepelin.frames.PushBack({ 0, 82, 71, 40 });
 	zepelin.loop = true;
 	zepelin.speed = 0.05f;
+	positionZepelin.setPosition(200, 110);
 
-	//Movement ballon
+	//Animation ballon
 	balloonAnim.frames.PushBack({ 81, 48, 41, 74 });
 	positionBalloon.setPosition(0, 40);
 
-	//Movement zepelin3
+	//Animation zepelin3
 	zepelin3Anim.frames.PushBack({ 76, 0, 29, 17 });
-	positionZepelin3.setPosition(0, 130);
+	positionZepelin3.setPosition(-20, 130);
+
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -37,9 +39,13 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 	//App->particles->findParticle(COLLIDER_FINISH);
 	graphics = App->textures->Load("buildings.png");
+
 	zepelin2 = App->textures->Load("planes.png");
 	balloon = App->textures->Load("planes.png");
 	zepelin3 = App->textures->Load("planes.png");
+
+	introtitle = App->textures->Load("Title.png");
+
 	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	select_fx = App->audio->LoadFx("Select.ogg");
@@ -54,6 +60,11 @@ bool ModuleSceneIntro::CleanUp()
 	LOG("Unloading Intro scene");
 
 	App->textures->Unload(graphics);
+	App->textures->Unload(zepelin2);
+	App->textures->Unload(balloon);
+	App->textures->Unload(zepelin3);
+	App->textures->Unload(introtitle);
+
 
 	return true;
 }
@@ -81,6 +92,7 @@ update_status ModuleSceneIntro::Update(){
 	}
 
 	App->renderer->Blit(graphics, 0, 0, NULL);
+	
 
 	//Zepelin2
 	App->renderer->Blit(zepelin3, positionZepelin3.x, positionZepelin3.y, &(current_animation_zepelin2->GetCurrentFrame()));
@@ -106,6 +118,8 @@ update_status ModuleSceneIntro::Update(){
 		positionBalloon.x++;
 	}
 	
+	App->renderer->Blit(introtitle, 0, 0, NULL);
+
 	zepelinFPS++;
 
 	if (zepelinFPS == 3)
