@@ -8,7 +8,9 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 	graphics = NULL;
 	fx = 0;
-	positionZepelin.setPosition(200, 0);
+
+	zepelinFPS = 1;
+	positionZepelin.setPosition(200, 110);
 	//Animation zepelin
 	zepelin.frames.PushBack({ 0, 0, 71, 40 });
 	zepelin.frames.PushBack({ 0, 41, 71, 40 });
@@ -16,6 +18,13 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	zepelin.loop = true;
 	zepelin.speed = 0.05f;
 
+	//Movement ballon
+	balloonAnim.frames.PushBack({ 81, 48, 41, 74 });
+	positionBalloon.setPosition(0, 40);
+
+	//Movement zepelin3
+	zepelin3Anim.frames.PushBack({ 76, 0, 29, 17 });
+	positionZepelin3.setPosition(0, 130);
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -29,6 +38,8 @@ bool ModuleSceneIntro::Start()
 	//App->particles->findParticle(COLLIDER_FINISH);
 	graphics = App->textures->Load("buildings.png");
 	zepelin2 = App->textures->Load("planes.png");
+	balloon = App->textures->Load("planes.png");
+	zepelin3 = App->textures->Load("planes.png");
 	App->audio->PlayMusic("bombermanIntro.ogg", 0.5f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	select_fx = App->audio->LoadFx("Select.ogg");
@@ -52,7 +63,9 @@ update_status ModuleSceneIntro::Update(){
 	
 	// Draw everything --------------------------------------	
 
-	current_animation = &zepelin;
+	current_animation_zepelin1 = &zepelin;
+	current_animation_balloon = &balloonAnim;
+	current_animation_zepelin2 = &zepelin3Anim;
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
@@ -68,12 +81,37 @@ update_status ModuleSceneIntro::Update(){
 	}
 
 	App->renderer->Blit(graphics, 0, 0, NULL);
-	App->renderer->Blit(zepelin2, positionZepelin.x, positionZepelin.y, &(current_animation->GetCurrentFrame()));
-	if (positionZepelin.x > -71)
+
+	//Zepelin2
+	App->renderer->Blit(zepelin3, positionZepelin3.x, positionZepelin3.y, &(current_animation_zepelin2->GetCurrentFrame()));
+
+	if (positionZepelin3.x < 320 && zepelinFPS == 1)
+	{
+		positionZepelin3.x++;
+	}
+
+	//Zepelin 1
+	App->renderer->Blit(zepelin2, positionZepelin.x, positionZepelin.y, &(current_animation_zepelin1->GetCurrentFrame()));
+
+	if (positionZepelin.x > -71 && zepelinFPS == 1)
 	{
 		positionZepelin.x--;
 	}
+
+	//Balloon
+	App->renderer->Blit(balloon, positionBalloon.x, positionBalloon.y, &(current_animation_balloon->GetCurrentFrame()));
+
+	if (positionBalloon.x < 320 && zepelinFPS == 1)
+	{
+		positionBalloon.x++;
+	}
 	
+	zepelinFPS++;
+
+	if (zepelinFPS == 3)
+	{
+		zepelinFPS = 1;
+	}
 
 	return UPDATE_CONTINUE;
 }

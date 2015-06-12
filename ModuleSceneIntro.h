@@ -27,10 +27,17 @@ public:
 	p2Point<int> position;
 
 	Animation zepelin;
-	Animation* current_animation;
+	Animation balloonAnim;
+	Animation zepelin3Anim;
+	Animation* current_animation_zepelin1;
+	Animation* current_animation_balloon;
+	Animation* current_animation_zepelin2;
 
 	unsigned int fx;
+	int zepelinFPS;
 	p2Point<int> positionZepelin;
+	p2Point<int> positionBalloon;
+	p2Point<int> positionZepelin3;
 
 	unsigned int select_fx;
 };
